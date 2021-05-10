@@ -16,9 +16,27 @@ main {
 .row {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .column {
     display: flex;
     flex-direction: column;
+}
+
+.logo {
+    padding: 10px;
+    height: 64px;
+    width: auto;
+}
+
+#navbar {
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+#navbar h4 {
+    padding: 0 10px;
+    margin: 5px 5px;
 }
