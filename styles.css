@@ -1,6 +1,10 @@
 html, body {
     margin: 0;
     height: 100%;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 19px;
+    font-weight: 900;
+    color: #444444;
 }
 
 .container {
@@ -29,12 +33,44 @@ main {
     width: auto;
 }
 
+header.row h1{
+    font-size: 28px;
+    padding-right: .8rem;
+}
+
+header.row {
+    background-color: #80FFDB;
+    color: #444444;
+}
+
+/* main.column{
+    background-color: #dde5fa;
+} */
+
+footer.row {
+    background-color: #80FFDB;
+}
+
 #navbar {
     align-content: center;
     flex-wrap: wrap;
 }
 
-#navbar h4 {
-    padding: 0 10px;
+#navbar a {
+    padding: .5rem;
     margin: 5px 5px;
+
+    text-decoration: none;
+    font-weight: 700;
+    color: #444444;
+    border: 8px solid #80FFDB;
+    transition: .3s;
+    border-radius: 14px;
+}
+
+#navbar a:hover{
+    border: 8px solid #80FFDB;
+    background-color: #6930C3;
+
+    color: #f5e3ff;
 }
