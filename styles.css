@@ -4,7 +4,7 @@ html, body {
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 19px;
     font-weight: 900;
-    color: #444444;
+    color: #2a2a2a;
 }
 
 .container {
@@ -40,7 +40,7 @@ header.row h1{
 
 header.row {
     background-color: #80FFDB;
-    color: #444444;
+    color: #2a2a2a;
 }
 
 /* main.column{
@@ -57,19 +57,19 @@ footer.row {
 }
 
 #navbar a {
-    padding: .5rem;
-    margin: 5px 5px;
+    padding: .2rem .5rem;
+    /* margin: 5px 5px; */
 
     text-decoration: none;
     font-weight: 700;
-    color: #444444;
+    color: #2a2a2a;
     border: 8px solid #80FFDB;
     transition: .3s;
     border-radius: 14px;
 }
 
 #navbar a:hover{
-    border: 8px solid #80FFDB;
+    border: 24px solid #80FFDB;
     background-color: #6930C3;
 
     color: #f5e3ff;
