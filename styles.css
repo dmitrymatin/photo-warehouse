@@ -1,7 +1,10 @@
+* {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
 html, body {
     margin: 0;
     height: 100%;
-    font-family: 'Noto Sans JP', sans-serif;
     font-size: 19px;
     font-weight: 900;
     color: #2a2a2a;
@@ -33,7 +36,7 @@ main {
     width: auto;
 }
 
-header.row h1{
+header.row h1 {
     font-size: 28px;
     padding-right: .8rem;
 }
@@ -58,19 +61,44 @@ footer.row {
 
 #navbar a {
     padding: .2rem .5rem;
-    /* margin: 5px 5px; */
-
+    margin: 0 .3em;
     text-decoration: none;
     font-weight: 700;
     color: #2a2a2a;
-    border: 8px solid #80FFDB;
     transition: .3s;
-    border-radius: 14px;
+    border-radius: 6px;
 }
 
-#navbar a:hover{
-    border: 24px solid #80FFDB;
+#navbar a:hover {
     background-color: #6930C3;
-
     color: #f5e3ff;
+}
+
+.icon {
+    margin: .6em;
+    height: 36px;
+    width: auto;
+}
+
+.searchBar input {
+    font-size: 1.5em;
+    padding: .8em;
+    margin: 10px;
+    height: 1.9em;
+    outline: 0;
+    transition: .2s;
+}
+
+.searchBar input:hover {
+    border: 5px solid #7400B8;
+}
+
+.searchBar {
+    margin: .7em;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.searchBar input {
+    max-width: 70vw;
 }
