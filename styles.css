@@ -86,11 +86,14 @@ footer.row {
     margin: 10px;
     height: 1.9em;
     outline: 0;
-    transition: .2s;
+    transition: .4s;
+    border: .15em solid white;
+    outline: 1px solid black;
+    border-radius: 0px;
 }
 
 .searchBar input:hover {
-    border: 5px solid #7400B8;
+    border: .15em solid #7400B8;
 }
 
 .searchBar {
