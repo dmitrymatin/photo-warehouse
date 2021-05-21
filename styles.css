@@ -46,9 +46,9 @@ header.row {
     color: #2a2a2a;
 }
 
-/* main.column{
-    background-color: #dde5fa;
-} */
+main.column{
+    background-color: #faefff;
+}
 
 footer.row {
     background-color: #80FFDB;
@@ -71,7 +71,7 @@ footer.row {
 
 #navbar a:hover {
     background-color: #6930C3;
-    color: #f5e3ff;
+    color: #fdf9ff;
 }
 
 .icon {
@@ -87,7 +87,7 @@ footer.row {
     height: 1.9em;
     outline: 0;
     transition: .4s;
-    border: .15em solid white;
+    border: .15em solid #faefff;
     outline: 1px solid black;
     border-radius: 0px;
 }
@@ -104,4 +104,5 @@ footer.row {
 
 .searchBar input {
     max-width: 70vw;
+    background-color: #faefff;
 }
