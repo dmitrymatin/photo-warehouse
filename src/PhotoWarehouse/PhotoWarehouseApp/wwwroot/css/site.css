@@ -1,71 +1,111 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+* {
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+html, body {
+    margin: 0;
+    height: 100%;
+    font-size: 19px;
+    font-weight: 900;
+    color: #2a2a2a;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.container {
+    min-height: 100vh;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+main {
+    flex: 1;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+.column {
+    display: flex;
+    flex-direction: column;
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+.logo {
+    padding: 10px;
+    height: 64px;
+    width: auto;
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+header.row h1 {
+    font-size: 28px;
+    padding-right: .8rem;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
+header.row {
+    background-color: #80FFDB;
+    color: #2a2a2a;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+main.column {
+    background-color: #faefff;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+
+footer.row {
+    background-color: #80FFDB;
 }
+
+#navbar {
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+    #navbar a {
+        padding: .2rem .5rem;
+        margin: 0 .3em;
+        text-decoration: none;
+        font-weight: 700;
+        color: #2a2a2a;
+        transition: .3s;
+        border-radius: 6px;
+    }
+
+        #navbar a:hover {
+            background-color: #6930C3;
+            color: #fdf9ff;
+        }
+
+.icon {
+    margin: .6em;
+    height: 36px;
+    width: auto;
+}
+
+.searchBar input {
+    font-size: 1.5em;
+    padding: .8em;
+    margin: 10px;
+    height: 1.9em;
+    outline: 0;
+    transition: .4s;
+    border: .15em solid #faefff;
+    outline: 1px solid black;
+    border-radius: 0px;
+}
+
+    .searchBar input:hover {
+        border: .15em solid #7400B8;
+    }
+
+.searchBar {
+    margin: .7em;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+    .searchBar input {
+        max-width: 70vw;
+        background-color: #faefff;
+    }
