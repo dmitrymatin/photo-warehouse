@@ -3,13 +3,43 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PhotoWarehouseApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <title>@ViewData["Title"] - Photo Warehouse</title>
+    <link href="~/favicon.png" rel="icon" type="image/png" />
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container column">
+        <header class="row">
+            <section class="row">
+                <img src="~/images/logo.png" alt="logo with a camera on it" class="logo" width="64" height="64" />
+                <h1>Photo Warehouse</h1>
+            </section>
+            <section class="row">
+                <div id="navbar" class="row">
+                    <a href="#thing1">Menu 1</a>
+                    <a href="#thing2">Menu 2</a>
+                    <a href="#thing3">Menu 3</a>
+                    <partial name="_LoginPartial" />
+                </div>
+            </section>
+        </header>
+        <main class="column">
+            <section class="row searchBar">
+                <input type="search" name="searchBar" value="" placeholder="Поиск" />
+                <img src="~/images/search-svgrepo-com.svg" alt="search icon" class="icon" width="36" />
+            </section>
+            <h3>main</h3>
+            @RenderBody()
+        </main>
+
+        <footer class="row">
+            <h4>footer</h4>
+            &copy; 2021 - PhotoWarehouseApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </footer>
+
+        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">PhotoWarehouseApp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -28,19 +58,8 @@
                     <partial name="_LoginPartial" />
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </nav>*@
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - PhotoWarehouseApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
