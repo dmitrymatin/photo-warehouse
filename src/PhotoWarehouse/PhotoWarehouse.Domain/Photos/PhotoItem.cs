@@ -1,4 +1,5 @@
 ﻿using PhotoWarehouse.Domain.Orders;
+using PhotoWarehouse.Domain.Users;
 using System;
 using System.Collections.Generic;
 
@@ -12,5 +13,6 @@ namespace PhotoWarehouse.Domain.Photos
         public Photo Photo { get; set; }
         public int PhotoId { get; set; }
         public IEnumerable<Order> OrderPhotos { get; set; }
+        public IEnumerable<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

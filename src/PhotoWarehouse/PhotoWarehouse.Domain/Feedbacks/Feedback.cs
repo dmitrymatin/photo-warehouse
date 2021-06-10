@@ -1,6 +1,7 @@
-﻿using System;
+﻿using PhotoWarehouse.Domain.Users;
+using System;
 
-namespace PhotoWarehouse.Domain.Feedback
+namespace PhotoWarehouse.Domain.Feedbacks
 {
     public class Feedback
     {
@@ -8,5 +9,8 @@ namespace PhotoWarehouse.Domain.Feedback
         public string Text { get; set; }
         public DateTimeOffset DateSubmitted { get; set; }
         public DateTimeOffset DateReviewed { get; set; }
+
+        public ApplicationUser ReviewedBy { get; set; }
+        public string ApplicationUserId { get; set; }
     }
 }
