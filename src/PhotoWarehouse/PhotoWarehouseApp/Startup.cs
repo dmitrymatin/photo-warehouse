@@ -41,6 +41,7 @@ namespace PhotoWarehouseApp
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Stores.MaxLengthForKeys = 85; // this should fix MySQL "Specified key was too long; max key length is 3072 bytes" problem
+                options.Password.RequireNonAlphanumeric = false;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
