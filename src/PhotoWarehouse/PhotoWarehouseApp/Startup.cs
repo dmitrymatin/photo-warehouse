@@ -28,7 +28,7 @@ namespace PhotoWarehouseApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionStringBuilder = 
+            var connectionStringBuilder =
                 new SqlConnectionStringBuilder(Configuration.GetConnectionString("DefaultConnection"));
             connectionStringBuilder.Password = Configuration["DbPassword"];
 
@@ -36,7 +36,11 @@ namespace PhotoWarehouseApp
                 options.UseMySQL(connectionStringBuilder.ConnectionString));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Stores.MaxLengthForKeys = 85; // this should fix MySQL "Specified key was too long; max key length is 3072 bytes" problem
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
         }
