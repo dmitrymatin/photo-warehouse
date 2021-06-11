@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PhotoWarehouse.Data;
+using PhotoWarehouse.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -36,7 +37,7 @@ namespace PhotoWarehouseApp
                 options.UseMySQL(connectionStringBuilder.ConnectionString));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Stores.MaxLengthForKeys = 85; // this should fix MySQL "Specified key was too long; max key length is 3072 bytes" problem
