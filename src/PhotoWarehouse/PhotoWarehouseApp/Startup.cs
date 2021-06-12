@@ -34,10 +34,13 @@ namespace PhotoWarehouseApp
             connectionStringBuilder.Password = Configuration["DbPassword"];
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySQL(connectionStringBuilder.ConnectionString));
+            {
+                options.UseMySQL(connectionStringBuilder.ConnectionString)
+                       .EnableSensitiveDataLogging();
+            });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<ApplicationUser>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Stores.MaxLengthForKeys = 85; // this should fix MySQL "Specified key was too long; max key length is 3072 bytes" problem
