@@ -25,4 +25,8 @@
     <ProjectReference Include="..\PhotoWarehouse.Data\PhotoWarehouse.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\userImages\" />
+  </ItemGroup>
+
 </Project>

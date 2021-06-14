@@ -12,7 +12,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Photo.Name" class="control-label"></label>
@@ -32,6 +32,10 @@
             <div class="form-group">
                 <label asp-for="Photo.Category" class="control-label"></label>
                 <select asp-for="Photo.Category" class ="form-control" asp-items="ViewBag.Category"></select>
+            </div>
+            <div>
+                <label></label>
+                <input type="file" name="photoItem" value="" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

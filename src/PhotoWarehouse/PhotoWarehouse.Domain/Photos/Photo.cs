@@ -18,7 +18,7 @@ namespace PhotoWarehouse.Domain.Photos
 
         public PhotoCategory Category { get; set; }
         public int CategoryId { get; set; }
-        public IEnumerable<PhotoItem> PhotoItems { get; set; }
+        public ICollection<PhotoItem> PhotoItems { get; set; }
 
     }
 }
