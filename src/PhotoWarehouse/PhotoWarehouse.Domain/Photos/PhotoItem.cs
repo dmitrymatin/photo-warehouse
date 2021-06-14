@@ -9,6 +9,7 @@ namespace PhotoWarehouse.Domain.Photos
     {
         public int Id { get; set; }
         public DateTimeOffset DateUploaded { get; set; }
+        public string Path { get; set; }
 
         public Photo Photo { get; set; }
         public int PhotoId { get; set; }
