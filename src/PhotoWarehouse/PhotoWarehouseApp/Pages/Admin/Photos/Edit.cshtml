@@ -1,0 +1,56 @@
+﻿@page
+@model PhotoWarehouseApp.Pages.Admin.Photos.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Photo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Photo.Id" />
+            <div class="form-group">
+                <label asp-for="Photo.Name" class="control-label"></label>
+                <input asp-for="Photo.Name" class="form-control" />
+                <span asp-validation-for="Photo.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Photo.Description" class="control-label"></label>
+                <input asp-for="Photo.Description" class="form-control" />
+                <span asp-validation-for="Photo.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Photo.InitialUploadDate" class="control-label"></label>
+                <input asp-for="Photo.InitialUploadDate" class="form-control" />
+                <span asp-validation-for="Photo.InitialUploadDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Photo.DateTaken" class="control-label"></label>
+                <input asp-for="Photo.DateTaken" class="form-control" />
+                <span asp-validation-for="Photo.DateTaken" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Photo.CategoryId" class="control-label"></label>
+                <select asp-for="Photo.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="Photo.CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
