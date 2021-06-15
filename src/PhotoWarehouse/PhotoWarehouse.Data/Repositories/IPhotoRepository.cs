@@ -12,24 +12,31 @@ namespace PhotoWarehouse.Data.Repositories
     {
         int Commit();
         void Add(Photo photo);
-        Task AddPhotoItemAsync(Stream stream, PhotoItem photoItem, string path);
+        Task AddPhotoItemAsync(Stream stream, string path, PhotoItem photoItem);
     }
 
     public class SQLPhotoRepository : IPhotoRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public void Add(Photo photo)
+        public SQLPhotoRepository(ApplicationDbContext applicationDbContext)
         {
-            _context.Add(photo);
+            _context = applicationDbContext;
         }
 
-        public async Task AddPhotoItemAsync(Stream stream, PhotoItem photoItem, string path)
+        public void Add(Photo photo)
+        {
+            _context.Photos.Add(photo);
+        }
+
+        public async Task AddPhotoItemAsync(Stream stream, string path, PhotoItem photoItem)
         {
             using (FileStream output = File.Create(path))
             {
                 await stream.CopyToAsync(output);
             }
+
+            _context.PhotoItems.Add(photoItem);
         }
 
         public int Commit()
