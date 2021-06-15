@@ -9,8 +9,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using PhotoWarehouse.Data;
+using PhotoWarehouse.Data.Repositories;
 using PhotoWarehouse.Domain.Photos;
+using PhotoWarehouseApp.Services;
 
 namespace PhotoWarehouseApp.Pages.Admin.Photos
 {
@@ -18,12 +21,23 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IConfiguration _configuration;
+        private readonly IPhotoRepository _photoRepository;
 
-        public CreateModel(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public CreateModel(
+            ApplicationDbContext context,
+            IWebHostEnvironment webHostEnvironment,
+            IConfiguration configuration,
+            IPhotoRepository photoRepository)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _configuration = configuration;
+            _photoRepository = photoRepository;
         }
+
+        [TempData]
+        public string ImageError { get; set; }
 
         public IActionResult OnGet()
         {
@@ -45,13 +59,28 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
             Photo.InitialUploadDate = DateTimeOffset.UtcNow;
             if (Request.Form.Files.Count > 0)
             {
-                IFormFile photoItem = Request.Form.Files[0];
-                string filename = ContentDispositionHeaderValue.Parse(photoItem.ContentDisposition).FileName.Trim('"');
-                filename = EnsureCorrectFilename(filename);
-                using (FileStream output = System.IO.File.Create(this.GetPathAndFilename(filename)))
+                IFormFile formPhoto = Request.Form.Files[0];
+
+                string filename = ContentDispositionHeaderValue.Parse(formPhoto.ContentDisposition).FileName;
+                string path = FileService.EnsureCorrectPathAndFileName(_webHostEnvironment, _configuration, filename);
+                string extension = FileService.GetExtension(filename);
+
+                if (!formPhoto.IsImage(extension))
                 {
-                    await photoItem.CopyToAsync(output);
+                    TempData["ImageError"] = "Image file not correct";
+                    return Page();
                 }
+
+                var photoItem = new PhotoItem
+                {
+                    DateUploaded = DateTimeOffset.UtcNow,
+                    Path = path,
+                    Photo = Photo,
+
+                };
+                //Photo.PhotoItems = new List<PhotoItem> { new PhotoItem { } }
+
+                await _photoRepository.AddPhotoItemAsync(formPhoto.OpenReadStream(), new PhotoItem { }, path);
 
                 _context.FileFormats.FirstOrDefault(f => f.Name == "gif");
                 //Photo.PhotoItems.ToList().Add(new PhotoItem() { DateUploaded = DateTimeOffset.UtcNow });
@@ -60,19 +89,6 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
             //await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
-        }
-
-        private string EnsureCorrectFilename(string filename)
-        {
-            if (filename.Contains("\\"))
-                filename = filename.Substring(filename.LastIndexOf("\\") + 1);
-
-            return filename;
-        }
-
-        private string GetPathAndFilename(string filename)
-        {
-            return _webHostEnvironment.WebRootPath + "\\userImages\\" + filename;
         }
     }
 }
