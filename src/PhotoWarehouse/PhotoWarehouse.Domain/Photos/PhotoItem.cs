@@ -13,8 +13,8 @@ namespace PhotoWarehouse.Domain.Photos
 
         public Photo Photo { get; set; }
         public int PhotoId { get; set; }
-        public IEnumerable<Order> OrderPhotos { get; set; }
-        public IEnumerable<ApplicationUser> ApplicationUsers { get; set; }
+        public ICollection<Order> OrderPhotos { get; set; }
+        public ICollection<ApplicationUser> ApplicationUsers { get; set; }
         public PhotoSize Size { get; set; }
         public int PhotoSizeId { get; set; }
         public FileFormat FileFormat { get; set; }
