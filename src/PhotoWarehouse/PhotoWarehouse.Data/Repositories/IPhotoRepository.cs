@@ -15,11 +15,11 @@ namespace PhotoWarehouse.Data.Repositories
         Task AddPhotoItemAsync(Stream stream, string path, PhotoItem photoItem);
     }
 
-    public class SQLPhotoRepository : IPhotoRepository
+    public class SqlPhotoRepository : IPhotoRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public SQLPhotoRepository(ApplicationDbContext applicationDbContext)
+        public SqlPhotoRepository(ApplicationDbContext applicationDbContext)
         {
             _context = applicationDbContext;
         }

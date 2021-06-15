@@ -20,20 +20,23 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IPhotoRepository _photoRepository;
+        private readonly IFileFormatRepository _fileFormatRepository;
 
         public CreateModel(
             ApplicationDbContext context,
-            IWebHostEnvironment webHostEnvironment,
             IConfiguration configuration,
-            IPhotoRepository photoRepository)
+            IWebHostEnvironment webHostEnvironment,
+            IPhotoRepository photoRepository,
+            IFileFormatRepository fileFormatRepository)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
             _photoRepository = photoRepository;
+            _fileFormatRepository = fileFormatRepository;
         }
 
         [TempData]
@@ -62,33 +65,43 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 IFormFile formPhoto = Request.Form.Files[0];
 
                 string filename = ContentDispositionHeaderValue.Parse(formPhoto.ContentDisposition).FileName;
-                string path = FileService.EnsureCorrectPathAndFileName(_webHostEnvironment, _configuration, filename);
-                string extension = FileService.GetExtension(filename);
+                filename = FileService.EnsureCorrectFileName(filename);
+                string extension = FileService.GetFileExtension(filename);
+                
+                filename = $"{Guid.NewGuid()}{extension}";
+                string absolutePath = FileService.GetUserImageAbsolutePath(_webHostEnvironment, _configuration, filename);
 
                 if (!formPhoto.IsImage(extension))
                 {
-                    TempData["ImageError"] = "Image file not correct";
+                    TempData["ImageError"] = "Image file is not correct";
                     return Page();
+                }
+
+                var fileFormat = _fileFormatRepository.GetByName(extension);
+                if (fileFormat is null)
+                {
+                    fileFormat = new FileFormat { Name = extension };
+                    _fileFormatRepository.Add(fileFormat);
+                    _fileFormatRepository.Commit();
                 }
 
                 var photoItem = new PhotoItem
                 {
                     DateUploaded = DateTimeOffset.UtcNow,
-                    Path = path,
+                    Path = filename,
                     Photo = Photo,
-
+                    // size???
+                    FileFormat = fileFormat
                 };
-                //Photo.PhotoItems = new List<PhotoItem> { new PhotoItem { } }
+                Photo.PhotoItems = new List<PhotoItem> { photoItem };
 
-                await _photoRepository.AddPhotoItemAsync(formPhoto.OpenReadStream(), new PhotoItem { }, path);
-
-                _context.FileFormats.FirstOrDefault(f => f.Name == "gif");
-                //Photo.PhotoItems.ToList().Add(new PhotoItem() { DateUploaded = DateTimeOffset.UtcNow });
+                await _photoRepository.AddPhotoItemAsync(formPhoto.OpenReadStream(), absolutePath, photoItem);
             }
-            _context.Photos.Add(Photo);
-            //await _context.SaveChangesAsync();
+            _photoRepository.Add(Photo);
 
-            return RedirectToPage("./Index");
+            _photoRepository.Commit();
+
+            return RedirectToPage("/Index");
         }
     }
 }

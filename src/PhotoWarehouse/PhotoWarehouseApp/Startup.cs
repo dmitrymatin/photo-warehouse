@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PhotoWarehouse.Data;
+using PhotoWarehouse.Data.Repositories;
 using PhotoWarehouse.Domain.Users;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,9 @@ namespace PhotoWarehouseApp
                 options.UseMySQL(connectionStringBuilder.ConnectionString)
                        .EnableSensitiveDataLogging();
             });
+
+            services.AddScoped<IPhotoRepository, SqlPhotoRepository>();
+            services.AddScoped<IFileFormatRepository, SqlFileFormatRepository>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
