@@ -42,6 +42,7 @@ namespace PhotoWarehouseApp
 
             services.AddScoped<IPhotoRepository, SqlPhotoRepository>();
             services.AddScoped<IFileFormatRepository, SqlFileFormatRepository>();
+            services.AddScoped<IPhotoSizeRepository, SqlPhotoSizeRepository>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
