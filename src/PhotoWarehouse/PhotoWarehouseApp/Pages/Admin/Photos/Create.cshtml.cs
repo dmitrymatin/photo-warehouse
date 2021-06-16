@@ -14,6 +14,7 @@ using PhotoWarehouse.Data;
 using PhotoWarehouse.Data.Repositories;
 using PhotoWarehouse.Domain.Photos;
 using PhotoWarehouseApp.Services;
+using SixLabors.ImageSharp;
 
 namespace PhotoWarehouseApp.Pages.Admin.Photos
 {
@@ -24,19 +25,22 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IPhotoRepository _photoRepository;
         private readonly IFileFormatRepository _fileFormatRepository;
+        private readonly IPhotoSizeRepository _photoSizeRepository;
 
         public CreateModel(
             ApplicationDbContext context,
             IConfiguration configuration,
             IWebHostEnvironment webHostEnvironment,
             IPhotoRepository photoRepository,
-            IFileFormatRepository fileFormatRepository)
+            IFileFormatRepository fileFormatRepository,
+            IPhotoSizeRepository photoSizeRepository)
         {
             _context = context;
             _configuration = configuration;
             _webHostEnvironment = webHostEnvironment;
             _photoRepository = photoRepository;
             _fileFormatRepository = fileFormatRepository;
+            _photoSizeRepository = photoSizeRepository;
         }
 
         [TempData]
@@ -67,7 +71,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 string filename = ContentDispositionHeaderValue.Parse(formPhoto.ContentDisposition).FileName;
                 filename = FileService.EnsureCorrectFileName(filename);
                 string extension = FileService.GetFileExtension(filename);
-                
+
                 filename = $"{Guid.NewGuid()}{extension}";
                 string absolutePath = FileService.GetUserImageAbsolutePath(_webHostEnvironment, _configuration, filename);
 
@@ -85,12 +89,22 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                     _fileFormatRepository.Commit();
                 }
 
+                using var image = Image.Load(formPhoto.OpenReadStream());
+
+                var photoSize = _photoSizeRepository.GetByDimensions(image.Width, image.Height);
+                if (photoSize is null)
+                {
+                    photoSize = new PhotoSize { Width = image.Width, Height = image.Height };
+                    _photoSizeRepository.Add(photoSize);
+                    _photoSizeRepository.Commit();
+                }
+
                 var photoItem = new PhotoItem
                 {
                     DateUploaded = DateTimeOffset.UtcNow,
                     Path = filename,
                     Photo = Photo,
-                    // size???
+                    Size = photoSize,
                     FileFormat = fileFormat
                 };
                 Photo.PhotoItems = new List<PhotoItem> { photoItem };
