@@ -38,7 +38,7 @@
                 <td>@Html.DisplayNameFor(model => model.Photo.PhotoItems[0].DateUploaded)</td>
                 <td>@Html.DisplayNameFor(model => model.Photo.PhotoItems[0].FileFormat.Name)</td>
                 <td>@Html.DisplayNameFor(model => model.Photo.PhotoItems[0].Size)</td>
-                <td>@Html.DisplayNameFor(model => model.Photo.PhotoItems[0])</td> <!--for photo iteself-->
+                <td>@Html.DisplayNameFor(model => model.Photo.PhotoItems)</td> <!--for photo iteself-->
             </tr>
         </thead>
         <tbody>
@@ -53,39 +53,6 @@
             </tr>
         </tbody>
     </table>
-
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Photo.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Photo.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Photo.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Photo.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Photo.InitialUploadDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Photo.InitialUploadDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Photo.DateTaken)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Photo.DateTaken)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Photo.Category)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Photo.Category.Id)
-        </dd>
-    </dl>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Photo.Id">Edit</a> |

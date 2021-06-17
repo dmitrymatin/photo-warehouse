@@ -21,7 +21,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
         public Photo Photo { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int photoId)
         {
             Photo = await _context.Photos
                     .Include(p => p.Category)
@@ -29,7 +29,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                         .ThenInclude(pi => pi.FileFormat)
                     .Include(p => p.PhotoItems)
                         .ThenInclude(pi => pi.Size)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == photoId);
 
             if (Photo == null)
             {
