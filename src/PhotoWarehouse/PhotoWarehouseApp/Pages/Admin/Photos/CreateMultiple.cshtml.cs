@@ -62,6 +62,9 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
         [BindProperty]
         public InputModel Input { get; set; } = new InputModel();
 
+        [TempData]
+        public string ImageError { get; set; }
+
         public IActionResult OnGet()
         {
             

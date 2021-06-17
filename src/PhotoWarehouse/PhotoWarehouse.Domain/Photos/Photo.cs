@@ -17,6 +17,8 @@ namespace PhotoWarehouse.Domain.Photos
         public DateTimeOffset DateTaken { get; set; } // TODO: consider it nullable
 
         public PhotoCategory Category { get; set; }
+        
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
         public IList<PhotoItem> PhotoItems { get; set; }
 

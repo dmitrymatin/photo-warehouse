@@ -5,6 +5,7 @@ namespace PhotoWarehouse.Domain.Photos
 {
     public class PhotoCategory
     {
+        [Display(Name = "Category")]
         public int Id { get; set; }
 
         [Display(Name = "Category")]
