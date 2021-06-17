@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PhotoWarehouse.Data;
 using PhotoWarehouse.Domain.Photos;
 using PhotoWarehouseApp.Services;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PhotoWarehouseApp.Pages.Admin.Photos
 {
@@ -26,7 +23,6 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
         }
 
         public Photo Photo { get; set; }
-        IEnumerable<string> PhotoItemPaths { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int photoId)
         {
