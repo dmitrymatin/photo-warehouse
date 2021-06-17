@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{photoId}"
 @model PhotoWarehouseApp.Pages.Admin.Photos.EditModel
 
 @{
@@ -8,38 +8,61 @@
 
 <h1>Edit</h1>
 
+@if (Model.Input.ImageError is not null)
+{
+    <div>@Model.Input.ImageError</div>
+}
+
 <h4>Photo</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Photo.Id" />
+            <input type="hidden" asp-for="Input.Photo.Id" />
             <div class="form-group">
-                <label asp-for="Photo.Name" class="control-label"></label>
-                <input asp-for="Photo.Name" class="form-control" />
-                <span asp-validation-for="Photo.Name" class="text-danger"></span>
+                <label asp-for="Input.Photo.Name" class="control-label"></label>
+                <input asp-for="Input.Photo.Name" class="form-control" />
+                <span asp-validation-for="Input.Photo.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Photo.Description" class="control-label"></label>
-                <input asp-for="Photo.Description" class="form-control" />
-                <span asp-validation-for="Photo.Description" class="text-danger"></span>
+                <label asp-for="Input.Photo.Description" class="control-label"></label>
+                <input asp-for="Input.Photo.Description" class="form-control" />
+                <span asp-validation-for="Input.Photo.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Photo.InitialUploadDate" class="control-label"></label>
-                <input asp-for="Photo.InitialUploadDate" class="form-control" />
-                <span asp-validation-for="Photo.InitialUploadDate" class="text-danger"></span>
+                <label asp-for="Input.Photo.InitialUploadDate" class="control-label"></label>
+                <input asp-for="Input.Photo.InitialUploadDate" class="form-control" />
+                <span asp-validation-for="Input.Photo.InitialUploadDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Photo.DateTaken" class="control-label"></label>
-                <input asp-for="Photo.DateTaken" class="form-control" />
-                <span asp-validation-for="Photo.DateTaken" class="text-danger"></span>
+                <label asp-for="Input.Photo.DateTaken" class="control-label"></label>
+                <input asp-for="Input.Photo.DateTaken" class="form-control" />
+                <span asp-validation-for="Input.Photo.DateTaken" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Photo.CategoryId" class="control-label"></label>
-                <select asp-for="Photo.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                <span asp-validation-for="Photo.CategoryId" class="text-danger"></span>
+                <label asp-for="Input.Photo.CategoryId" class="control-label"></label>
+                <select asp-for="Input.Photo.CategoryId" class="form-control" asp-items="Model.Input.Categories"></select>
+                <span asp-validation-for="Input.Photo.CategoryId" class="text-danger"></span>
             </div>
+
+            @foreach (var photoItem in Model.Input.Photo.PhotoItems)
+            {
+                <div class="row" id="row-@photoItem.Id">
+                    <input type="hidden" asp-for="@photoItem.Id" />
+                    <div>@photoItem.DateUploaded</div>
+                    <div>@photoItem.FileFormat.Name</div>
+                    <div>@photoItem.Size</div>
+                    <div><img src="@photoItem.RelativePath" width="256" alt="@photoItem.Photo.Name @photoItem.Size" /></div> <!--for photo iteself-->
+                    <button class="photoItemDeleteButton" id="@photoItem.Id">Delete</button>
+                </div>
+            }
+
+            <div class="form-group">
+                <label>Upload photos</label>
+                <input type="file" name="photoItem" multiple value="" class="form-control" />
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -48,9 +71,23 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">Back to all photos</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        <script>
+            const existingPhotoItems = document.querySelectorAll('.photoItemDeleteButton');
+            existingPhotoItems.forEach((pi) => {
+                pi.addEventListener('click', (event) => {
+                    const clickedButton = event.target;
+                    const buttonId = clickedButton.getAttribute('id');
+                    const sectionToDelete = document.querySelector(`#row-${buttonId}`);
+                    sectionToDelete.remove();
+                });
+            });
+        </script>
+
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

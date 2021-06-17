@@ -6,38 +6,61 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PhotoWarehouse.Data;
 using PhotoWarehouse.Domain.Photos;
+using PhotoWarehouseApp.Services;
 
 namespace PhotoWarehouseApp.Pages.Admin.Photos
 {
     public class EditModel : PageModel
     {
-        private readonly PhotoWarehouse.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public EditModel(PhotoWarehouse.Data.ApplicationDbContext context)
+        public EditModel(ApplicationDbContext context,
+            IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
+        }
+
+        public class InputModel
+        {
+            public Photo Photo { get; set; }
+
+            public IEnumerable<SelectListItem> Categories { get; set; }
+
+            [TempData]
+            public string ImageError { get; set; }
         }
 
         [BindProperty]
-        public Photo Photo { get; set; }
+        public InputModel Input { get; set; } = new InputModel();
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int photoId)
         {
-            if (id == null)
+            Input.Photo = await _context.Photos
+                 .Include(p => p.Category)
+                 .Include(p => p.PhotoItems)
+                     .ThenInclude(pi => pi.FileFormat)
+                 .Include(p => p.PhotoItems)
+                     .ThenInclude(pi => pi.Size)
+                 .FirstOrDefaultAsync(p => p.Id == photoId);
+
+            Input.Categories = new SelectList(_context.PhotoCategories, "Id", "Name");
+
+            if (Input.Photo == null)
             {
                 return NotFound();
             }
 
-            Photo = await _context.Photos
-                .Include(p => p.Category).FirstOrDefaultAsync(m => m.Id == id);
-
-            if (Photo == null)
+            foreach (var photoItem in Input.Photo.PhotoItems ?? Enumerable.Empty<PhotoItem>())
             {
-                return NotFound();
+                photoItem.RelativePath = FileService
+                    .GetUserImageContentPath(_configuration, photoItem.Path);
             }
-           ViewData["CategoryId"] = new SelectList(_context.PhotoCategories, "Id", "Id");
+
             return Page();
         }
 
@@ -49,8 +72,13 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
             {
                 return Page();
             }
+            
+            _context.Attach(Input.Photo).State = EntityState.Modified;
 
-            _context.Attach(Photo).State = EntityState.Modified;
+
+            _context.Attach(Input.Photo.PhotoItems).State = EntityState.Deleted;
+
+
 
             try
             {
@@ -58,7 +86,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PhotoExists(Photo.Id))
+                if (!PhotoExists(Input.Photo.Id))
                 {
                     return NotFound();
                 }
