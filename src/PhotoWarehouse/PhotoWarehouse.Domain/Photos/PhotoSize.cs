@@ -8,7 +8,7 @@
 
         public override string ToString()
         {
-            return $"{Width}x{Height}";
+            return $"{Width:F0}x{Height:F0}";
         }
     }
 }

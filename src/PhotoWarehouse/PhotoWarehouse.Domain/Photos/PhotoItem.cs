@@ -2,6 +2,7 @@
 using PhotoWarehouse.Domain.Users;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhotoWarehouse.Domain.Photos
 {
@@ -9,7 +10,10 @@ namespace PhotoWarehouse.Domain.Photos
     {
         public int Id { get; set; }
         public DateTimeOffset DateUploaded { get; set; }
-        public string Path { get; set; }
+        public string Path { get; set; } // rename to FileName when recreating db since MySQL provider throws NotImplemented on migration that renames the column
+
+        [NotMapped]
+        public string RelativePath { get; set; }
 
         public Photo Photo { get; set; }
         public int PhotoId { get; set; }
