@@ -14,7 +14,7 @@ namespace PhotoWarehouse.Domain.Photos
         public DateTimeOffset InitialUploadDate { get; set; }
 
         [Display(Name = "Date Taken")]
-        public DateTimeOffset DateTaken { get; set; }
+        public DateTimeOffset DateTaken { get; set; } // TODO: consider it nullable
 
         public PhotoCategory Category { get; set; }
         public int CategoryId { get; set; }
