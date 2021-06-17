@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{photoId:int}"
 @model PhotoWarehouseApp.Pages.Admin.Photos.DetailsModel
 
 @{
@@ -9,8 +9,51 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Photo</h4>
+    <h4>Photo: @Html.DisplayFor(model => model.Photo.Name)</h4>
+    <div>@Html.DisplayFor(model => model.Photo.Description)</div>
     <hr />
+
+    <table>
+        <thead>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Photo.Name)</td>
+                <td>@Html.DisplayNameFor(model => model.Photo.DateTaken)</td>
+                <td>@Html.DisplayNameFor(model => model.Photo.InitialUploadDate)</td>
+                <td>@Html.DisplayNameFor(model => model.Photo.Category.Name)</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.Photo.Name)</td>
+                <td>@Html.DisplayFor(model => model.Photo.DateTaken)</td>
+                <td>@Html.DisplayFor(model => model.Photo.InitialUploadDate)</td>
+                <td>@Html.DisplayFor(model => model.Photo.Category.Name)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Photo.PhotoItems[0].DateUploaded)</td>
+                <td>@Html.DisplayNameFor(model => model.Photo.PhotoItems[0].FileFormat.Name)</td>
+                <td>@Html.DisplayNameFor(model => model.Photo.PhotoItems[0].Size)</td>
+                <td>@Html.DisplayNameFor(model => model.Photo.PhotoItems[0])</td> <!--for photo iteself-->
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var photoItem in Model.Photo.PhotoItems)
+                {
+                    <td>@photoItem.DateUploaded</td>
+                    <td>@photoItem.FileFormat.Name</td>
+                    <td>@photoItem.Size</td>
+                    <td></td> <!--for photo iteself-->
+                }
+            </tr>
+        </tbody>
+    </table>
+
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Photo.Name)

@@ -12,24 +12,24 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 {
     public class DetailsModel : PageModel
     {
-        private readonly PhotoWarehouse.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DetailsModel(PhotoWarehouse.Data.ApplicationDbContext context)
+        public DetailsModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
         public Photo Photo { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Photo = await _context.Photos
-                .Include(p => p.Category).FirstOrDefaultAsync(m => m.Id == id);
+                    .Include(p => p.Category)
+                    .Include(p => p.PhotoItems)
+                        .ThenInclude(pi => pi.FileFormat)
+                    .Include(p => p.PhotoItems)
+                        .ThenInclude(pi => pi.Size)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Photo == null)
             {
