@@ -27,6 +27,16 @@ namespace PhotoWarehouseApp.Services
             return $@"{webHostEnvironment.WebRootPath}\{uploadsFolder}\{filename}";
         }
 
+        public static string GetUserImageContentPath(
+            IConfiguration configuration,
+            string filename
+            )
+        {
+            string uploadsFolder = configuration["UploadsFolder"];
+
+            return $@"\{uploadsFolder}\{filename}";
+        }
+
         public static string GetFileExtension(string path)
         {
             return System.IO.Path.GetExtension(path);
