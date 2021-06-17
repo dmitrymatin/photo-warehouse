@@ -2,19 +2,37 @@
 @model PhotoWarehouseApp.Pages.Admin.Photos.CreateMultipleModel
 
 @{
-    ViewData["Title"] = "CreateMultiple";
+    ViewData["Title"] = "Add Multiple Photos";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>CreateMultiple</h1>
+<h1>Add Multiple Photos</h1>
 
 <h4>Photo</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
+                <label asp-for="Input.CommonCategoryId" class="control-label"></label>
+                <select asp-for="Input.CommonCategoryId" class="form-control" asp-items="Model.Input.Categories"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.CommonDateTaken" class="control-label"></label>
+                <input type="datetime-local" asp-for="Input.CommonDateTaken" class="form-control" />
+            </div>
+
+
+            <div class="form-group">
+                <label>Upload a photo</label>
+                <input type="file" name="photoItem" value="" class="form-control" />
+            </div>
+
+
+            @*<div class="form-group">
                 <label asp-for="Photo.Name" class="control-label"></label>
                 <input asp-for="Photo.Name" class="form-control" />
                 <span asp-validation-for="Photo.Name" class="text-danger"></span>
@@ -36,17 +54,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="Photo.CategoryId" class="control-label"></label>
-                <select asp-for="Photo.CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
-            </div>
+                <select asp-for="Photo.CategoryId" class="form-control" asp-items="ViewBag.Category"></select>
+            </div>*@
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Add" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index">Back to main page</a>
 </div>
 
 @section Scripts {
