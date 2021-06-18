@@ -13,6 +13,11 @@
     <div>@Model.ImageError</div>
 }
 
+@if (Model.NoFilesAddedError is not null)
+{
+    <div>@Model.NoFilesAddedError</div>
+}
+
 <h4>Photo</h4>
 <hr />
 <div class="row">

@@ -65,9 +65,12 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
         [TempData]
         public string ImageError { get; set; }
 
+        [TempData]
+        public string NoFilesAddedError { get; set; }
+
         public IActionResult OnGet()
         {
-            
+
             Input.Categories = new SelectList(_context.PhotoCategories, "Id", "Name");
             return Page();
         }
@@ -83,17 +86,23 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 return Page();
             }
 
+            if (Request.Form.Files.Count == 0)
+            {
+                TempData["NoFilesAddedError"] = "On this page you are required to provide at least one photo.";
+                return RedirectToPage();
+            }
+
             foreach (var formFile in Request.Form.Files)
             {
                 if (Request.Form.Files.Count > 0)
                 {
                     // test
                 }
-                string filename = ContentDispositionHeaderValue.Parse(formFile.ContentDisposition).FileName;
-                filename = FileService.EnsureCorrectFileName(filename);
-                string extension = FileService.GetFileExtension(filename);
+                string formFileName = ContentDispositionHeaderValue.Parse(formFile.ContentDisposition).FileName;
+                formFileName = FileService.EnsureCorrectFileName(formFileName);
+                string extension = FileService.GetFileExtension(formFileName);
 
-                filename = $"{Guid.NewGuid()}{extension}";
+                string filename = $"{Guid.NewGuid()}{extension}";
                 string absolutePath = FileService.GetUserImageAbsolutePath(_webHostEnvironment, _configuration, filename);
 
                 if (!formFile.IsImage(extension))
@@ -142,9 +151,10 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
                 _photoRepository.Add(photo);
 
-                _photoRepository.Commit();
 
             }
+            _photoRepository.Commit();
+
             return RedirectToPage("/Index");
 
         }
