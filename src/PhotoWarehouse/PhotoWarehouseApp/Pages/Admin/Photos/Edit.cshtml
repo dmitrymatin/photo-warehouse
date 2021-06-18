@@ -53,7 +53,8 @@
                     <div>@Model.Input.Photo.PhotoItems[i].DateUploaded</div>
                     <div>@Model.Input.Photo.PhotoItems[i].FileFormat.Name</div>
                     <div>@Model.Input.Photo.PhotoItems[i].Size</div>
-                    <div><img src="@Model.Input.Photo.PhotoItems[i].RelativePath" width="256" alt="@Model.Input.Photo.PhotoItems[i].Photo.Name @Model.Input.Photo.PhotoItems[i].Size" /></div> <!--for photo iteself-->
+                    <div><img src="@Model.Input.Photo.PhotoItems[i].RelativePath" width="256" 
+                              alt="@Model.Input.Photo.PhotoItems[i].Photo.Name @Model.Input.Photo.PhotoItems[i].Size" /></div> <!--for photo iteself-->
                     <button class="photoItemDeleteButton" id="@Model.Input.Photo.PhotoItems[i].Id">Delete</button>
                 </div>
             }
