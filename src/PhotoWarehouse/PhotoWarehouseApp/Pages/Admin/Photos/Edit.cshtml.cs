@@ -72,9 +72,17 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
             {
                 return Page();
             }
-            
-            _context.Attach(Input.Photo).State = EntityState.Modified;
 
+            if (await TryUpdateModelAsync<Photo>(
+                Input.Photo,
+                "Photo",
+                i => i.PhotoItems, i => i.Name
+                ))
+            {
+                _context.Attach(Input.Photo).State = EntityState.Modified;
+
+            }
+            
 
             _context.Attach(Input.Photo.PhotoItems).State = EntityState.Deleted;
 

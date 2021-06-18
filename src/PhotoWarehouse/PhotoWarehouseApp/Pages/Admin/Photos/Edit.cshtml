@@ -46,15 +46,15 @@
                 <span asp-validation-for="Input.Photo.CategoryId" class="text-danger"></span>
             </div>
 
-            @foreach (var photoItem in Model.Input.Photo.PhotoItems)
+            @for (int i = 0; i < Model.Input.Photo.PhotoItems.Count; i++)
             {
-                <div class="row" id="row-@photoItem.Id">
-                    <input type="hidden" asp-for="@photoItem.Id" />
-                    <div>@photoItem.DateUploaded</div>
-                    <div>@photoItem.FileFormat.Name</div>
-                    <div>@photoItem.Size</div>
-                    <div><img src="@photoItem.RelativePath" width="256" alt="@photoItem.Photo.Name @photoItem.Size" /></div> <!--for photo iteself-->
-                    <button class="photoItemDeleteButton" id="@photoItem.Id">Delete</button>
+                <div class="row" id="row-@Model.Input.Photo.PhotoItems[i].Id">
+                    <input type="hidden" asp-for="Input.Photo.PhotoItems[i].Id" />
+                    <div>@Model.Input.Photo.PhotoItems[i].DateUploaded</div>
+                    <div>@Model.Input.Photo.PhotoItems[i].FileFormat.Name</div>
+                    <div>@Model.Input.Photo.PhotoItems[i].Size</div>
+                    <div><img src="@Model.Input.Photo.PhotoItems[i].RelativePath" width="256" alt="@Model.Input.Photo.PhotoItems[i].Photo.Name @Model.Input.Photo.PhotoItems[i].Size" /></div> <!--for photo iteself-->
+                    <button class="photoItemDeleteButton" id="@Model.Input.Photo.PhotoItems[i].Id">Delete</button>
                 </div>
             }
 
