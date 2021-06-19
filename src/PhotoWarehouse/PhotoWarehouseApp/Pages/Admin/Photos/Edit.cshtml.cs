@@ -46,10 +46,20 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
         {
             public Photo Photo { get; set; }
 
+            public IList<PhotoItemData> PhotoItemData { get; set; }
+
             public IEnumerable<SelectListItem> Categories { get; set; }
 
             [TempData]
             public string ImageError { get; set; }
+        }
+
+        public enum PhotoItemStatus { Unmodified = 0, Deleted = 1 }
+
+        public class PhotoItemData
+        {
+            public PhotoItem PhotoItem { get; set; }
+            public PhotoItemStatus PhotoItemStatus { get; set; }
         }
 
         [BindProperty]
@@ -73,10 +83,20 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 return NotFound();
             }
 
-            foreach (var photoItem in Input.Photo.PhotoItems ?? Enumerable.Empty<PhotoItem>())
+            var photoItems = Input.Photo.PhotoItems ?? Enumerable.Empty<PhotoItem>();
+
+            Input.PhotoItemData = new List<PhotoItemData>(photoItems.Count());
+
+            foreach (var photoItem in photoItems)
             {
                 photoItem.RelativePath = FileService
                     .GetUserImageContentPath(_configuration, photoItem.Path);
+
+                Input.PhotoItemData.Add(new PhotoItemData
+                {
+                    PhotoItem = photoItem,
+                    PhotoItemStatus = PhotoItemStatus.Unmodified
+                });
             }
 
             return Page();
@@ -93,22 +113,35 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
             var photoToUpdate = await _context.Photos
                 .Include(p => p.PhotoItems)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == Input.Photo.Id);
+
+            _photoRepository.UpdatePhoto(Input.Photo);
+
+            //photoToUpdate.Name = Input.Photo.Name;
+            //photoToUpdate.Description = Input.Photo.Description;
+            //photoToUpdate.InitialUploadDate = Input.Photo.InitialUploadDate;
+            //photoToUpdate.DateTaken = Input.Photo.DateTaken;
+            //photoToUpdate.CategoryId = Input.Photo.CategoryId;
+
             if (photoToUpdate is null)
             {
                 TempData["ImageError"] = "An error occured while saving changes: photo entry not found";
                 return RedirectToPage();
             }
 
-            if (Input.Photo.PhotoItems is null)
+            if (Input.PhotoItemData is null)
             {
                 photoToUpdate.PhotoItems = new List<PhotoItem>();
             }
             else
             {
-                foreach (var oldPhotoItem in photoToUpdate.PhotoItems/* ?? Enumerable.Empty<PhotoItem>()*/)
+                foreach (var oldPhotoItem in photoToUpdate.PhotoItems.ToList()/* ?? Enumerable.Empty<PhotoItem>()*/)
                 {
-                    if (!Input.Photo.PhotoItems.Any(pi => pi.Id == oldPhotoItem.Id))
+                    var matchingPhotoItemData = Input.PhotoItemData
+                        .First(photoItemData => photoItemData.PhotoItem.Id == oldPhotoItem.Id);
+
+                    if (matchingPhotoItemData.PhotoItemStatus == PhotoItemStatus.Deleted)
                     {
                         photoToUpdate.PhotoItems.Remove(oldPhotoItem);
                     }

@@ -47,16 +47,17 @@
                 <span asp-validation-for="Input.Photo.CategoryId" class="text-danger"></span>
             </div>
 
-            @for (int i = 0; i < Model.Input.Photo.PhotoItems.Count; i++)
+            @for (int i = 0; i < Model.Input.PhotoItemData.Count; i++)
             {
-                <div class="row" id="row-@Model.Input.Photo.PhotoItems[i].Id">
-                    <input type="hidden" asp-for="Input.Photo.PhotoItems[i].Id" />
-                    <div>@Model.Input.Photo.PhotoItems[i].DateUploaded</div>
-                    <div>@Model.Input.Photo.PhotoItems[i].FileFormat.Name</div>
-                    <div>@Model.Input.Photo.PhotoItems[i].Size</div>
-                    <div><img src="@Model.Input.Photo.PhotoItems[i].RelativePath" width="256" 
-                              alt="@Model.Input.Photo.PhotoItems[i].Photo.Name @Model.Input.Photo.PhotoItems[i].Size" /></div> <!--for photo iteself-->
-                    <button class="photoItemDeleteButton" id="@Model.Input.Photo.PhotoItems[i].Id">Delete</button>
+                <div class="row" id="row-@Model.Input.PhotoItemData[i].PhotoItem.Id">
+                    <input type="hidden" asp-for="Input.PhotoItemData[i].PhotoItem.Id" />
+                    <input class="itemStatus" type="hidden" asp-for="Input.PhotoItemData[i].PhotoItemStatus"/>
+                    <div>@Model.Input.PhotoItemData[i].PhotoItem.DateUploaded</div>
+                    <div>@Model.Input.PhotoItemData[i].PhotoItem.FileFormat.Name</div>
+                    <div>@Model.Input.PhotoItemData[i].PhotoItem.Size</div>
+                    <div><img src="@Model.Input.PhotoItemData[i].PhotoItem.RelativePath" width="256"
+                              alt="@Model.Input.PhotoItemData[i].PhotoItem.Photo.Name @Model.Input.PhotoItemData[i].PhotoItem.Size" /></div> <!--for photo iteself-->
+                    <button type="button" class="photoItemDeleteButton">Delete</button>
                 </div>
             }
 
@@ -78,18 +79,8 @@
 
 @section Scripts {
     @{
-        <script>
-            const existingPhotoItems = document.querySelectorAll('.photoItemDeleteButton');
-            existingPhotoItems.forEach((pi) => {
-                pi.addEventListener('click', (event) => {
-                    const clickedButton = event.target;
-                    const buttonId = clickedButton.getAttribute('id');
-                    const sectionToDelete = document.querySelector(`#row-${buttonId}`);
-                    sectionToDelete.remove();
-                });
-            });
-        </script>
 
+        await Html.RenderPartialAsync("_PhotoItemScriptsPartial");
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
