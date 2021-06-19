@@ -100,11 +100,18 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 return RedirectToPage();
             }
 
-            foreach (var oldPhotoItem in photoToUpdate.PhotoItems ?? Enumerable.Empty<PhotoItem>())
+            if (Input.Photo.PhotoItems is null)
             {
-                if (!Input.Photo.PhotoItems.Any(pi => pi.Id == oldPhotoItem.Id))
+                photoToUpdate.PhotoItems = new List<PhotoItem>();
+            }
+            else
+            {
+                foreach (var oldPhotoItem in photoToUpdate.PhotoItems/* ?? Enumerable.Empty<PhotoItem>()*/)
                 {
-                    photoToUpdate.PhotoItems.Remove(oldPhotoItem);
+                    if (!Input.Photo.PhotoItems.Any(pi => pi.Id == oldPhotoItem.Id))
+                    {
+                        photoToUpdate.PhotoItems.Remove(oldPhotoItem);
+                    }
                 }
             }
 
@@ -117,7 +124,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 string extension = FileService.GetFileExtension(formFileName);
 
                 string filename = initialPhotoName is not null
-                    ? $"{initialPhotoName}-{photoItemsCount++}{extension}"
+                    ? $"{initialPhotoName}-{++photoItemsCount}{extension}"
                     : $"{Guid.NewGuid()}{extension}";
 
                 string absolutePath = FileService.GetUserImageAbsolutePath(_webHostEnvironment, _configuration, filename);
@@ -162,7 +169,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
             _photoRepository.Commit();
 
-            return RedirectToPage(new { photoId = photoToUpdate.Id});
+            return RedirectToPage(new { photoId = photoToUpdate.Id });
         }
     }
 }
