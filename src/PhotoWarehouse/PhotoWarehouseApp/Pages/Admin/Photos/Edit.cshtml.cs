@@ -67,14 +67,10 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
         public async Task<IActionResult> OnGetAsync(int photoId)
         {
-            Input.Photo = await _context.Photos
-                 .Include(p => p.Category)
-                 .Include(p => p.PhotoItems)
-                     .ThenInclude(pi => pi.FileFormat)
-                 .Include(p => p.PhotoItems)
-                     .ThenInclude(pi => pi.Size)
-                 .AsNoTracking()
-                 .FirstOrDefaultAsync(p => p.Id == photoId);
+            Input.Photo = await _photoRepository.GetPhotoAsync(photoId, 
+                includeCategory: true, 
+                includeFileFormat: true, 
+                includeSize: true); 
 
             Input.Categories = new SelectList(_context.PhotoCategories, "Id", "Name");
 
@@ -111,45 +107,48 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 return Page();
             }
 
-            var photoToUpdate = await _context.Photos
-                .Include(p => p.PhotoItems)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(p => p.Id == Input.Photo.Id);
+            //var photoToUpdate = await _context.Photos
+            //    .Include(p => p.PhotoItems)
+            //    .AsNoTracking()
+            //    .FirstOrDefaultAsync(p => p.Id == Input.Photo.Id);
 
-            _photoRepository.UpdatePhoto(Input.Photo);
-
-            //photoToUpdate.Name = Input.Photo.Name;
-            //photoToUpdate.Description = Input.Photo.Description;
-            //photoToUpdate.InitialUploadDate = Input.Photo.InitialUploadDate;
-            //photoToUpdate.DateTaken = Input.Photo.DateTaken;
-            //photoToUpdate.CategoryId = Input.Photo.CategoryId;
-
-            if (photoToUpdate is null)
+            bool photoExists = _photoRepository.PhotoExists(Input.Photo.Id);
+            if (!photoExists)
             {
                 TempData["ImageError"] = "An error occured while saving changes: photo entry not found";
                 return RedirectToPage();
             }
 
+            _photoRepository.UpdatePhoto(Input.Photo);
+
+            var photoItems = await _photoRepository.GetPhotoItemsAsync(Input.Photo.Id);
+            Input.Photo.PhotoItems = photoItems;
+
+
+            //_photoRepository.UpdatePhoto(Input.Photo);
+
             if (Input.PhotoItemData is null)
             {
-                photoToUpdate.PhotoItems = new List<PhotoItem>();
+                _photoRepository.DeletePhotoItems(photoItems.ToArray());
+                //photoItems.Clear();
             }
             else
             {
-                foreach (var oldPhotoItem in photoToUpdate.PhotoItems.ToList()/* ?? Enumerable.Empty<PhotoItem>()*/)
+                foreach (var oldPhotoItem in photoItems.ToList() /* ?? Enumerable.Empty<PhotoItem>()*/)
                 {
                     var matchingPhotoItemData = Input.PhotoItemData
                         .First(photoItemData => photoItemData.PhotoItem.Id == oldPhotoItem.Id);
 
                     if (matchingPhotoItemData.PhotoItemStatus == PhotoItemStatus.Deleted)
                     {
-                        photoToUpdate.PhotoItems.Remove(oldPhotoItem);
+                        _photoRepository.DeletePhotoItems(oldPhotoItem);
+                        //photoItems.Remove(oldPhotoItem);
                     }
                 }
             }
 
-            var initialPhotoName = photoToUpdate.PhotoItems.FirstOrDefault();
-            var photoItemsCount = photoToUpdate.PhotoItems.Count;
+            var initialPhotoName = photoItems.FirstOrDefault();
+            var photoItemsCount = photoItems.Count;
             foreach (var formFile in Request.Form.Files)
             {
                 string formFileName = ContentDispositionHeaderValue.Parse(formFile.ContentDisposition).FileName;
@@ -190,19 +189,20 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 {
                     DateUploaded = DateTimeOffset.UtcNow,
                     Path = filename,
-                    Photo = photoToUpdate,
+                    Photo = Input.Photo,
                     Size = photoSize,
                     FileFormat = fileFormat
                 };
 
-                photoToUpdate.PhotoItems.Add(photoItem);
+                photoItems.Add(photoItem);
 
                 await _photoRepository.AddPhotoItemAsync(formFile.OpenReadStream(), absolutePath, photoItem);
             }
-
+            //Input.Photo.PhotoItems = photoItems;
+            //_photoRepository.UpdatePhoto(Input.Photo);
             _photoRepository.Commit();
 
-            return RedirectToPage(new { photoId = photoToUpdate.Id });
+            return RedirectToPage(new { photoId = Input.Photo.Id });
         }
     }
 }
