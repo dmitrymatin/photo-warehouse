@@ -149,7 +149,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
                 await _photoRepository.AddPhotoItemAsync(formFile.OpenReadStream(), absolutePath, photoItem);
 
-                _photoRepository.Add(photo);
+                _photoRepository.AddPhoto(photo);
 
 
             }

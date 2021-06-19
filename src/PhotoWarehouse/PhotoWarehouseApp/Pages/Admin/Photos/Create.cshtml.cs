@@ -111,7 +111,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
                 await _photoRepository.AddPhotoItemAsync(formPhoto.OpenReadStream(), absolutePath, photoItem);
             }
-            _photoRepository.Add(Photo);
+            _photoRepository.AddPhoto(Photo);
 
             _photoRepository.Commit();
 
