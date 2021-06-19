@@ -1,4 +1,5 @@
-﻿using PhotoWarehouse.Domain.Photos;
+﻿using Microsoft.EntityFrameworkCore;
+using PhotoWarehouse.Domain.Photos;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,8 +12,9 @@ namespace PhotoWarehouse.Data.Repositories
     public interface IPhotoRepository
     {
         int Commit();
-        void Add(Photo photo);
+        void AddPhoto(Photo photo);
         Task AddPhotoItemAsync(Stream stream, string path, PhotoItem photoItem);
+        void UpdatePhoto(Photo photo);
     }
 
     public class SqlPhotoRepository : IPhotoRepository
@@ -24,7 +26,7 @@ namespace PhotoWarehouse.Data.Repositories
             _context = applicationDbContext;
         }
 
-        public void Add(Photo photo)
+        public void AddPhoto(Photo photo)
         {
             _context.Photos.Add(photo);
         }
@@ -42,6 +44,11 @@ namespace PhotoWarehouse.Data.Repositories
         public int Commit()
         {
             return _context.SaveChanges();
+        }
+
+        public void UpdatePhoto(Photo photo)
+        {
+            _context.Entry(photo).State = EntityState.Modified;
         }
     }
 }
