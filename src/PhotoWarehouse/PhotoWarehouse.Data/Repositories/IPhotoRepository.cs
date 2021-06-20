@@ -20,6 +20,16 @@ namespace PhotoWarehouse.Data.Repositories
             bool includeCategory = false,
             bool includeFileFormat = false,
             bool includeSize = false);
+
+
+        /// <summary>
+        /// Search method. By default this method will query for all photos that have a set name and have at least one associated photo item.
+        /// </summary>
+        /// <param name="searchTerm">Search term to be matched.</param>
+        /// <param name="maxCount">Specifies the number of elements to be searched.</param>
+        /// <param name="requireSetPhotoName">Enables searching only photos that have non empty name.</param>
+        /// <param name="requirePhotoItems">Enables searching only photos that have at least one associated photo item.</param>
+        IEnumerable<Photo> GetPhotosAsync(string searchTerm, int maxCount = 300, bool requireSetPhotoName = true, bool requirePhotoItems = true);
         Task<IList<PhotoItem>> GetPhotoItemsAsync(int photoId);
         bool PhotoExists(int photoId);
         void UpdatePhoto(Photo photo);
@@ -82,6 +92,31 @@ namespace PhotoWarehouse.Data.Repositories
             return await _context.PhotoItems
                 .AsNoTracking()
                 .Where(p => p.PhotoId == photoId).ToListAsync();
+        }
+
+        public IEnumerable<Photo> GetPhotosAsync(string searchTerm, int maxCount = 300, bool requireSetPhotoName = true, bool requirePhotoItems = true)
+        {
+            IQueryable<Photo> queryBuilder = _context.Photos
+                .Include(p => p.Category)
+                .Include(p => p.PhotoItems)
+                    .ThenInclude(pi => pi.FileFormat)
+                .Include(p => p.PhotoItems)
+                    .ThenInclude(pi => pi.Size)
+                .AsNoTracking();
+
+            IQueryable<Photo> filteredQuery = queryBuilder;
+
+            if (requireSetPhotoName)
+                filteredQuery = filteredQuery.Where(p => !string.IsNullOrEmpty(p.Name) && p.Name.Contains(searchTerm));
+            else
+                filteredQuery = filteredQuery.Where(p => string.IsNullOrEmpty(p.Name) || p.Name.Contains(searchTerm));
+
+            if (requirePhotoItems)
+                filteredQuery = filteredQuery.Where(p => p.PhotoItems.Any());
+
+            return filteredQuery
+                .OrderByDescending(p => p.InitialUploadDate) // TODO: consider indexing by InitialUploadDate field
+                .Take(maxCount);
         }
 
         public bool PhotoExists(int photoId)

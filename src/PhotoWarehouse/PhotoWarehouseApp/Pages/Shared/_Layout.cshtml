@@ -27,8 +27,10 @@
         </header>
         <main class="column">
             <section class="row searchBar">
-                <input type="search" name="searchBar" value="" placeholder="Поиск" />
-                <img src="~/images/search-svgrepo-com.svg" alt="search icon" class="icon" width="36" />
+                <form asp-page="/Photos/Search" method="get">
+                    <input type="search" name="searchTerm" value="" placeholder="Поиск" />
+                    <button><img src="~/images/search-svgrepo-com.svg" alt="search icon" class="icon" width="36" /></button>
+                </form>
             </section>
             <h3>main</h3>
             @RenderBody()

@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoWarehouseApp", "PhotoWarehouseApp\PhotoWarehouseApp.csproj", "{6CC664EC-E818-45CC-8EEF-4F6253C526ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoWarehouse.Domain", "PhotoWarehouse.Domain\PhotoWarehouse.Domain.csproj", "{56534D75-0A50-4E49-A849-43163993D972}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoWarehouse.Domain", "PhotoWarehouse.Domain\PhotoWarehouse.Domain.csproj", "{56534D75-0A50-4E49-A849-43163993D972}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoWarehouse.Data", "PhotoWarehouse.Data\PhotoWarehouse.Data.csproj", "{A20410AB-139D-48F1-8ADC-ECDE3A782550}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoWarehouse.Data", "PhotoWarehouse.Data\PhotoWarehouse.Data.csproj", "{A20410AB-139D-48F1-8ADC-ECDE3A782550}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

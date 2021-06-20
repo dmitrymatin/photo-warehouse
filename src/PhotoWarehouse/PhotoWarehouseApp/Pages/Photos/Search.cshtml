@@ -1,0 +1,15 @@
+﻿@page
+@model PhotoWarehouseApp.Pages.Photos.SearchModel
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search results</h1>
+
+@foreach (var item in Model.FoundPhotos)
+{
+    <div>
+        @item.Name
+    </div>
+}
+
