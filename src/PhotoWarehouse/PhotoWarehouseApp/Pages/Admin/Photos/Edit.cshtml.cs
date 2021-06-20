@@ -49,9 +49,6 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
             public IList<PhotoItemData> PhotoItemData { get; set; }
 
             public IEnumerable<SelectListItem> Categories { get; set; }
-
-            [TempData]
-            public string ImageError { get; set; }
         }
 
         public enum PhotoItemStatus { Unmodified = 0, Deleted = 1 }
@@ -64,6 +61,9 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
         [BindProperty]
         public InputModel Input { get; set; } = new InputModel();
+
+        [TempData]
+        public string ImageError { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int photoId)
         {
@@ -137,21 +137,18 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 }
             }
 
-            var initialPhotoName = FileService.GetFileNameWithoutExtension(photoItems.FirstOrDefault()?.Path);
-            var photoItemsCount = photoItems.Count;
+            var photoItemWithGreatestCount = FileService.GetFileNameWithoutExtension(
+                photoItems
+                .OrderBy(pi => pi.Path)
+                .LastOrDefault()?.Path);
+
             foreach (var formFile in Request.Form.Files)
             {
                 string formFileName = ContentDispositionHeaderValue.Parse(formFile.ContentDisposition).FileName;
+                string filename = ImageFileNameFactory.GenerateFileName(photoItemWithGreatestCount, formFileName);
+
                 formFileName = FileService.EnsureCorrectFileName(formFileName);
                 string extension = FileService.GetFileExtension(formFileName);
-
-                string filename = "";
-                if (initialPhotoName is null)
-                {
-                    initialPhotoName = Guid.NewGuid().ToString();
-                }
-
-                filename = $"{initialPhotoName}({++photoItemsCount}){extension}";
 
                 string absolutePath = FileService.GetUserImageAbsolutePath(_webHostEnvironment, _configuration, filename);
 
