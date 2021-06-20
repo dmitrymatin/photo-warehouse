@@ -10,7 +10,7 @@ namespace PhotoWarehouse.Domain.Photos
     {
         public int Id { get; set; }
         public DateTimeOffset DateUploaded { get; set; }
-        public string Path { get; set; } // rename to FileName when recreating db since MySQL provider throws NotImplemented on migration that renames the column
+        public string Path { get; set; } // TODO: rename to FileName when recreating db since MySQL provider throws NotImplemented on migration that renames the column
 
         [NotMapped]
         public string RelativePath { get; set; }

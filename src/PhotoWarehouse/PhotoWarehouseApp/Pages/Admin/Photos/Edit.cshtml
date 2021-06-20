@@ -33,12 +33,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.Photo.InitialUploadDate" class="control-label"></label>
-                <input asp-for="Input.Photo.InitialUploadDate" class="form-control" />
+                <input type="datetime-local" asp-for="Input.Photo.InitialUploadDate" class="form-control" />
                 <span asp-validation-for="Input.Photo.InitialUploadDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Photo.DateTaken" class="control-label"></label>
-                <input asp-for="Input.Photo.DateTaken" class="form-control" />
+                <input type="datetime-local" asp-for="Input.Photo.DateTaken" class="form-control" />
                 <span asp-validation-for="Input.Photo.DateTaken" class="text-danger"></span>
             </div>
             <div class="form-group">

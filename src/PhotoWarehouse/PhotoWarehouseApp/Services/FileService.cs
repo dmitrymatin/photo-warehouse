@@ -41,5 +41,10 @@ namespace PhotoWarehouseApp.Services
         {
             return System.IO.Path.GetExtension(path);
         }
+
+        public static string GetFileNameWithoutExtension(string path)
+        {
+            return path is null ? null : System.IO.Path.GetFileNameWithoutExtension(path);
+        }
     }
 }
