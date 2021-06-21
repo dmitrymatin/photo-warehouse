@@ -26,6 +26,7 @@ main {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    min-height: 3.1rem;
 }
 
 .column {
@@ -57,12 +58,12 @@ footer.row {
     background-color: #80FFDB;
 }
 
-#navbar {
+.navbar {
     align-content: center;
     flex-wrap: wrap;
 }
 
-    #navbar a {
+    .navbar .navItem {
         padding: .2rem .5rem;
         margin: 0 .3em;
         text-decoration: none;
@@ -72,10 +73,14 @@ footer.row {
         border-radius: 6px;
     }
 
-        #navbar a:hover {
+        .navbar .navItem:hover {
             background-color: #6930C3;
             color: #fdf9ff;
         }
+
+.siteTitle {
+    font-size: 24px;
+}
 
 .icon {
     margin: .6em;
@@ -109,3 +114,11 @@ footer.row {
         max-width: 70vw;
         background-color: #faefff;
     }
+
+/*NEW STYLES*/
+button {
+    background: inherit;
+    border: inherit;
+    cursor: pointer;
+    font-size: inherit;
+}

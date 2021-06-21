@@ -13,25 +13,27 @@
     <div class="container column">
         <header class="row">
             <section class="row">
-                <img src="~/images/logo.png" alt="logo with a camera on it" class="logo" width="64" height="64" />
-                <h1>Photo Warehouse</h1>
+                <div class="navbar siteTitle row">
+                    <a asp-page="/Index"><img src="~/images/logo.png" alt="logo with a camera on it" class="logo" width="64" height="64" /></a>
+                    <a asp-page="/Index" class="navItem">Photo Warehouse</a>
+                </div>
             </section>
             <section class="row">
-                <div id="navbar" class="row">
-                    <a href="#thing1">Menu 1</a>
-                    <a href="#thing2">Menu 2</a>
-                    <a href="#thing3">Menu 3</a>
+                <div class="row navbar">
+                    <a class="navItem" href="#thing1">Menu 1</a>
+                    <a class="navItem" href="#thing2">Menu 2</a>
+                    <a class="navItem" href="#thing3">Menu 3</a>
                     <partial name="_LoginPartial" />
                 </div>
             </section>
         </header>
         <main class="column">
-            <section class="row searchBar">
-                <form asp-page="/Photos/Search" method="get">
+            <form asp-page="/Photos/Search" method="get">
+                <section class="row searchBar">
                     <input type="search" name="searchTerm" value="" placeholder="Поиск" />
                     <button><img src="~/images/search-svgrepo-com.svg" alt="search icon" class="icon" width="36" /></button>
-                </form>
-            </section>
+                </section>
+            </form>
             <h3>main</h3>
             @RenderBody()
         </main>
@@ -42,25 +44,25 @@
         </footer>
 
         @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">PhotoWarehouseApp</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-page="/Index">PhotoWarehouseApp</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
-            </div>
-        </nav>*@
+            </nav>*@
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
