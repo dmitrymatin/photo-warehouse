@@ -28,7 +28,7 @@
 
 3. Создать базу данных путем применения миграций из проекта PhotoWarehouse.Data
 Для этого перейти в консоли в папку с проектом PhotoWarehouse.Data (В VS2019 в контекстном меню для проекта PhotoWarehouse.Data можно выбрать опцию открытия в терминале - *Open in Terminal*). Выполнить команду
-`dotnet database update -s ..\PhotoWarehouseApp\PhotoWarehouseApp.csproj`
+`dotnet ef database update -s ..\PhotoWarehouseApp\PhotoWarehouseApp.csproj`
 База данных должна создаться и её можно увидеть в списке БД, например, в MySQL Workbench
 
 4. Запуск
