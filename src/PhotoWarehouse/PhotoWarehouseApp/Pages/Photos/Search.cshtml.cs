@@ -43,6 +43,11 @@ namespace PhotoWarehouseApp.Pages.Photos
                 photo.PhotoItemFirst.RelativePath = FileService.GetUserImageContentPath(_configuration, photo.PhotoItemFirst.Path);
             }
 
+            if (FoundPhotos.Count() == 0)
+            {
+                ViewData["NoSearchResultsMessage"] = "Sorry, we couldn't find anything that fit your search";
+            }
+
 
             return Page();
         }
