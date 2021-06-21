@@ -137,20 +137,34 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 }
             }
 
-            var photoItemWithGreatestCount = FileService.GetFileNameWithoutExtension(
-                photoItems
-                .OrderBy(pi => pi.Path)
-                .LastOrDefault()?.Path);
+            var photoItemWithGreatestCount = photoItems.OrderBy(pi => pi.Path).LastOrDefault();
+            string initialFileNameWithoutExtension = FileService.GetFileNameWithoutExtension(photoItemWithGreatestCount?.Path);
+
+            int photoItemNameCount = 1;
+
+
+            if (initialFileNameWithoutExtension is null)
+            {
+                initialFileNameWithoutExtension = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                int bracketStart = initialFileNameWithoutExtension.LastIndexOf('(');
+                int bracketEnd = initialFileNameWithoutExtension.LastIndexOf(')');
+
+                if (bracketStart != -1 && bracketEnd != -1)
+                {
+                    string countString = initialFileNameWithoutExtension.Substring(bracketStart + 1, bracketEnd - bracketStart - 1);
+                    initialFileNameWithoutExtension = initialFileNameWithoutExtension.Substring(0, bracketStart);
+                    photoItemNameCount = int.Parse(countString) + 1;
+                }
+            }
 
             foreach (var formFile in Request.Form.Files)
             {
                 string formFileName = ContentDispositionHeaderValue.Parse(formFile.ContentDisposition).FileName;
-                string filename = ImageFileNameFactory.GenerateFileName(photoItemWithGreatestCount, formFileName);
-
                 formFileName = FileService.EnsureCorrectFileName(formFileName);
                 string extension = FileService.GetFileExtension(formFileName);
-
-                string absolutePath = FileService.GetUserImageAbsolutePath(_webHostEnvironment, _configuration, filename);
 
                 if (!formFile.IsImage(extension))
                 {
@@ -158,12 +172,14 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                     return RedirectToPage();
                 }
 
+                string filename = $"{initialFileNameWithoutExtension}({photoItemNameCount++}){extension}";
+
                 var fileFormat = _fileFormatRepository.GetByName(extension);
                 if (fileFormat is null)
                 {
                     fileFormat = new FileFormat { Name = extension };
                     _fileFormatRepository.Add(fileFormat);
-                    _fileFormatRepository.Commit(); // TODO: consider one call to commit() call
+                    _fileFormatRepository.Commit();
                 }
 
                 using var image = Image.Load(formFile.OpenReadStream());
@@ -187,6 +203,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
                 photoItems.Add(photoItem);
 
+                string absolutePath = FileService.GetUserImageAbsolutePath(_webHostEnvironment, _configuration, filename);
                 await _photoRepository.AddPhotoItemAsync(formFile.OpenReadStream(), absolutePath, photoItem);
             }
 
