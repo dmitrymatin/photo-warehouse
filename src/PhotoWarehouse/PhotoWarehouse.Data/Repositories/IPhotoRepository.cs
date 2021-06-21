@@ -29,7 +29,7 @@ namespace PhotoWarehouse.Data.Repositories
         /// <param name="maxCount">Specifies the number of elements to be searched.</param>
         /// <param name="requireSetPhotoName">Enables searching only photos that have non empty name.</param>
         /// <param name="requirePhotoItems">Enables searching only photos that have at least one associated photo item.</param>
-        IEnumerable<Photo> GetPhotosAsync(string searchTerm, int maxCount = 300, bool requireSetPhotoName = true, bool requirePhotoItems = true);
+        Task<IList<Photo>> GetPhotosAsync(string searchTerm, int maxCount = 300, bool requireSetPhotoName = true, bool requirePhotoItems = true);
         Task<IList<PhotoItem>> GetPhotoItemsAsync(int photoId);
         bool PhotoExists(int photoId);
         void UpdatePhoto(Photo photo);
@@ -94,7 +94,7 @@ namespace PhotoWarehouse.Data.Repositories
                 .Where(p => p.PhotoId == photoId).ToListAsync();
         }
 
-        public IEnumerable<Photo> GetPhotosAsync(string searchTerm, int maxCount = 300, bool requireSetPhotoName = true, bool requirePhotoItems = true)
+        public async Task<IList<Photo>> GetPhotosAsync(string searchTerm, int maxCount = 300, bool requireSetPhotoName = true, bool requirePhotoItems = true)
         {
             IQueryable<Photo> queryBuilder = _context.Photos
                 .Include(p => p.Category)
@@ -114,9 +114,10 @@ namespace PhotoWarehouse.Data.Repositories
             if (requirePhotoItems)
                 filteredQuery = filteredQuery.Where(p => p.PhotoItems.Any());
 
-            return filteredQuery
+            return await filteredQuery
                 .OrderByDescending(p => p.InitialUploadDate) // TODO: consider indexing by InitialUploadDate field
-                .Take(maxCount);
+                .Take(maxCount)
+                .ToListAsync();
         }
 
         public bool PhotoExists(int photoId)
