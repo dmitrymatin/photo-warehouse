@@ -16,7 +16,7 @@
 <div class="row">
     @foreach (var item in Model.FoundPhotos)
     {
-        <div class="card">
+        <div class="card column">
             <div class="card-picture row">
                 <img src="@item.PhotoItemFirst.RelativePath" alt="@item.PhotoItemFirst.RelativePath @item.PhotoItemFirst.Size" />
             </div>
