@@ -27,7 +27,9 @@
  Например, `dotnet user-secrets set "DbPassword" "pass123"`
 
 3. Создать базу данных путем применения миграций из проекта PhotoWarehouse.Data
-Для этого перейти в консоли в папку с проектом PhotoWarehouse.Data (В VS2019 в контекстном меню для проекта PhotoWarehouse.Data можно выбрать опцию открытия в терминале - *Open in Terminal*). Выполнить команду
+Предварительно, необходимо убедиться, что установлен инструмент для работы с Entity Framework: dotnet-ef.
+Для его установки, необходимо выполнить команду `dotnet tool install --global dotnet-ef`
+После установки dotnet-ef, перейти в консоли в папку с проектом PhotoWarehouse.Data (В VS2019 в контекстном меню для проекта PhotoWarehouse.Data можно выбрать опцию открытия в терминале - *Open in Terminal*). Выполнить команду
 `dotnet ef database update -s ..\PhotoWarehouseApp\PhotoWarehouseApp.csproj`
 База данных должна создаться и её можно увидеть в списке БД, например, в MySQL Workbench
 
