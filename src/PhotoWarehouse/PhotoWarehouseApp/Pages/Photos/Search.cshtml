@@ -1,9 +1,10 @@
 ﻿@page
-@using System.Globalization 
+@using System.Globalization
 @model PhotoWarehouseApp.Pages.Photos.SearchModel
 @{
     ViewData["Title"] = "Search";
 }
+
 
 <h1>Search results</h1>
 
@@ -12,21 +13,22 @@
     <div class="alert">@ViewBag.NoSearchResultsMessage</div>
 }
 
-@foreach (var item in Model.FoundPhotos)
-{
-    <div class="card">
-        <div class="card-picture">
-            <img src="@item.PhotoItemFirst.RelativePath" width="256" alt="@item.PhotoItemFirst.RelativePath @item.PhotoItemFirst.Size" />
+<div class="row">
+    @foreach (var item in Model.FoundPhotos)
+    {
+        <div class="card">
+            <div class="card-picture">
+                <img src="@item.PhotoItemFirst.RelativePath" width="256" alt="@item.PhotoItemFirst.RelativePath @item.PhotoItemFirst.Size" />
+            </div>
+            <div class="card-title">
+                @item.Photo.Name
+            </div>
+            <div class="card-info">
+                @item.Photo.DateTaken.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+            </div>
+            <div class="card-info">
+                @item.Photo.Category.Name
+            </div>
         </div>
-        <div class="card-title">
-            @item.Photo.Name
-        </div>
-        <div class="card-info">
-            @item.Photo.DateTaken.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-        </div>
-        <div class="card-info">
-            @item.Photo.Category.Name
-        </div>
-    </div>
-}
-
+    }
+</div>
