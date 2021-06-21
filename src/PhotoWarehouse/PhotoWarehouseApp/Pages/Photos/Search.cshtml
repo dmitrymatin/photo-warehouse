@@ -8,8 +8,19 @@
 
 @foreach (var item in Model.FoundPhotos)
 {
-    <div>
-        @item.Name
+    <div class="card">
+        <div class="card-picture">
+            <img src="@item.PhotoItemFirst.RelativePath" width="256" alt="@item.PhotoItemFirst.RelativePath @item.PhotoItemFirst.Size" />
+        </div>
+        <div class="card-title">
+            @item.Photo.Name
+        </div>
+        <div class="card-info">
+            @item.Photo.DateTaken
+        </div>
+        <div class="card-info">
+            @item.Photo.Category
+        </div>
     </div>
 }
 
