@@ -6,13 +6,14 @@
 }
 
 
-<h1>Search results</h1>
+<div class="column-centered">
+    <h1>Search results</h1>
+    @if (ViewBag.NoSearchResultsMessage is not null)
+    {
+        <div class="alert">@ViewBag.NoSearchResultsMessage</div>
+    }
 
-@if (ViewBag.NoSearchResultsMessage is not null)
-{
-    <div class="alert">@ViewBag.NoSearchResultsMessage</div>
-}
-
+</div>
 <div class="row card-collection">
     @foreach (var item in Model.FoundPhotos)
     {

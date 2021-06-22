@@ -9,7 +9,7 @@ html, body {
     margin: 0;
     height: 100%;
     font-size: 19px;
-    font-weight: 900;
+    font-weight: 400;
     color: #2a2a2a;
 }
 
@@ -34,6 +34,12 @@ main {
     flex-direction: column;
 }
 
+.column-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .logo {
     padding: 10px;
     height: 64px;
@@ -52,7 +58,7 @@ header.row {
 
 main.column {
     background-color: #faefff;
-    align-items: center;
+    padding-bottom: 2.3em;
 }
 
 footer.row {
@@ -124,7 +130,7 @@ button {
     font-size: inherit;
 }
 
-.row.card-collection{
+.row.card-collection {
     justify-content: center;
 }
 
@@ -136,9 +142,9 @@ button {
     box-shadow: 0 0.6px 0.8px rgba(0, 0, 0, 0.017), 0 1.4px 1.7px rgba(0, 0, 0, 0.025), 0 2.3px 2.9px rgba(0, 0, 0, 0.031), 0 3.5px 4.3px rgba(0, 0, 0, 0.035), 0 5px 6.3px rgba(0, 0, 0, 0.04), 0 7.1px 8.9px rgba(0, 0, 0, 0.045), 0 10.1px 12.6px rgba(0, 0, 0, 0.049), 0 14.6px 18.3px rgba(0, 0, 0, 0.055), 0 22.5px 28.1px rgba(0, 0, 0, 0.063), 0 40px 50px rgba(0, 0, 0, 0.08);
 }
 
-.card.column{
-    justify-content: flex-start;
-}
+    .card.column {
+        justify-content: flex-start;
+    }
 
 .card-picture > img {
     border-radius: 5px;
@@ -152,11 +158,12 @@ button {
     justify-content: center;
 }
 
-.card-title, .card-info{
+.card-title, .card-info {
     padding-left: .6em;
 }
 
-.card-title{
+.card-title {
+    font-weight: 900;
     font-size: .9em;
     padding-bottom: .4em;
 }
