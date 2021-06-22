@@ -35,8 +35,6 @@ main {
 }
 
 .column-centered {
-    display: flex;
-    flex-direction: column;
     align-items: center;
 }
 
@@ -84,6 +82,11 @@ footer.row {
             background-color: #6930C3;
             color: #fdf9ff;
         }
+
+.row.stickRight {
+    flex-grow: 1;
+    justify-content: flex-end;
+}
 
 .siteTitle {
     font-size: 24px;
@@ -163,7 +166,7 @@ button {
 }
 
 .card-title {
-    font-weight: 900;
+    font-weight: 700;
     font-size: .9em;
     padding-bottom: .4em;
 }

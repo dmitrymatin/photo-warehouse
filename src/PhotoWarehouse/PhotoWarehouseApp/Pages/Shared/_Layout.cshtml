@@ -7,22 +7,34 @@
     <link href="~/favicon.png" rel="icon" type="image/png" />
     <link rel="stylesheet" href="~/css/site.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;400;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container column">
         <header class="row">
             <section class="row">
-                <div class="navbar siteTitle row">
+                <div class="row navbar siteTitle">
                     <a asp-page="/Index"><img src="~/images/logo.png" alt="logo with a camera on it" class="logo" width="64" height="64" /></a>
                     <a asp-page="/Index" class="navItem">Photo Warehouse</a>
                 </div>
             </section>
             <section class="row">
                 <div class="row navbar">
-                    <a class="navItem" href="#thing1">Menu 1</a>
-                    <a class="navItem" href="#thing2">Menu 2</a>
-                    <a class="navItem" href="#thing3">Menu 3</a>
+                    @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
+                    {
+                        <a class="navItem" asp-page="/Admin/Photos/Index">Загрузка фото</a>
+
+                    }
+                    else if (User.IsInRole(Areas.Identity.Roles.Client.ToString()))
+                    {
+                        <a class="navItem" asp-page="/Categories">Категории</a>
+                        <a class="navItem" asp-page="/Basket">Корзина</a>
+                        <a class="navItem" asp-page="/Orders">Заказы</a>
+                    }
+                </div>
+            </section>
+            <section class="row stickRight">
+                <div class="row navbar">
                     <partial name="_LoginPartial" />
                 </div>
             </section>
