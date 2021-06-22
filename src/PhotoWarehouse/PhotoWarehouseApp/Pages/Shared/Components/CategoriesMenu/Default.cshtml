@@ -1,0 +1,8 @@
+﻿@model IEnumerable<PhotoWarehouse.Domain.Photos.PhotoCategory>
+
+<div id="expMenu" class="expandableMenu closed">
+    @foreach (var category in Model)
+    {
+        <div>@category.Name</div>
+    }
+</div>
