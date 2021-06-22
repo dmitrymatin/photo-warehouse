@@ -51,13 +51,15 @@
             {
                 <div class="row" id="row-@Model.Input.PhotoItemData[i].PhotoItem.Id">
                     <input type="hidden" asp-for="Input.PhotoItemData[i].PhotoItem.Id" />
-                    <input class="itemStatus" type="hidden" asp-for="Input.PhotoItemData[i].PhotoItemStatus"/>
-                    <div style="background-color: azure" >@Model.Input.PhotoItemData[i].PhotoItem.Path</div>
+                    <input class="itemStatus" type="hidden" asp-for="Input.PhotoItemData[i].PhotoItemStatus" />
+                    <div style="background-color: azure">@Model.Input.PhotoItemData[i].PhotoItem.Path</div>
                     <div>@Model.Input.PhotoItemData[i].PhotoItem.DateUploaded</div>
                     <div>@Model.Input.PhotoItemData[i].PhotoItem.FileFormat.Name</div>
                     <div>@Model.Input.PhotoItemData[i].PhotoItem.Size</div>
-                    <div><img src="@Model.Input.PhotoItemData[i].PhotoItem.RelativePath" width="256"
-                              alt="@Model.Input.PhotoItemData[i].PhotoItem.Photo.Name @Model.Input.PhotoItemData[i].PhotoItem.Size" /></div> <!--for photo iteself-->
+                    <div>
+                        <img src="@Model.Input.PhotoItemData[i].PhotoItem.RelativePath" width="256"
+                             alt="@Model.Input.PhotoItemData[i].PhotoItem.Photo.Name @Model.Input.PhotoItemData[i].PhotoItem.Size" />
+                    </div> <!--for photo iteself-->
                     <button type="button" class="photoItemDeleteButton">Delete</button>
                 </div>
             }
@@ -77,6 +79,8 @@
 <div>
     <a asp-page="./Index">Back to all photos</a>
 </div>
+
+<partial name="_ManageCategories" />
 
 @section Scripts {
     @{
