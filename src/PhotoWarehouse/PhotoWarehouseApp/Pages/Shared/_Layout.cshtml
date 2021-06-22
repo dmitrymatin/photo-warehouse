@@ -20,16 +20,20 @@
             </section>
             <section class="row">
                 <div class="row navbar">
-                    @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
-                    {
-                        <a class="navItem" asp-page="/Admin/Photos/Index">Загрузка фото</a>
-
-                    }
-                    else if (User.IsInRole(Areas.Identity.Roles.Client.ToString()))
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <a class="navItem" asp-page="/Categories">Категории</a>
-                        <a class="navItem" asp-page="/Basket">Корзина</a>
-                        <a class="navItem" asp-page="/Orders">Заказы</a>
+
+                        @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
+                        {
+                            <a class="navItem" asp-page="/Admin/Photos/Index">Загрузка фото</a>
+                            <a class="navItem" asp-page="/Admin/Photos/Index">Заказы пользователей</a>
+                        }
+                        else if (User.IsInRole(Areas.Identity.Roles.Client.ToString()))
+                        {
+                            <a class="navItem" asp-page="/Basket/Index">Корзина</a>
+                            <a class="navItem" asp-page="/Orders/Index">Заказы</a>
+                        }
                     }
                 </div>
             </section>
