@@ -9,6 +9,8 @@ namespace PhotoWarehouse.Domain.Photos
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public int? DownloadCount { get; set; }
+        public int? ViewCount { get; set; }
 
         [Display(Name = "Initial upload date")]
         public DateTimeOffset InitialUploadDate { get; set; }
