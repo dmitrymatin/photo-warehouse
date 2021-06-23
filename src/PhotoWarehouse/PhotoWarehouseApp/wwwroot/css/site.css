@@ -69,25 +69,19 @@ footer.row {
 }
 
     .navbar .navItem {
-        padding: .2rem .5rem;
         margin: 0 .3em;
-        /*text-decoration: none;*/
         font-weight: 700;
-        color: #2a2a2a;
-        /*transition: .3s;*/
-        border-radius: 6px;
     }
-
-        .navbar .navItem:hover {
-            /*            background-color: #6930C3;
-            color: #fdf9ff;*/
-        }
 
 .clickable {
     text-decoration: none;
     user-select: none;
     transition: .3s;
+    padding: .2rem .5rem;
+    font-weight: 400;
     cursor: pointer;
+    color: #2a2a2a;
+    border-radius: 6px;
 }
 
     .clickable:hover {
@@ -161,6 +155,8 @@ button {
     font-size: inherit;
 }
 
+/*CARDS*/
+
 .row.card-collection {
     justify-content: center;
 }
@@ -177,11 +173,11 @@ button {
         justify-content: flex-start;
     }
 
-.card-picture > img {
+.card-picture img {
     border-radius: 5px;
     margin: 0.7em 0.5em 0.4em;
-    width: 16em;
-    height: 11em;
+    width: 15.4em;
+    height: 10em;
     object-fit: scale-down;
 }
 
@@ -189,17 +185,17 @@ button {
     justify-content: center;
 }
 
-.card-title, .card-info {
-    padding-left: .6em;
+.card-title {
+    padding: .2em .8em;
 }
 
-.card-title {
-    font-weight: 700;
-    font-size: .9em;
-    padding-bottom: .4em;
-}
+    .card-title > .clickable {
+        font-weight: 700;
+        padding: .1em 0;
+    }
 
 .card-info {
     font-size: .7em;
     padding-bottom: .1em;
+    padding-left: 1.1em;
 }

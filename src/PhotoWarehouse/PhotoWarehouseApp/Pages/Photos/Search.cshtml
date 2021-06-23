@@ -19,10 +19,14 @@
     {
         <div class="card column">
             <div class="card-picture row">
-                <img src="@item.PhotoItemFirst.RelativePath" alt="@item.PhotoItemFirst.RelativePath @item.PhotoItemFirst.Size" />
+                <a asp-page="/Photos/Details" asp-route-photoId="@item.Photo.Id">
+                    <img src="@item.PhotoItemFirst.RelativePath" alt="@item.PhotoItemFirst.RelativePath @item.PhotoItemFirst.Size" />
+                </a>
             </div>
             <div class="card-title">
-                @item.Photo.Name
+                <a class="clickable" asp-page="/Photos/Details" asp-route-photoId="@item.Photo.Id">
+                    @item.Photo.Name
+                </a>
             </div>
             <div class="card-info">
                 @item.Photo.DateTaken?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
