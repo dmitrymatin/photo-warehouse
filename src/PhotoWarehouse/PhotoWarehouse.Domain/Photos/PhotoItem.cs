@@ -2,6 +2,7 @@
 using PhotoWarehouse.Domain.Users;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhotoWarehouse.Domain.Photos
@@ -19,8 +20,12 @@ namespace PhotoWarehouse.Domain.Photos
         public int PhotoId { get; set; }
         public ICollection<Order> OrderPhotos { get; set; }
         public ICollection<ApplicationUser> ApplicationUsers { get; set; }
+        
+        [Display(Name = "Размер")]
         public PhotoSize Size { get; set; }
         public int PhotoSizeId { get; set; }
+
+        [Display(Name = "Формат изображения")]
         public FileFormat FileFormat { get; set; }
         public int FileFormatId { get; set; }
     }
