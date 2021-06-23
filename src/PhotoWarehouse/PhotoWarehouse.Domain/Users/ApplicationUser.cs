@@ -17,7 +17,7 @@ namespace PhotoWarehouse.Domain.Users
 
 
         public IEnumerable<Feedback> FeedbackReviewed { get; set; }
-        public IEnumerable<PhotoItem> PhotoItemsInBasket { get; set; }
+        public IList<PhotoItem> PhotoItemsInBasket { get; set; }
         public IEnumerable<Order> Orders { get; set; }
     }
 }

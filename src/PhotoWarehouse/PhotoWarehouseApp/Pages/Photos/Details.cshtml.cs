@@ -23,10 +23,17 @@ namespace PhotoWarehouseApp.Pages.Photos
             _configuration = configuration;
         }
 
+        public class PhotoItemsInputModel
+        {
+            public int Id { get; set; }
+            public string SizeAndFormat { get; set; }
+        }
+
         public Photo Photo { get; set; }
         public PhotoItem PhotoItemFirst { get; set; }
-        public SelectList AvailableFormats { get; set; }
-        public SelectList AvailableSizes { get; set; }
+        public PhotoItem PhotoItemChosen { get; set; }
+        public IEnumerable<PhotoItemsInputModel> PhotoItemsInputModels { get; set; }
+        public SelectList PhotoItemsList { get; set; }
 
         public async Task<IActionResult> OnGet(int photoId)
         {
@@ -39,8 +46,15 @@ namespace PhotoWarehouseApp.Pages.Photos
                 return Page();
             }
 
-            AvailableFormats = new SelectList(Photo.PhotoItems.Select(pi => pi.FileFormat), "Id", "Name");
-            AvailableSizes = new SelectList(Photo.PhotoItems.Select(pi => pi.Size), "Id", "");
+            PhotoItemsInputModels = Photo.PhotoItems
+                .Select(pi => new PhotoItemsInputModel
+                {
+                    Id = pi.Id,
+                    SizeAndFormat = $"{pi.Size} ({pi.FileFormat})"
+                });
+
+
+            PhotoItemsList = new SelectList(PhotoItemsInputModels, "Id", "SizeAndFormat");
 
             PhotoItemFirst.RelativePath = FileService.GetUserImageContentPath(_configuration, PhotoItemFirst.FileName);
 

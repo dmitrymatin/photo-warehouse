@@ -10,6 +10,11 @@
     <div class="alert">@ViewBag.NoSearchResultsMessage</div>
 }
 
+@if (Model.TempData["AddedToBasketMessage"] is not null)
+{
+    <div class="alert">@TempData["AddedToBasketMessage"]</div>
+}
+
 @if (Model.Photo is not null && Model.PhotoItemFirst is not null)
 {
     <form method="post">
@@ -19,7 +24,7 @@
                     <img src="@Model.PhotoItemFirst.RelativePath" alt="@Model.PhotoItemFirst.RelativePath @Model.PhotoItemFirst.Size" />
                 </div>
 
-                <input type="hidden" asp-for="@Model.PhotoItemFirst.Id" />
+                <input type="hidden" asp-for="@Model.Photo.Id" />
                 <div class="row card-control">
                     @if (User.IsInRole(Areas.Identity.Roles.Client.ToString()))
                     {
@@ -46,13 +51,8 @@
                 </div>
 
                 <div class="card-info">
-                    <label asp-for="PhotoItemFirst.FileFormatId" class="control-label"></label>
-                    <select asp-for="PhotoItemFirst.FileFormatId" class="form-control" asp-items="Model.AvailableFormats"></select>
-                </div>
-
-                <div class="card-info">
-                    <label asp-for="PhotoItemFirst.PhotoSizeId" class="control-label"></label>
-                    <select asp-for="PhotoItemFirst.PhotoSizeId" class="form-control" asp-items="Model.AvailableSizes"></select>
+                    <label asp-for="PhotoItemChosen.Id" class="control-label"></label>
+                    <select asp-for="PhotoItemChosen.Id" class="form-control" asp-items="Model.PhotoItemsList"></select>
                 </div>
 
                 @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
