@@ -216,7 +216,7 @@ namespace PhotoWarehouse.Data.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Text = table.Column<string>(type: "text", nullable: true),
                     DateSubmitted = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
-                    DateReviewed = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    DateReviewed = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
                     ApplicationUserId = table.Column<string>(type: "varchar(85)", nullable: true)
                 },
                 constraints: table =>
@@ -237,7 +237,7 @@ namespace PhotoWarehouse.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     DateCreated = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    OrderStatusId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<string>(type: "varchar(85)", nullable: true)
                 },
                 constraints: table =>
@@ -254,7 +254,7 @@ namespace PhotoWarehouse.Data.Migrations
                         column: x => x.OrderStatusId,
                         principalTable: "OrderStatuses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -265,8 +265,10 @@ namespace PhotoWarehouse.Data.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
+                    DownloadCount = table.Column<int>(type: "int", nullable: false),
+                    ViewCount = table.Column<int>(type: "int", nullable: false),
                     InitialUploadDate = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
-                    DateTaken = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    DateTaken = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -287,6 +289,7 @@ namespace PhotoWarehouse.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     DateUploaded = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    FileName = table.Column<string>(type: "text", nullable: true),
                     PhotoId = table.Column<int>(type: "int", nullable: false),
                     PhotoSizeId = table.Column<int>(type: "int", nullable: false),
                     FileFormatId = table.Column<int>(type: "int", nullable: false)

@@ -191,7 +191,7 @@ namespace PhotoWarehouse.Data.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("varchar(85)");
 
-                    b.Property<DateTimeOffset>("DateReviewed")
+                    b.Property<DateTimeOffset?>("DateReviewed")
                         .HasColumnType("timestamp");
 
                     b.Property<DateTimeOffset>("DateSubmitted")
@@ -219,7 +219,7 @@ namespace PhotoWarehouse.Data.Migrations
                     b.Property<DateTimeOffset>("DateCreated")
                         .HasColumnType("timestamp");
 
-                    b.Property<int>("OrderStatusId")
+                    b.Property<int?>("OrderStatusId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -268,17 +268,23 @@ namespace PhotoWarehouse.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("DateTaken")
+                    b.Property<DateTimeOffset?>("DateTaken")
                         .HasColumnType("timestamp");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<int>("DownloadCount")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("InitialUploadDate")
                         .HasColumnType("timestamp");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -313,7 +319,7 @@ namespace PhotoWarehouse.Data.Migrations
                     b.Property<int>("FileFormatId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Path")
+                    b.Property<string>("FileName")
                         .HasColumnType("text");
 
                     b.Property<int>("PhotoId")
@@ -519,9 +525,7 @@ namespace PhotoWarehouse.Data.Migrations
 
                     b.HasOne("PhotoWarehouse.Domain.Orders.OrderStatus", "Status")
                         .WithMany()
-                        .HasForeignKey("OrderStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderStatusId");
 
                     b.Navigation("Customer");
 
