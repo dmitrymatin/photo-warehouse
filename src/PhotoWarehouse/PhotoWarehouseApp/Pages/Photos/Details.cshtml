@@ -12,46 +12,62 @@
 
 @if (Model.Photo is not null && Model.PhotoItemFirst is not null)
 {
-    <div class="row card-collection">
-        <div class="card cardAutoHeight column">
-            <div class="card-picture row">
-                <img src="@Model.PhotoItemFirst.RelativePath" alt="@Model.PhotoItemFirst.RelativePath @Model.PhotoItemFirst.Size" />
-            </div>
-            <div class="card-title">
-                @Model.Photo.Name
-            </div>
-            <div class="card-info">
-                @Model.Photo.Description
-            </div>
-            <div class="card-info">
-                @Model.Photo.DateTaken?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
-            </div>
-            <div class="card-info">
-                Категория: @Model.Photo.Category.Name
-            </div>
+    <form method="post">
+        <div class="row card-collection">
+            <div class="card cardAutoHeight column">
+                <div class="card-picture row">
+                    <img src="@Model.PhotoItemFirst.RelativePath" alt="@Model.PhotoItemFirst.RelativePath @Model.PhotoItemFirst.Size" />
+                </div>
 
-            <div class="card-info">
-                <label asp-for="PhotoItemFirst.FileFormat" class="control-label"></label>
-                <select asp-for="PhotoItemFirst.FileFormat" class="form-control" asp-items="Model.AvailableFormats"></select>
-            </div>
+                <input type="hidden" asp-for="@Model.PhotoItemFirst.Id" />
+                <div class="row card-control">
+                    @if (User.IsInRole(Areas.Identity.Roles.Client.ToString()))
+                    {
+                        <button class="clickable" type="submit" asp-page="/Photos/Basket/Add">Добавить в корзину</button>
 
-            <div class="card-info">
-                <label asp-for="PhotoItemFirst.Size" class="control-label"></label>
-                <select asp-for="PhotoItemFirst.Size" class="form-control" asp-items="Model.AvailableSizes"></select>
-            </div>
+                    }
+                    @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
+                    {
+                        <button class="clickable" type="submit" asp-page="/Admin/Photos/Download">Скачать</button>
+                    }
+                </div>
 
-            @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
-            {
-                <div class="card-info">
-                    Дата загрузки: @Model.Photo.InitialUploadDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                <div class="card-title">
+                    @Model.Photo.Name
                 </div>
                 <div class="card-info">
-                    @Model.Photo.ViewCount просмотров
+                    @Model.Photo.Description
                 </div>
                 <div class="card-info">
-                    @Model.Photo.DownloadCount загрузок
+                    @Model.Photo.DateTaken?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
                 </div>
-            }
+                <div class="card-info">
+                    Категория: @Model.Photo.Category.Name
+                </div>
+
+                <div class="card-info">
+                    <label asp-for="PhotoItemFirst.FileFormat" class="control-label"></label>
+                    <select asp-for="PhotoItemFirst.FileFormat" class="form-control" asp-items="Model.AvailableFormats"></select>
+                </div>
+
+                <div class="card-info">
+                    <label asp-for="PhotoItemFirst.Size" class="control-label"></label>
+                    <select asp-for="PhotoItemFirst.Size" class="form-control" asp-items="Model.AvailableSizes"></select>
+                </div>
+
+                @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
+                {
+                    <div class="card-info">
+                        Дата загрузки: @Model.Photo.InitialUploadDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                    </div>
+                    <div class="card-info">
+                        @Model.Photo.ViewCount просмотров
+                    </div>
+                    <div class="card-info">
+                        @Model.Photo.DownloadCount загрузок
+                    </div>
+                }
+            </div>
         </div>
-    </div>
+    </form>
 }

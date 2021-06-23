@@ -215,3 +215,11 @@ button {
     padding-bottom: .1em;
     padding-left: 1.1em;
 }
+
+.card-control {
+    justify-content: flex-end;
+}
+
+.card-control > .clickable{
+    font-size: .7em;
+}
