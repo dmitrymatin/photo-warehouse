@@ -1,8 +1,11 @@
 ﻿@model IEnumerable<PhotoWarehouse.Domain.Photos.PhotoCategory>
 
-<div id="expMenu" class="expandableMenu closed">
+<div id="expMenu" class="expandableMenu closed column">
     @foreach (var category in Model)
     {
-        <div>@category.Name</div>
+        <a class="navItem clickable" 
+           asp-page="/Photos/Search" 
+           asp-page-handler="Category" 
+           asp-route-searchTerm="@category.Name">@category.Name</a>
     }
 </div>

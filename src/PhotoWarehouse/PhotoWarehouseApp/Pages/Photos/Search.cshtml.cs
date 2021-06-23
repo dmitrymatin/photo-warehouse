@@ -51,5 +51,24 @@ namespace PhotoWarehouseApp.Pages.Photos
 
             return Page();
         }
+
+        public async Task<IActionResult> OnGetCategoryAsync()
+        {
+            FoundPhotos = (await _photoRepository.GetPhotosInCategoryAsync(SearchTerm))
+                .Select(p => new ProjectionModel { Photo = p, PhotoItemFirst = p.PhotoItems.FirstOrDefault() });
+
+            foreach (var photo in FoundPhotos)
+            {
+                photo.PhotoItemFirst.RelativePath = FileService.GetUserImageContentPath(_configuration, photo.PhotoItemFirst.Path);
+            }
+
+            if (!FoundPhotos.Any())
+            {
+                ViewData["NoSearchResultsMessage"] = $"{SearchTerm} CAT: Sorry, we couldn't find anything that fit your search";
+            }
+
+
+            return Page();
+        }
     }
 }
