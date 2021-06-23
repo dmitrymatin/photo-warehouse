@@ -139,7 +139,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 var photoItem = new PhotoItem
                 {
                     DateUploaded = DateTimeOffset.UtcNow,
-                    Path = filename,
+                    FileName = filename,
                     Photo = photo,
                     Size = photoSize,
                     FileFormat = fileFormat

@@ -42,7 +42,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
             foreach (var photoItem in Photo.PhotoItems ?? Enumerable.Empty<PhotoItem>())
             {
                 photoItem.RelativePath = FileService
-                    .GetUserImageContentPath(_configuration, photoItem.Path);
+                    .GetUserImageContentPath(_configuration, photoItem.FileName);
             }
 
 

@@ -86,7 +86,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
             foreach (var photoItem in photoItems)
             {
                 photoItem.RelativePath = FileService
-                    .GetUserImageContentPath(_configuration, photoItem.Path);
+                    .GetUserImageContentPath(_configuration, photoItem.FileName);
 
                 Input.PhotoItemData.Add(new PhotoItemData
                 {
@@ -137,8 +137,8 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 }
             }
 
-            var photoItemWithGreatestCount = photoItems.OrderBy(pi => pi.Path).LastOrDefault();
-            string initialFileNameWithoutExtension = FileService.GetFileNameWithoutExtension(photoItemWithGreatestCount?.Path);
+            var photoItemWithGreatestCount = photoItems.OrderBy(pi => pi.FileName).LastOrDefault();
+            string initialFileNameWithoutExtension = FileService.GetFileNameWithoutExtension(photoItemWithGreatestCount?.FileName);
 
             int photoItemNameCount = 1;
 
@@ -195,7 +195,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 var photoItem = new PhotoItem
                 {
                     DateUploaded = DateTimeOffset.UtcNow,
-                    Path = filename,
+                    FileName = filename,
                     Photo = Input.Photo,
                     Size = photoSize,
                     FileFormat = fileFormat

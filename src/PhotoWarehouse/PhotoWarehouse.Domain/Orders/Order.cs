@@ -12,7 +12,7 @@ namespace PhotoWarehouse.Domain.Orders
 
 
         public OrderStatus Status { get; set; }
-        public int OrderStatusId { get; set; }
+        public int? OrderStatusId { get; set; }
         public IEnumerable<PhotoItem> OrderItems { get; set; }
         public ApplicationUser Customer { get; set; }
         public string CustomerId { get; set; }

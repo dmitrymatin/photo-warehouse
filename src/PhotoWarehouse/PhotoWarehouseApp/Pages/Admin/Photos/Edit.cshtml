@@ -52,7 +52,7 @@
                 <div class="row" id="row-@Model.Input.PhotoItemData[i].PhotoItem.Id">
                     <input type="hidden" asp-for="Input.PhotoItemData[i].PhotoItem.Id" />
                     <input class="itemStatus" type="hidden" asp-for="Input.PhotoItemData[i].PhotoItemStatus" />
-                    <div style="background-color: azure">@Model.Input.PhotoItemData[i].PhotoItem.Path</div>
+                    <div style="background-color: azure">@Model.Input.PhotoItemData[i].PhotoItem.FileName</div>
                     <div>@Model.Input.PhotoItemData[i].PhotoItem.DateUploaded</div>
                     <div>@Model.Input.PhotoItemData[i].PhotoItem.FileFormat.Name</div>
                     <div>@Model.Input.PhotoItemData[i].PhotoItem.Size</div>

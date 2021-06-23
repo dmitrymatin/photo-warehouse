@@ -40,7 +40,7 @@ namespace PhotoWarehouseApp.Pages.Photos
 
             foreach (var photo in FoundPhotos)
             {
-                photo.PhotoItemFirst.RelativePath = FileService.GetUserImageContentPath(_configuration, photo.PhotoItemFirst.Path);
+                photo.PhotoItemFirst.RelativePath = FileService.GetUserImageContentPath(_configuration, photo.PhotoItemFirst.FileName);
             }
 
             if (!FoundPhotos.Any())
@@ -59,12 +59,12 @@ namespace PhotoWarehouseApp.Pages.Photos
 
             foreach (var photo in FoundPhotos)
             {
-                photo.PhotoItemFirst.RelativePath = FileService.GetUserImageContentPath(_configuration, photo.PhotoItemFirst.Path);
+                photo.PhotoItemFirst.RelativePath = FileService.GetUserImageContentPath(_configuration, photo.PhotoItemFirst.FileName);
             }
 
             if (!FoundPhotos.Any())
             {
-                ViewData["NoSearchResultsMessage"] = $"{SearchTerm} CAT: Sorry, we couldn't find anything that fit your search";
+                ViewData["NoSearchResultsMessage"] = "Sorry, we couldn't find anything that fit your search";
             }
 
 
