@@ -40,7 +40,7 @@ namespace PhotoWarehouseApp.Pages.Photos
             }
 
             AvailableFormats = new SelectList(Photo.PhotoItems.Select(pi => pi.FileFormat), "Id", "Name");
-            AvailableSizes = new SelectList(Photo.PhotoItems.Select(pi => pi.Size), "Id");
+            AvailableSizes = new SelectList(Photo.PhotoItems.Select(pi => pi.Size), "Id", "");
 
             PhotoItemFirst.RelativePath = FileService.GetUserImageContentPath(_configuration, PhotoItemFirst.FileName);
 

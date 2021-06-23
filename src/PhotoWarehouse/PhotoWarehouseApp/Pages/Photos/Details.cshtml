@@ -46,13 +46,13 @@
                 </div>
 
                 <div class="card-info">
-                    <label asp-for="PhotoItemFirst.FileFormat" class="control-label"></label>
-                    <select asp-for="PhotoItemFirst.FileFormat" class="form-control" asp-items="Model.AvailableFormats"></select>
+                    <label asp-for="PhotoItemFirst.FileFormatId" class="control-label"></label>
+                    <select asp-for="PhotoItemFirst.FileFormatId" class="form-control" asp-items="Model.AvailableFormats"></select>
                 </div>
 
                 <div class="card-info">
-                    <label asp-for="PhotoItemFirst.Size" class="control-label"></label>
-                    <select asp-for="PhotoItemFirst.Size" class="form-control" asp-items="Model.AvailableSizes"></select>
+                    <label asp-for="PhotoItemFirst.PhotoSizeId" class="control-label"></label>
+                    <select asp-for="PhotoItemFirst.PhotoSizeId" class="form-control" asp-items="Model.AvailableSizes"></select>
                 </div>
 
                 @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))

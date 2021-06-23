@@ -23,10 +23,14 @@ namespace PhotoWarehouse.Domain.Photos
         
         [Display(Name = "Размер")]
         public PhotoSize Size { get; set; }
+        
+        [Display(Name = "Размер")]
         public int PhotoSizeId { get; set; }
 
         [Display(Name = "Формат изображения")]
         public FileFormat FileFormat { get; set; }
+        
+        [Display(Name = "Формат изображения")
         public int FileFormatId { get; set; }
     }
 }
