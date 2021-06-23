@@ -30,7 +30,7 @@ namespace PhotoWarehouse.Domain.Photos
         [Display(Name = "Формат изображения")]
         public FileFormat FileFormat { get; set; }
         
-        [Display(Name = "Формат изображения")
+        [Display(Name = "Формат изображения")]
         public int FileFormatId { get; set; }
     }
 }

@@ -147,12 +147,17 @@ footer.row {
         background-color: #faefff;
     }
 
-/*NEW STYLES*/
+/*COMMON CONTROLS*/
 button {
     background: inherit;
     border: inherit;
     cursor: pointer;
     font-size: inherit;
+}
+
+select {
+    border: none;
+    background-color: inherit;
 }
 
 /*CARDS*/
@@ -220,6 +225,6 @@ button {
     justify-content: flex-end;
 }
 
-.card-control > .clickable{
-    font-size: .7em;
-}
+    .card-control > .clickable {
+        font-size: .7em;
+    }
