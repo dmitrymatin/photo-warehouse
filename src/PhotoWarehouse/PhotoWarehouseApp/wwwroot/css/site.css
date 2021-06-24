@@ -38,6 +38,10 @@ main {
     align-items: center;
 }
 
+.column-right-align {
+    align-items: flex-end;
+}
+
 .logo {
     padding: 10px;
     height: 64px;
@@ -56,7 +60,7 @@ header.row {
 
 main.column {
     background-color: #faefff;
-    padding-bottom: 2.3em;
+    padding: 0 5.3em 2.3em;
 }
 
 footer.row {
@@ -149,6 +153,7 @@ footer.row {
 
 /*COMMON CONTROLS*/
 button {
+    margin: .15em;
     background: inherit;
     border: inherit;
     cursor: pointer;
