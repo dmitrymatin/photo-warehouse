@@ -117,7 +117,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
             }
 
             var postData = Input.Select(x =>
-                new PostData { ChosenPhotoItemId = x.ChosenPhotoItem.Id, PhotoItemStatus = x.PhotoItemStatus });
+                new PostData { ChosenPhotoItemId = x.ChosenPhotoItem.Id, PhotoItemStatus = x.PhotoItemStatus }).ToList();
 
             var user = await userManager.Users
                 .Include(u => u.PhotoItemsInBasket)
@@ -141,6 +141,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                     if (postDataItem.PhotoItemStatus == PhotoItemStatus.Deleted)
                     {
                         user.PhotoItemsInBasket.Remove(existingBasketItem);
+                        postData.Remove(postDataItem);
                     }
 
 
@@ -159,6 +160,9 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
 
             foreach (var postDataItem in postData)
             {
+                //if (postDataItem.PhotoItemStatus == PhotoItemStatus.Deleted) // must've been deleted previously
+                //    continue;
+
                 if (!user.PhotoItemsInBasket.Any(pi => pi.Id == postDataItem.ChosenPhotoItemId))
                 {
                     var itemToAdd = context.PhotoItems.FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
