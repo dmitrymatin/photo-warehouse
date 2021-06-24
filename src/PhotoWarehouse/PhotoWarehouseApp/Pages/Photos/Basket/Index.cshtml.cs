@@ -120,15 +120,12 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
             {
                 var matchingPhotoItem = user.PhotoItemsInBasket.FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
 
-                if (matchingPhotoItem is not null && postDataItem.PhotoItemStatus == PhotoItemStatus.Deleted)
+                if (matchingPhotoItem is not null)
                 {
-                    //var deletedPhotoItem = context.PhotoItems.Attach(photoItem);
-                    //context.Remove(matchingPhotoItem);
-                    //var matchingPhotoItemEntry = context.Attach(matchingPhotoItem);
-                    //matchingPhotoItemEntry.State = EntityState.Deleted;
-
-                    user.PhotoItemsInBasket.Remove(matchingPhotoItem);
-
+                    if (postDataItem.PhotoItemStatus == PhotoItemStatus.Deleted)
+                    {
+                        user.PhotoItemsInBasket.Remove(matchingPhotoItem);
+                    }
                 }
                 else
                 {
@@ -148,21 +145,10 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                     var photoItemToAdd = relatedPhotoItems.FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
                     if (photoItemToAdd is not null)
                     {
-                        //matchingPhotoItem = photoItemToAdd;
-                    }
-                    else
-                    {
-
+                        user.PhotoItemsInBasket.Add(photoItemToAdd);
+                        user.PhotoItemsInBasket.Remove(matchingPhotoItem);
                     }
                 }
-
-                if (matchingPhotoItem is null)
-                {
-                    TempData["ErrorMessage"] = "При сохранении изменений в корзине возникла ошибка. Проверьте правильность введенных данных и попробуйте снова";
-                    return RedirectToPage();
-                }
-
-                //user.PhotoItemsInBasket.Add(matchingPhotoItem);
             }
 
             context.SaveChanges();
