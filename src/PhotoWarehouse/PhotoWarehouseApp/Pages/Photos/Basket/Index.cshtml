@@ -26,7 +26,11 @@
                              alt="@Model.Input[i].Photo.Name of size @Model.Input[i].ChosenPhotoItem.Size in @Model.Input[i].ChosenPhotoItem.FileFormat format" />
                     </a>
                 </div>
-                <div class="card-title">@Model.Input[i].Photo.Name</div>
+                <div class="card-title">
+                    <a class="clickable" asp-page="/Photos/Details" asp-route-photoId="@Model.Input[i].Photo.Id">
+                        @Model.Input[i].Photo.Name
+                    </a>
+                </div>
                 <div class="card-info">@Model.Input[i].Photo.Description</div>
                 <div class="card-info">Категория: @Model.Input[i].Photo.Category.Name</div>
 
