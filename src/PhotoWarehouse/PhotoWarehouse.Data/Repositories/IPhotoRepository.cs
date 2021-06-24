@@ -110,7 +110,8 @@ namespace PhotoWarehouse.Data.Repositories
         {
             return await _context.PhotoItems
                 .AsNoTracking()
-                .Include(pi => pi.ApplicationUsers.Where(u => u.Id == userId))
+                //.Include(pi => pi.ApplicationUsers.Where(u => u.Id == userId))
+                .Where(pi => pi.ApplicationUsers.Any(u => u.Id == userId))
                 .ToListAsync();
         }
 
