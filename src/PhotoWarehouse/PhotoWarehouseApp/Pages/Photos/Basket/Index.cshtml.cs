@@ -182,6 +182,11 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                 OrderItems = new List<PhotoItem>(capacity: user.PhotoItemsInBasket.Count)
             };
 
+            if (user.PhotoItemsInBasket.Count < 1)
+            {
+                TempData["ErrorMessage"] = "В заказе должно присутствовать как минимум одно изображение.";
+                return RedirectToPage();
+            }
 
             foreach (var basketItem in user.PhotoItemsInBasket.ToList())
             {
