@@ -42,7 +42,7 @@ namespace PhotoWarehouseApp.Pages.Photos
 
             if (Photo is null || PhotoItemFirst is null)
             {
-                ViewData["NoSearchResultsMessage"] = "Sorry, we couldn't find anything that fit your search";
+                ViewData["PhotoNotFoundMessage"] = "Sorry, we couldn't find the photo or it is not fully set up";
                 return Page();
             }
 
