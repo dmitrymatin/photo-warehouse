@@ -22,60 +22,64 @@
     }
 </div>
 
-<form method="post">
-    <div class="row card-collection">
-        @for (int i = 0; i < Model.Input.Count; i++)
-        {
-            <div class="card column">
-                @*<input type="hidden" asp-for="Input[i].PhotoItem.Id" />*@
-                <input class="itemStatus" type="hidden" asp-for="Input[i].PhotoItemStatus" />
+@if (Model.Input.Count > 0)
+{
+    <form method="post">
+        <div class="row card-collection">
+            @for (int i = 0; i < Model.Input.Count; i++)
+            {
+                <div class="card column">
+                    @*<input type="hidden" asp-for="Input[i].PhotoItem.Id" />*@
+                    <input class="itemStatus" type="hidden" asp-for="Input[i].PhotoItemStatus" />
 
-                <div class="card-picture row">
-                    <a asp-page="/Photos/Details" asp-route-photoId="@Model.Input[i].Photo.Id">
-                        <img src="@Model.Input[i].ThumbnailPath"
-                             alt="@Model.Input[i].Photo.Name of size @Model.Input[i].ChosenPhotoItem.Size in @Model.Input[i].ChosenPhotoItem.FileFormat format" />
-                    </a>
-                </div>
-                <div class="card-title">
-                    <a class="clickable" asp-page="/Photos/Details" asp-route-photoId="@Model.Input[i].Photo.Id">
-                        @Model.Input[i].Photo.Name
-                    </a>
-                </div>
-                <div class="card-info">@Model.Input[i].Photo.Description</div>
-                <div class="card-info">Категория: @Model.Input[i].Photo.Category.Name</div>
+                    <div class="card-picture row">
+                        <a asp-page="/Photos/Details" asp-route-photoId="@Model.Input[i].Photo.Id">
+                            <img src="@Model.Input[i].ThumbnailPath"
+                                 alt="@Model.Input[i].Photo.Name of size @Model.Input[i].ChosenPhotoItem.Size in @Model.Input[i].ChosenPhotoItem.FileFormat format" />
+                        </a>
+                    </div>
+                    <div class="card-title">
+                        <a class="clickable" asp-page="/Photos/Details" asp-route-photoId="@Model.Input[i].Photo.Id">
+                            @Model.Input[i].Photo.Name
+                        </a>
+                    </div>
+                    <div class="card-info">@Model.Input[i].Photo.Description</div>
+                    <div class="card-info">Категория: @Model.Input[i].Photo.Category.Name</div>
 
-                <div class="card-info">
-                    <label asp-for="Input[i].ChosenPhotoItem.Id" class="control-label"></label>
-                    <select asp-for="Input[i].ChosenPhotoItem.Id" class="form-control" asp-items="Model.Input[i].SizeAndFormatSelectList"></select>
-                </div>
+                    <div class="card-info">
+                        <label asp-for="Input[i].ChosenPhotoItem.Id" class="control-label"></label>
+                        <select asp-for="Input[i].ChosenPhotoItem.Id" class="form-control" asp-items="Model.Input[i].SizeAndFormatSelectList"></select>
+                    </div>
 
-                <button type="button" class="photoItemDeleteButton clickable">Удалить из корзины</button>
-                @*
-                    <input type="hidden" asp-for="PhotoItems[i].Id" />
-                    <input class="itemStatus" type="hidden" asp-for="Input.PhotoItemData[i].PhotoItemStatus" />
-                    <div style="background-color: azure">@Model.Input.PhotoItemData[i].PhotoItem.FileName</div>
-                    <div>@Model.Input.PhotoItemData[i].PhotoItem.DateUploaded</div>
-                    <div>@Model.Input.PhotoItemData[i].PhotoItem.FileFormat.Name</div>
-                    <div>@Model.Input.PhotoItemData[i].PhotoItem.Size</div>
-                    <div>
-                        <img src="@Model.Input.PhotoItemData[i].PhotoItem.RelativePath" width="256"
-                             alt="@Model.Input.PhotoItemData[i].PhotoItem.Photo.Name @Model.Input.PhotoItemData[i].PhotoItem.Size" />
-                    </div> <!--for photo iteself-->
-                *@
-            </div>
-        }
-    </div>
-    <div class="column column-right-align">
-        <button asp-page="/Photos/Basket/Index"
-                asp-page-handler="Save" type="submit" class="clickable">
-            Сохранить
-        </button>
-        <button asp-page="/Photos/Basket/Index"
-                asp-page-handler="Order" type="submit" class="clickable">
-            Оформить заказ
-        </button>
-    </div>
-</form>
+                    <button type="button" class="photoItemDeleteButton clickable">Удалить из корзины</button>
+                    @*
+                        <input type="hidden" asp-for="PhotoItems[i].Id" />
+                        <input class="itemStatus" type="hidden" asp-for="Input.PhotoItemData[i].PhotoItemStatus" />
+                        <div style="background-color: azure">@Model.Input.PhotoItemData[i].PhotoItem.FileName</div>
+                        <div>@Model.Input.PhotoItemData[i].PhotoItem.DateUploaded</div>
+                        <div>@Model.Input.PhotoItemData[i].PhotoItem.FileFormat.Name</div>
+                        <div>@Model.Input.PhotoItemData[i].PhotoItem.Size</div>
+                        <div>
+                            <img src="@Model.Input.PhotoItemData[i].PhotoItem.RelativePath" width="256"
+                                 alt="@Model.Input.PhotoItemData[i].PhotoItem.Photo.Name @Model.Input.PhotoItemData[i].PhotoItem.Size" />
+                        </div> <!--for photo iteself-->
+                    *@
+                </div>
+            }
+        </div>
+
+        <div class="column column-right-align">
+            <button asp-page="/Photos/Basket/Index"
+                    asp-page-handler="Save" type="submit" class="clickable">
+                Сохранить
+            </button>
+            <button asp-page="/Photos/Basket/Index"
+                    asp-page-handler="Order" type="submit" class="clickable">
+                Оформить заказ
+            </button>
+        </div>
+    </form>
+}
 
 @section Scripts {
     @{
