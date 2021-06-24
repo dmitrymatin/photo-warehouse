@@ -101,6 +101,8 @@ namespace PhotoWarehouse.Data.Repositories
         {
             return _context.PhotoItems
                 .AsNoTracking()
+                .Include(pi => pi.Size)
+                .Include(pi => pi.FileFormat)
                 .Where(p => p.PhotoId == photoId).ToList();
         }
 

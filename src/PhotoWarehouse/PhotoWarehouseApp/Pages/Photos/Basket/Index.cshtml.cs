@@ -81,7 +81,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                 Photo = pi.Photo,
                 ThumbnailPath = FileService.GetUserImageContentPath(configuration, pi.FileName),
                 //PhotoItemsToChoose = pi.Photo.PhotoItems.Select(pi => new PhotoItemToChoose
-                PhotoItemsToChoose = photoRepository.GetPhotoItems(pi.PhotoId).Select(pi => new PhotoItemToChoose
+                PhotoItemsToChoose = photoRepository.GetPhotoItems(pi.Photo.Id).Select(pi => new PhotoItemToChoose
                 {
                     PhotoItemId = pi.Id,
                     SizeAndFormat = $"{pi.Size} ({pi.FileFormat})",
