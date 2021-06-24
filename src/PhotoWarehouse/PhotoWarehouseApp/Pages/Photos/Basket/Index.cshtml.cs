@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PhotoWarehouse.Data;
 using PhotoWarehouse.Data.Repositories;
+using PhotoWarehouse.Domain.Orders;
 using PhotoWarehouse.Domain.Photos;
 using PhotoWarehouse.Domain.Users;
 using PhotoWarehouseApp.Services;
@@ -160,7 +161,38 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
 
         public async Task<IActionResult> OnPostOrderAsync()
         {
-            return Page();
+            if (!ModelState.IsValid)
+            {
+                TempData["ErrorMessage"] = "При оформлении заказа возникла ошибка. Проверьте правильность введенных данных и попробуйте снова";
+                return RedirectToPage();
+            }
+
+            var postData = Input.Select(x =>
+                new PostData { ChosenPhotoItemId = x.ChosenPhotoItem.Id }).ToList();
+
+            var user = await userManager.Users
+                .Include(u => u.PhotoItemsInBasket)
+                .Include(u => u.Orders)
+                .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            var order = new Order
+            {
+                Customer = user,
+                DateCreated = DateTimeOffset.UtcNow,
+                OrderItems = new List<PhotoItem>(capacity: user.PhotoItemsInBasket.Count)
+            };
+
+
+            foreach (var basketItem in user.PhotoItemsInBasket.ToList())
+            {
+                order.OrderItems.Add(basketItem);
+            }
+
+            context.Orders.Add(order);
+
+            context.SaveChanges();
+
+            return RedirectToPage("/Photos/Orders/Details", new { orderId = order.Id });
         }
     }
 }
