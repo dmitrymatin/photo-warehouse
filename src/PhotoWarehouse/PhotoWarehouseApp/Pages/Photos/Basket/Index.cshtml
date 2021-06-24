@@ -10,6 +10,16 @@
     {
         <div class="alert">@ViewBag.EmptyBasketMessage</div>
     }
+
+    @if (TempData["ErrorMessage"] is not null)
+    {
+        <div class="alert">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (TempData["SuccessMessage"] is not null)
+    {
+        <div class="alert">@TempData["SuccessMessage"]</div>
+    }
 </div>
 
 <form method="post">
@@ -60,7 +70,10 @@
                 asp-page-handler="Save" type="submit" class="clickable">
             Сохранить
         </button>
-        <button asp-page="/Photos/Orders/Create" type="submit" class="clickable">Оформить заказ</button>
+        <button asp-page="/Photos/Basket/Index"
+                asp-page-handler="Order" type="submit" class="clickable">
+            Оформить заказ
+        </button>
     </div>
 </form>
 

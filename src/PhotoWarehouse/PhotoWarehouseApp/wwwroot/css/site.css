@@ -165,6 +165,14 @@ select {
     background-color: inherit;
 }
 
+.alert {
+    background-color: rgb(255 111 111);
+}
+
+.success {
+    background-color: rgb(156 207 104);
+}
+
 /*CARDS*/
 
 .row.card-collection {

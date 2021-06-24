@@ -32,6 +32,8 @@ namespace PhotoWarehouse.Data.Repositories
         Task<IList<Photo>> GetPhotosAsync(string searchTerm, int maxCount = 300, bool requireSetPhotoName = true, bool requirePhotoItems = true);
         Task<IList<Photo>> GetPhotosInCategoryAsync(string categoryName, int maxCount = 300, bool requireSetPhotoName = true, bool requirePhotoItems = true);
         Task<IList<PhotoItem>> GetPhotoItemsAsync(int photoId);
+        IList<PhotoItem> GetPhotoItems(int photoId);
+        Task<IList<PhotoItem>> GetUserPhotoItemsAsync(string userId);
         bool PhotoExists(int photoId);
         void UpdatePhoto(Photo photo);
     }
@@ -94,6 +96,22 @@ namespace PhotoWarehouse.Data.Repositories
                 .AsNoTracking()
                 .Where(p => p.PhotoId == photoId).ToListAsync();
         }
+
+        public IList<PhotoItem> GetPhotoItems(int photoId)
+        {
+            return _context.PhotoItems
+                .AsNoTracking()
+                .Where(p => p.PhotoId == photoId).ToList();
+        }
+
+        public async Task<IList<PhotoItem>> GetUserPhotoItemsAsync(string userId)
+        {
+            return await _context.PhotoItems
+                .AsNoTracking()
+                .Include(pi => pi.ApplicationUsers.Where(u => u.Id == userId))
+                .ToListAsync();
+        }
+
 
         public async Task<IList<Photo>> GetPhotosAsync(string searchTerm, int maxCount = 300, bool requireSetPhotoName = true, bool requirePhotoItems = true)
         {
