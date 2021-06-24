@@ -81,7 +81,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
             {
                 Photo = pi.Photo,
                 ThumbnailPath = FileService.GetUserImageContentPath(configuration, pi.FileName),
-                //PhotoItemsToChoose = pi.Photo.PhotoItems.Select(pi => new PhotoItemToChoose
+
                 PhotoItemsToChoose = photoRepository.GetPhotoItems(pi.Photo.Id).Select(pi => new PhotoItemToChoose
                 {
                     PhotoItemId = pi.Id,
@@ -127,12 +127,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
             {
                 if (!postData.Any(pd => pd.ChosenPhotoItemId == existingBasketItem.Id))
                 {
-                    //var itemToDelete = await context.PhotoItems
-                    //   //.AsNoTracking()
-                    //   .FirstOrDefaultAsync(pi => pi.Id == existingBasketItem.Id);
-
                     user.PhotoItemsInBasket.Remove(existingBasketItem);
-                    //continue;
                 }
                 else
                 {
@@ -143,26 +138,11 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                         user.PhotoItemsInBasket.Remove(existingBasketItem);
                         postData.Remove(postDataItem);
                     }
-
-
-                    //if (basketItemsFromRequest.PhotoItemStatus == PhotoItemStatus.Deleted)
-                    //{
-
-                    //}
-
-                    //var itemToDelete = await context.PhotoItems
-                    //   //.AsNoTracking()
-                    //   .FirstOrDefaultAsync(pi => pi.Id == basketItemsFromRequest.ChosenPhotoItemId);
-
-                    //user.PhotoItemsInBasket.Remove(itemToDelete);
                 }
             }
 
             foreach (var postDataItem in postData)
             {
-                //if (postDataItem.PhotoItemStatus == PhotoItemStatus.Deleted) // must've been deleted previously
-                //    continue;
-
                 if (!user.PhotoItemsInBasket.Any(pi => pi.Id == postDataItem.ChosenPhotoItemId))
                 {
                     var itemToAdd = context.PhotoItems.FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
@@ -170,68 +150,6 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                     user.PhotoItemsInBasket.Add(itemToAdd);
                 }
             }
-
-            //foreach (var basketItemsFromRequest in postData)
-            //{
-            //    if (!user.PhotoItemsInBasket.Any(pi => pi.Id == basketItemsFromRequest.ChosenPhotoItemId))
-            //    {
-            //        var newItem = await context.PhotoItems
-            //           //.AsNoTracking()
-            //           .FirstOrDefaultAsync(pi => pi.Id == basketItemsFromRequest.ChosenPhotoItemId);
-
-            //        user.PhotoItemsInBasket.Add(newItem);
-            //    }
-            //    if (basketItemsFromRequest.PhotoItemStatus == PhotoItemStatus.Deleted)
-            //    {
-            //        var itemToDelete = await context.PhotoItems
-            //           //.AsNoTracking()
-            //           .FirstOrDefaultAsync(pi => pi.Id == basketItemsFromRequest.ChosenPhotoItemId);
-
-            //        user.PhotoItemsInBasket.Remove(itemToDelete);
-            //    }
-            //}
-
-            //user.PhotoItemsInBasket.Select(pi => postData.Any(new { ChosenPhotoItemId, PhotoItemStatus.Unmodified }));
-
-            //foreach (var userExistingBasketItem in user.PhotoItemsInBasket ?? Enumerable.Empty<PhotoItem>())
-            //{
-            //    if (postData.Any(new { ChosenPhotoItemId = 1, PhotoItemStatus.Deleted })) ;
-            //}
-
-            //foreach (var postDataItem in postData)
-            //{
-            //    var matchingPhotoItem = user.PhotoItemsInBasket.FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
-
-            //    if (matchingPhotoItem is not null)
-            //    {
-            //        if (postDataItem.PhotoItemStatus == PhotoItemStatus.Deleted)
-            //        {
-            //            user.PhotoItemsInBasket.Remove(matchingPhotoItem);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        // ChosenPhotoItem was added as another version of 
-            //        var chosenPhotoItem = context.PhotoItems
-            //            .AsNoTracking()
-            //            .Include(pi => pi.Photo)
-            //            .FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
-            //        var chosenPhoto = chosenPhotoItem.Photo;
-
-            //        var relatedPhotoItems = context.PhotoItems
-            //            .AsNoTracking()
-            //            .Include(pi => pi.Photo)
-            //            .Where(pi => pi.PhotoId == chosenPhoto.Id)
-            //            .ToList();
-
-            //        var photoItemToAdd = relatedPhotoItems.FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
-            //        if (photoItemToAdd is not null)
-            //        {
-            //            user.PhotoItemsInBasket.Add(photoItemToAdd);
-            //            user.PhotoItemsInBasket.Remove(matchingPhotoItem);
-            //        }
-            //    }
-            //}
 
             context.SaveChanges();
 
