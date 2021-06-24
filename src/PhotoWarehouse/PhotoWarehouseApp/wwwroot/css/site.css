@@ -166,11 +166,15 @@ select {
 }
 
 .alert {
-    background-color: rgb(255 111 111);
+    padding: .2em .4em;
+    background-color: rgb(255 176 176);
+    border-radius: 6px;
 }
 
 .success {
+    padding: .2em .4em;
     background-color: rgb(156 207 104);
+    border-radius: 6px;
 }
 
 /*CARDS*/
