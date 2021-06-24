@@ -112,38 +112,58 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
             var postData = Input.Select(x =>
                 new { ChosenPhotoItemId = x.ChosenPhotoItem.Id, x.PhotoItemStatus });
 
-            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            var user = await userManager.Users
+                .Include(u => u.PhotoItemsInBasket)
+                .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            //context.Entry(user).State = EntityState.Detached;
 
             //var userEntry = await context.Users
+            //    .AsNoTracking()
             //    .Include(u => u.PhotoItemsInBasket)
-            //        .ThenInclude(pi => pi.Size)
-            //    .Include(u => u.PhotoItemsInBasket)
-            //        .ThenInclude(pi => pi.FileFormat)
-            //    .Include(u => u.PhotoItemsInBasket)
-            //        .ThenInclude(pi => pi.Photo)
-            //            .ThenInclude(p => p.Category)
             //    .FirstOrDefaultAsync(u => u.Id == user.Id);
 
-            var userPhotoItems = await photoRepository.GetUserPhotoItemsAsync(user.Id);
-            user.PhotoItemsInBasket = userPhotoItems;
+            //var userPhotoItems = await photoRepository.GetUserPhotoItemsAsync(user.Id);
+            //user.PhotoItemsInBasket = userPhotoItems;
 
-            //if (!postData.Any())
-            //{
-            //    // error! there should be photos as they can only be soft deleted
-            //}
-            foreach (var item in postData)
+            foreach (var postDataItem in postData)
             {
-                var matchingPhotoItem = userPhotoItems.FirstOrDefault(pi => pi.Id == item.ChosenPhotoItemId);
+                var matchingPhotoItem = user.PhotoItemsInBasket.FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
 
-                if (matchingPhotoItem is null)
+                if (matchingPhotoItem is not null)
                 {
-                    var chosenPhoto = context.PhotoItems.FirstOrDefault(pi => pi.Id == item.ChosenPhotoItemId);
-                    var relatedPhotoItems = context.PhotoItems.Where(pi => pi.PhotoId == chosenPhoto.Id);
+                    if (postDataItem.PhotoItemStatus == PhotoItemStatus.Deleted)
+                    {
+                        //var deletedPhotoItem = context.PhotoItems.Attach(photoItem);
+                        var matchingPhotoItemEntry = context.Attach(matchingPhotoItem);
+                        matchingPhotoItemEntry.State = EntityState.Deleted;
+                        //user.PhotoItemsInBasket.Remove(matchingPhotoItem);
+                    }
+                }
+                else
+                {
+                    // ChosenPhotoItem was added as another version of picture
+                    
+                    var chosenPhotoItem = context.PhotoItems
+                        .AsNoTracking()
+                        .Include(pi => pi.Photo)
+                        .FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
+                    var chosenPhoto = chosenPhotoItem.Photo;
 
-                    var photoItemToAdd = relatedPhotoItems.FirstOrDefault(pi => pi.Id == item.ChosenPhotoItemId);
+                    var relatedPhotoItems = context.PhotoItems
+                        .AsNoTracking()
+                        .Include(pi => pi.Photo)
+                        .Where(pi => pi.PhotoId == chosenPhoto.Id)
+                        .ToList();
+
+                    var photoItemToAdd = relatedPhotoItems.FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
                     if (photoItemToAdd is not null)
                     {
                         matchingPhotoItem = photoItemToAdd;
+                    }
+                    else
+                    {
+
                     }
                 }
 
@@ -153,50 +173,13 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                     return RedirectToPage();
                 }
 
-                if (item.PhotoItemStatus == PhotoItemStatus.Deleted)
-                {
-                    photoRepository.DeletePhotoItems(matchingPhotoItem);
-                }
-                else
-                {
-                    userPhotoItems.Add(matchingPhotoItem);
-                }
+                user.PhotoItemsInBasket.Add(matchingPhotoItem);
             }
 
-
-            //foreach (var photoItem in userPhotoItems)
-            //{
-            //    var matchingPhotoItem = postData.
-            //    if (photoItem.Id == )
-            //}
-
-            //var input = Input;
-
-
-            //Input = userEntry.PhotoItemsInBasket.Select(pi => new PhotoItemsInputModel
-            //{
-            //    Photo = pi.Photo,
-            //    ThumbnailPath = FileService.GetUserImageContentPath(configuration, pi.FileName),
-            //    PhotoItemsToChoose = pi.Photo.PhotoItems.Select(pi => new PhotoItemToChoose
-            //    {
-            //        PhotoItemId = pi.Id,
-            //        SizeAndFormat = $"{pi.Size} ({pi.FileFormat})",
-            //    }),
-            //    ChosenPhotoItem = pi,
-            //    PhotoItemStatus = PhotoItemStatus.Unmodified
-            //}).ToList();
-
-            //foreach (var inputItem in Input)
-            //{
-            //    inputItem.SizeAndFormatSelectList = new SelectList(inputItem.PhotoItemsToChoose, "PhotoItemId", "SizeAndFormat");
-            //}
-
-            //if (!Input.Any())
-            //{
-            //    ViewData["EmptyBasketMessage"] = "На данный момент корзина пуста";
-            //}
+            context.SaveChanges();
 
             TempData["SuccessMessage"] = "Изменения успешно сохранены.";
+
             return RedirectToPage();
         }
 
