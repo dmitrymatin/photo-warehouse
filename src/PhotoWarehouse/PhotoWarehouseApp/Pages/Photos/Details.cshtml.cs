@@ -38,7 +38,7 @@ namespace PhotoWarehouseApp.Pages.Photos
         public async Task<IActionResult> OnGet(int photoId)
         {
             Photo = await _photoRepository.GetPhotoAsync(photoId, true, true, true);
-            PhotoItemFirst = Photo.PhotoItems?.FirstOrDefault();
+            PhotoItemFirst = Photo?.PhotoItems?.FirstOrDefault();
 
             if (Photo is null || PhotoItemFirst is null)
             {
