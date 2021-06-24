@@ -116,34 +116,23 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                 .Include(u => u.PhotoItemsInBasket)
                 .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
-            //context.Entry(user).State = EntityState.Detached;
-
-            //var userEntry = await context.Users
-            //    .AsNoTracking()
-            //    .Include(u => u.PhotoItemsInBasket)
-            //    .FirstOrDefaultAsync(u => u.Id == user.Id);
-
-            //var userPhotoItems = await photoRepository.GetUserPhotoItemsAsync(user.Id);
-            //user.PhotoItemsInBasket = userPhotoItems;
-
             foreach (var postDataItem in postData)
             {
                 var matchingPhotoItem = user.PhotoItemsInBasket.FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
 
-                if (matchingPhotoItem is not null)
+                if (matchingPhotoItem is not null && postDataItem.PhotoItemStatus == PhotoItemStatus.Deleted)
                 {
-                    if (postDataItem.PhotoItemStatus == PhotoItemStatus.Deleted)
-                    {
-                        //var deletedPhotoItem = context.PhotoItems.Attach(photoItem);
-                        var matchingPhotoItemEntry = context.Attach(matchingPhotoItem);
-                        matchingPhotoItemEntry.State = EntityState.Deleted;
-                        //user.PhotoItemsInBasket.Remove(matchingPhotoItem);
-                    }
+                    //var deletedPhotoItem = context.PhotoItems.Attach(photoItem);
+                    //context.Remove(matchingPhotoItem);
+                    //var matchingPhotoItemEntry = context.Attach(matchingPhotoItem);
+                    //matchingPhotoItemEntry.State = EntityState.Deleted;
+
+                    user.PhotoItemsInBasket.Remove(matchingPhotoItem);
+
                 }
                 else
                 {
-                    // ChosenPhotoItem was added as another version of picture
-                    
+                    // ChosenPhotoItem was added as another version of 
                     var chosenPhotoItem = context.PhotoItems
                         .AsNoTracking()
                         .Include(pi => pi.Photo)
@@ -159,7 +148,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                     var photoItemToAdd = relatedPhotoItems.FirstOrDefault(pi => pi.Id == postDataItem.ChosenPhotoItemId);
                     if (photoItemToAdd is not null)
                     {
-                        matchingPhotoItem = photoItemToAdd;
+                        //matchingPhotoItem = photoItemToAdd;
                     }
                     else
                     {
@@ -173,7 +162,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                     return RedirectToPage();
                 }
 
-                user.PhotoItemsInBasket.Add(matchingPhotoItem);
+                //user.PhotoItemsInBasket.Add(matchingPhotoItem);
             }
 
             context.SaveChanges();
