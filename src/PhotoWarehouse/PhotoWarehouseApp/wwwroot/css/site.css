@@ -87,6 +87,7 @@ footer.row {
     transition: .3s;
     padding: .2rem .5rem;
     font-weight: 400;
+    text-align: center;
     cursor: pointer;
     color: #2a2a2a;
     border-radius: 6px;
@@ -268,7 +269,7 @@ select {
 
 /*FORM STYLES*/
 .form-medium {
-    width: 75vw;
+    width: 35vw;
 }
 
     .form-medium > .column {
@@ -277,11 +278,12 @@ select {
     .form-medium .form-control {
         font-size: .9em;
         flex-grow: 1;
-        margin-left: .7em;
+        margin: .2em .7em .2em;
+        padding: .1em;
     }
 
     .form-medium button {
-        margin: .4em 0 .1em;
+        margin: .4em 0 .7em;
     }
 
     .form-medium .row {
@@ -296,5 +298,9 @@ select {
 @media only screen and (max-width: 768px) {
     main.column {
         padding: 0 .8em 1.7em;
+    }
+
+    .form-medium {
+        width: 75vw;
     }
 }

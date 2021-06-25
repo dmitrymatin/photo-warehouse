@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -41,8 +41,8 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = "Необходимо указать имя пользователя")]
-            [Display(Name = "Имя пользователя")]
+            [Required(ErrorMessage = "РќРµРѕР±С…РѕРґРёРјРѕ СѓРєР°Р·Р°С‚СЊ РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")]
+            [Display(Name = "РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")]
             public string UserName { get; set; }
 
             [Required]
@@ -51,14 +51,14 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "{0} должен иметь длину хотя бы {2} символов (максимум - {1} символов).", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "{0} РґРѕР»Р¶РµРЅ РёРјРµС‚СЊ РґР»РёРЅСѓ С…РѕС‚СЏ Р±С‹ {2} СЃРёРјРІРѕР»РѕРІ (РјР°РєСЃРёРјСѓРј - {1} СЃРёРјРІРѕР»РѕРІ).", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Пароль")]
+            [Display(Name = "РџР°СЂРѕР»СЊ")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Подтвердите пароль")]
-            [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
+            [Display(Name = "РџРѕРґС‚РІРµСЂРґРёС‚Рµ РїР°СЂРѕР»СЊ")]
+            [Compare("Password", ErrorMessage = "РџР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -82,7 +82,7 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account
                 var addToRoleResult = await _userManager.AddToRoleAsync(user, Roles.Client.ToString());
                 if (createUserResult.Succeeded && addToRoleResult.Succeeded)
                 {
-                    _logger.LogInformation("Создан пользователь с паролем.");
+                    _logger.LogInformation("РЎРѕР·РґР°РЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃ РїР°СЂРѕР»РµРј.");
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
