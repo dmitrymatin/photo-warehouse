@@ -28,12 +28,12 @@
                         @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
                         {
                             <a class="navItem clickable" asp-page="/Admin/Photos/Index">Загрузка фото</a>
-                            <a class="navItem clickable" asp-page="/Admin/Photos/Index">Заказы пользователей</a>
+                            <a class="navItem clickable" asp-page="/Photos/Orders/List">Заказы пользователей</a>
                         }
                         else if (User.IsInRole(Areas.Identity.Roles.Client.ToString()))
                         {
                             <a class="navItem clickable" asp-page="/Photos/Basket/Index">Корзина</a>
-                            <a class="navItem clickable" asp-page="/Photos/Orders/Index">Заказы</a>
+                            <a class="navItem clickable" asp-page="/Photos/Orders/List">Заказы</a>
                         }
                     }
                 </div>

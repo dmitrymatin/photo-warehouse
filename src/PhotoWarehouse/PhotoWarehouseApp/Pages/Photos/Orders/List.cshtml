@@ -1,0 +1,24 @@
+﻿@page
+@model PhotoWarehouseApp.Pages.Photos.Orders.ListModel
+@{
+    ViewData["Title"] = "Список заказов";
+}
+
+<div class="row">
+    @foreach (var order in Model.Orders)
+    {
+        <div class="card card-loose-height">
+            <div class="card-title">
+                <a asp-page="/Photos/Orders/Details" asp-route-orderId="@order.Id" class="clickable">
+                    Заказ <span class="local-date-time">@order.DateCreated.ToString(System.Globalization.CultureInfo.InvariantCulture)</span>
+                </a>
+            </div>
+            <div class="card-info">Количество фотографий в заказе: @order.OrderItems.Count</div>
+
+            @if (User.IsInRole(PhotoWarehouseApp.Areas.Identity.Roles.Administrator.ToString()))
+            {
+                <div class="card-info">Заказ создан пользователем @order.Customer.UserName</div>
+            }
+        </div>
+    }
+</div>
