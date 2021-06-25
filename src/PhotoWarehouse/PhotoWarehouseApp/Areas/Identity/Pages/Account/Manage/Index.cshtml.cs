@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,7 +23,6 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        public string Username { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -33,21 +32,25 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+            [Required(ErrorMessage = "Введите имя пользователя")]
+            [Display(Name ="Имя пользователя")]
+            public string Username { get; set; }
+
+            [Required(ErrorMessage = "Введите адрес электронной почтыпользователя")]
+            [EmailAddress(ErrorMessage = "Введенный адрес не является допустимым")]
+            [Display(Name = "Адрес электронной почты")]
+            public string UserEmail { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
+            var userEmail = await _userManager.GetEmailAsync(user);
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                Username = userName,
+                UserEmail = userEmail
             };
         }
 
@@ -56,7 +59,7 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Невозможно загрузить профиль пользователя с ID '{_userManager.GetUserId(User)}'.");
             }
 
             await LoadAsync(user);
@@ -68,7 +71,7 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Невозможно загрузить профиль пользователя с ID '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
@@ -77,19 +80,30 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            var userName = await _userManager.GetUserNameAsync(user);
+            var userEmail = await _userManager.GetEmailAsync(user);
+            if (Input.Username != userName)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
+                var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.Username);
+                if (!setUserNameResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "При сохранении имени пользователя возникла ошибка.";
+                    return RedirectToPage();
+                }
+            }
+
+            if (Input.UserEmail != userEmail)
+            {
+                var setUserEmailResult = await _userManager.SetEmailAsync(user, Input.UserEmail);
+                if (!setUserEmailResult.Succeeded)
+                {
+                    StatusMessage = "При сохранении адреса электронной почты возникла ошибка.";
                     return RedirectToPage();
                 }
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Изменения успешно сохранены!";
             return RedirectToPage();
         }
     }
