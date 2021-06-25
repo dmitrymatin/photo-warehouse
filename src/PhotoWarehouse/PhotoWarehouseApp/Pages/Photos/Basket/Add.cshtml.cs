@@ -40,7 +40,14 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                 return RedirectToPage("/Error");
             }
 
-            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            string userName = User.Identity?.Name;
+            if (userName is null)
+            {
+                return RedirectToPage("/Error");
+            }
+
+            var user = await userManager.FindByNameAsync(userName);
+
 
             var userEntry = context.Users
                 .Include(u => u.PhotoItemsInBasket)

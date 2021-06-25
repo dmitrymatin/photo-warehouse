@@ -27,9 +27,16 @@ namespace PhotoWarehouseApp.Pages.Photos.Orders
 
         public IEnumerable<Order> Orders { get; set; }
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            string userName = User.Identity?.Name;
+            if (userName is null)
+            {
+                return RedirectToPage("/Error");
+            }
+
+            var user = await userManager.FindByNameAsync(userName);
+
 
             if (await userManager.IsInRoleAsync(user, Roles.Administrator.ToString()))
             {
@@ -37,13 +44,15 @@ namespace PhotoWarehouseApp.Pages.Photos.Orders
                     .Include(o => o.OrderItems)
                     .Include(o => o.Customer)
                     .ToListAsync();
-                
-                return;
+
+                return Page();
             }
 
             Orders = await context.Orders
                 .Include(o => o.OrderItems)
                 .ToListAsync();
+
+            return Page();
         }
     }
 }

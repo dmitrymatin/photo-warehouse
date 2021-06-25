@@ -64,9 +64,16 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
         [BindProperty]
         public IList<PhotoItemsInputModel> Input { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            string userName = User.Identity?.Name;
+            if (userName is null)
+            {
+                return RedirectToPage("/Error");
+            }
+
+            var user = await userManager.FindByNameAsync(userName);
+
 
             var userEntry = await context.Users
                 .Include(u => u.PhotoItemsInBasket)
@@ -101,6 +108,8 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
             {
                 ViewData["EmptyBasketMessage"] = "На данный момент корзина пуста";
             }
+
+            return Page();
         }
 
         public class PostData
@@ -123,6 +132,11 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
             var user = await userManager.Users
                 .Include(u => u.PhotoItemsInBasket)
                 .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            if (user is null)
+            {
+                return RedirectToPage("/Error");
+            }
 
             foreach (var existingBasketItem in user.PhotoItemsInBasket.ToList())
             {
@@ -174,6 +188,11 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
                 .Include(u => u.PhotoItemsInBasket)
                 .Include(u => u.Orders)
                 .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            if (user is null)
+            {
+                return RedirectToPage("/Error");
+            }
 
             var order = new Order
             {
