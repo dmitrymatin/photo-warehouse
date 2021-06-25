@@ -178,7 +178,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Basket
             var order = new Order
             {
                 Customer = user,
-                DateCreated = DateTimeOffset.UtcNow,
+                DateCreated = DateTimeOffset.Now,
                 OrderItems = new List<PhotoItem>(capacity: user.PhotoItemsInBasket.Count)
             };
 

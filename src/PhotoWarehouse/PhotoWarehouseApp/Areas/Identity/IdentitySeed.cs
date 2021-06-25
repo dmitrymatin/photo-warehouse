@@ -30,7 +30,7 @@ namespace PhotoWarehouseApp.Areas.Identity
             {
                 UserName = "administrator",
                 Email = configuration["AdministratorEmail"],
-                DateJoined = DateTimeOffset.UtcNow,
+                DateJoined = DateTimeOffset.Now,
                 EmailConfirmed = true
             };
 

@@ -132,13 +132,13 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 var photo = new Photo
                 {
                     CategoryId = Input.CommonCategoryId,
-                    InitialUploadDate = DateTimeOffset.UtcNow,
-                    DateTaken = Input.CommonDateTaken ?? DateTimeOffset.UtcNow, // consider DateTaken to be nullable
+                    InitialUploadDate = DateTimeOffset.Now,
+                    DateTaken = Input.CommonDateTaken ?? DateTimeOffset.Now, // consider DateTaken to be nullable
                 };
 
                 var photoItem = new PhotoItem
                 {
-                    DateUploaded = DateTimeOffset.UtcNow,
+                    DateUploaded = DateTimeOffset.Now,
                     FileName = filename,
                     Photo = photo,
                     Size = photoSize,

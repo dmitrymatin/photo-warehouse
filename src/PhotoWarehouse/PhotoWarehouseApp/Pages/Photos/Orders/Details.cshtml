@@ -11,34 +11,9 @@
 </div>
 
 <div class="row card-collection">
-    <div class="column">
-
-    </div>
-
     @foreach (var item in Model.Order.OrderItems.ToList())
     {
-        <div class="card column">
-            <div class="card-picture row">
-                <a asp-page="/Photos/Details" asp-route-photoId="@item.Photo.Id">
-                    <img src="@item.RelativePath"
-                         alt="@item.Photo.Name of size @item.Size" in @item.FileFormat format />
-                </a>
-            </div>
-            <div class="card-title">
-                <a class="clickable" asp-page="/Photos/Details" asp-route-photoId="@item.Photo.Id">
-                    @item.Photo.Name
-                </a>
-            </div>
-            <div class="card-info">
-                @item.Photo.Description
-            </div>
-            <div class="card-info">
-                Размер @item.Size @item.FileFormat
-            </div>
-            <div class="card-info">
-                Формат @item.FileFormat
-            </div>
-        </div>
+        <partial name="_OrderDetails" model="item" />
     }
 
 </div>

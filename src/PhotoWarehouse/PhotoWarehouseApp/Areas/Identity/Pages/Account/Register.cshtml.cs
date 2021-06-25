@@ -72,7 +72,7 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account
                 { 
                     UserName = Input.Email, 
                     Email = Input.Email, 
-                    DateJoined = DateTimeOffset.UtcNow 
+                    DateJoined = DateTimeOffset.Now 
                 };
                 var createUserResult = await _userManager.CreateAsync(user, Input.Password);
                 var addToRoleResult = await _userManager.AddToRoleAsync(user, Roles.Client.ToString());

@@ -63,7 +63,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 return Page();
             }
 
-            Photo.InitialUploadDate = DateTimeOffset.UtcNow;
+            Photo.InitialUploadDate = DateTimeOffset.Now;
             if (Request.Form.Files.Count > 0)
             {
                 IFormFile formPhoto = Request.Form.Files[0];
@@ -101,7 +101,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
                 var photoItem = new PhotoItem
                 {
-                    DateUploaded = DateTimeOffset.UtcNow,
+                    DateUploaded = DateTimeOffset.Now,
                     FileName = filename,
                     Photo = Photo,
                     Size = photoSize,

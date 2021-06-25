@@ -194,7 +194,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
                 var photoItem = new PhotoItem
                 {
-                    DateUploaded = DateTimeOffset.UtcNow,
+                    DateUploaded = DateTimeOffset.Now,
                     FileName = filename,
                     Photo = Input.Photo,
                     Size = photoSize,
