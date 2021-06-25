@@ -203,7 +203,7 @@ select {
         .card.cardAutoHeight > .card-picture img {
             height: auto;
             width: auto;
-            max-height: auto;
+            max-height: max-content;
             max-width: 65vw;
             object-fit: cover;
         }
