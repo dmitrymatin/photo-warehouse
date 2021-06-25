@@ -41,20 +41,24 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required(ErrorMessage = "Необходимо указать имя пользователя")]
+            [Display(Name = "Имя пользователя")]
+            public string UserName { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "{0} должен иметь длину хотя бы {2} символов (максимум - {1} символов).", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Пароль")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Подтвердите пароль")]
+            [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -68,33 +72,19 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser 
-                { 
-                    UserName = Input.Email, 
-                    Email = Input.Email, 
-                    DateJoined = DateTimeOffset.Now 
+                var user = new ApplicationUser
+                {
+                    UserName = Input.UserName,
+                    Email = Input.Email,
+                    DateJoined = DateTimeOffset.Now
                 };
                 var createUserResult = await _userManager.CreateAsync(user, Input.Password);
                 var addToRoleResult = await _userManager.AddToRoleAsync(user, Roles.Client.ToString());
                 if (createUserResult.Succeeded && addToRoleResult.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
-
-                    var callbackUrl = Url.Page(
-                        "/Index",
-                        pageHandler: null,
-                        values: new { returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    _logger.LogInformation("Создан пользователь с паролем.");
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
                 }
                 foreach (var error in createUserResult.Errors)
                 {

@@ -6,7 +6,7 @@ function initialiseCategoriesMenu() {
     const menuToggle = document.querySelector('#categoriesMenuToggle');
     const menu = document.querySelector('#expMenu');
 
-    menuToggle.addEventListener('click', () => {
+    menuToggle?.addEventListener('click', () => {
         const menuToggleCoords = menuToggle.getBoundingClientRect();
         console.dir(menuToggleCoords);
         const x = menuToggleCoords.left;
