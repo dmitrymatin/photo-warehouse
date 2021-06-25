@@ -41,11 +41,11 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Введите имя пользователя")]
             [Display(Name = "Имя пользователя")]
             public string UserName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Введите пароль")]
             [DataType(DataType.Password)]
             [Display(Name = "Пароль")]
             public string Password { get; set; }

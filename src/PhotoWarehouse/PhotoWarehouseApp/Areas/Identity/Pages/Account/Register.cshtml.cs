@@ -45,12 +45,12 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account
             [Display(Name = "Имя пользователя")]
             public string UserName { get; set; }
 
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Необходимо указать адрес электронной почты")]
+            [EmailAddress(ErrorMessage = "Введенный адрес не является допустимым")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Пароль является обязательным")]
             [StringLength(100, ErrorMessage = "{0} должен иметь длину хотя бы {2} символов (максимум - {1} символов).", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Пароль")]
