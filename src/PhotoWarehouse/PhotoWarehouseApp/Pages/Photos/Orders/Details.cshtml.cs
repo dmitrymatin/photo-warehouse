@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using PhotoWarehouse.Data;
 using PhotoWarehouse.Domain.Orders;
 using PhotoWarehouse.Domain.Users;
+using PhotoWarehouseApp.Areas.Identity;
 using PhotoWarehouseApp.Services;
 
 namespace PhotoWarehouseApp.Pages.Photos.Orders
@@ -31,17 +32,26 @@ namespace PhotoWarehouseApp.Pages.Photos.Orders
 
         public Order Order { get; set; }
 
-        public async Task OnGet(int orderId)
+        public async Task<IActionResult> OnGet(int orderId)
         {
             var user = await userManager.Users
                .Include(u => u.Orders)
                .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
-            var order = user.Orders.FirstOrDefault(o => o.Id == orderId);
+            Order order = null;
+
+            if (await userManager.IsInRoleAsync(user, Roles.Client.ToString()))
+            {
+                order = user.Orders.FirstOrDefault(o => o.Id == orderId);
+            }
+            else if (await userManager.IsInRoleAsync(user, Roles.Client.ToString()))
+            {
+                order = context.Orders.Find(orderId);
+            }
 
             if (order is null)
             {
-                // order not found, redirect?
+                return RedirectToPage("/Orders/List");
             }
 
             Order = await context.Orders.AsNoTracking()
@@ -57,6 +67,8 @@ namespace PhotoWarehouseApp.Pages.Photos.Orders
             {
                 orderItem.RelativePath = FileService.GetUserImageContentPath(configuration, orderItem.FileName);
             }
+
+            return Page();
         }
     }
 }
