@@ -11,7 +11,11 @@ namespace PhotoWarehouse.Domain.Photos
     {
         [Display(Name = "Вариант изображения")]
         public int Id { get; set; }
+
+        [Display(Name = "Дата загрузки")]
         public DateTimeOffset DateUploaded { get; set; }
+
+        [Display(Name = "Название файла")]
         public string FileName { get; set; }
 
         [NotMapped]

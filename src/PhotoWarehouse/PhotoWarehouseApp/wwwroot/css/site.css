@@ -305,12 +305,19 @@ select {
         opacity: 0;
     }
 
+.form-large {
+    width: 70vw;
+}
 
 /*TABLE*/
 .table-wrapper {
     overflow: scroll;
     margin: 1.3em 0 .3em;
 }
+
+    .table-wrapper.small-wrapper {
+        font-size: .7em;
+    }
 
     .table-wrapper::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);

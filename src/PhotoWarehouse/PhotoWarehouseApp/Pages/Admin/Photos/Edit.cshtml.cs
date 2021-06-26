@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -55,6 +56,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
         public class PhotoItemData
         {
+            [Display(Name = "Изображение")]
             public PhotoItem PhotoItem { get; set; }
             public PhotoItemStatus PhotoItemStatus { get; set; }
         }
@@ -110,7 +112,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
             bool photoExists = _photoRepository.PhotoExists(Input.Photo.Id);
             if (!photoExists)
             {
-                TempData["ImageError"] = "An error occured while saving changes: photo entry not found";
+                TempData["ImageError"] = "Запрашиваемая фотография не найдена.";
                 return RedirectToPage();
             }
 
@@ -168,7 +170,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
                 if (!formFile.IsImage(extension))
                 {
-                    TempData["ImageError"] = $"The file {formFileName} you submitted is not an image. Only image files can be uploaded.";
+                    TempData["ImageError"] = $"Загруженный файл ({formFileName}) не является изображением.";
                     return RedirectToPage();
                 }
 
