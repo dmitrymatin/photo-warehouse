@@ -5,10 +5,10 @@ namespace PhotoWarehouse.Domain.Photos
 {
     public class PhotoCategory
     {
-        [Display(Name = "Category")]
+        [Display(Name = "Категория")]
         public int Id { get; set; }
 
-        [Display(Name = "Category")]
+        [Display(Name = "Категория")]
         public string Name { get; set; }
 
         public IEnumerable<Photo> Photos { get; set; }
