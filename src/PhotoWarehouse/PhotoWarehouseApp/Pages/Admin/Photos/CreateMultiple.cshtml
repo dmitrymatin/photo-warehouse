@@ -2,53 +2,51 @@
 @model PhotoWarehouseApp.Pages.Admin.Photos.CreateMultipleModel
 
 @{
-    ViewData["Title"] = "Add Multiple Photos";
+    ViewData["Title"] = "Добавить несколько фото";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Add Multiple Photos</h1>
+<div class="column column-centered">
 
-@if (Model.ImageError is not null)
-{
-    <div>@Model.ImageError</div>
-}
+    <h2>Добавление нескольких фотографий</h2>
 
-@if (Model.NoFilesAddedError is not null)
-{
-    <div>@Model.NoFilesAddedError</div>
-}
+    <div class="row">
+        <a class="clickable" asp-page="Index">Назад к списку фотографий</a>
+    </div>
 
-<h4>Photo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @if (Model.ImageError is not null)
+    {
+        <div class="alert">@Model.ImageError</div>
+    }
 
-            <div class="form-group">
+    @if (Model.NoFilesAddedError is not null)
+    {
+        <div class="alert">@Model.NoFilesAddedError</div>
+    }
+
+    <form method="post" enctype="multipart/form-data" class="form-medium">
+        <div class="column">
+            <div asp-validation-summary="ModelOnly" class="validation-alert"></div>
+
+            <div class="row">
                 <label asp-for="Input.CommonCategoryId" class="control-label"></label>
                 <select asp-for="Input.CommonCategoryId" class="form-control" asp-items="Model.Input.Categories"></select>
             </div>
 
-            <div class="form-group">
+            <div class="row">
                 <label asp-for="Input.CommonDateTaken" class="control-label"></label>
                 <input type="datetime-local" asp-for="Input.CommonDateTaken" class="form-control" />
             </div>
 
-            <div class="form-group">
-                <label>Upload photos</label>
-                <input type="file" name="photoItem" multiple value="" class="form-control" />
+            <div class="row">
+                <label for="photoItem" class="clickable">Загрузка фотографий</label>
+                <input type="file" id="photoItem" name="photoItem" multiple value="" class="form-control" />
             </div>
+            <button type="submit" class="clickable">Добавить</button>
+        </div>
+    </form>
 
-            <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-page="Index">Back to main page</a>
 </div>
 
 @section Scripts {

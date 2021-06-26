@@ -44,18 +44,13 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
         public class InputModel
         {
-            [Display(Name = "Choose category that will be applied to all photos")]
+            [Display(Name = "Выберите категорию, которая будет применена ко всем загружаемым фотографиям")]
             public int CommonCategoryId { get; set; }
 
-            [Display(Name = "Date on which the photos were taken. This will be applied to all photos")]
+            [Display(Name = "Дата создания фотографий. При указании применяется ко всем загружаемым фотографиям")]
             public DateTimeOffset? CommonDateTaken { get; set; }
 
             public IEnumerable<SelectListItem> Categories { get; set; }
-
-            //[Display(Name = "Upload a photo")]
-            //public IList<IFormFile> Photos { get; set; }
-
-            //public Photo Photo { get; set; } // to use in razor to define fields
         }
 
 
@@ -75,9 +70,6 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
             return Page();
         }
 
-        //[BindProperty]
-        //public Photo Photo { get; set; }
-
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
@@ -88,16 +80,12 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
             if (Request.Form.Files.Count == 0)
             {
-                TempData["NoFilesAddedError"] = "On this page you are required to provide at least one photo.";
+                TempData["NoFilesAddedError"] = "Необходимо добавить хотя бы одну фотографию.";
                 return RedirectToPage();
             }
 
             foreach (var formFile in Request.Form.Files)
             {
-                if (Request.Form.Files.Count > 0)
-                {
-                    // test
-                }
                 string formFileName = ContentDispositionHeaderValue.Parse(formFile.ContentDisposition).FileName;
                 formFileName = FileService.EnsureCorrectFileName(formFileName);
                 string extension = FileService.GetFileExtension(formFileName);
@@ -107,7 +95,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
                 if (!formFile.IsImage(extension))
                 {
-                    TempData["ImageError"] = "The file you submitted is not an image. Only image files can be uploaded.";
+                    TempData["ImageError"] = $"Загруженный файл ({formFileName}) не является изображением.";
                     return RedirectToPage();
                 }
 
@@ -133,7 +121,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
                 {
                     CategoryId = Input.CommonCategoryId,
                     InitialUploadDate = DateTimeOffset.Now,
-                    DateTaken = Input.CommonDateTaken ?? DateTimeOffset.Now, // consider DateTaken to be nullable
+                    DateTaken = Input.CommonDateTaken,
                 };
 
                 var photoItem = new PhotoItem

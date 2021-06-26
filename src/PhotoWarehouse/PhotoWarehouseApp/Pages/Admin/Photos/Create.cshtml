@@ -8,7 +8,7 @@
 
 <div class="column column-centered">
 
-    <h2>Добавление фото</h2>
+    <h2>Добавление фотографии</h2>
 
     <div class="row">
         <a class="clickable" asp-page="Index">Назад к списку фотографий</a>
@@ -17,7 +17,7 @@
 
     @if (Model.ImageError is not null)
     {
-        <div>@Model.ImageError</div>
+        <div class="alert">@Model.ImageError</div>
     }
     <form method="post" enctype="multipart/form-data" class="form-medium">
         <div class="column">
@@ -43,7 +43,7 @@
             </div>
             <div class="row">
                 <label for="photoItem" class="clickable">Загрузка фотографии</label>
-                <input type="file" id="photoItem" name="photoItem" value="" />
+                <input type="file" id="photoItem" name="photoItem" class="form-control" value="" />
             </div>
             <button type="submit" class="clickable">Добавить</button>
         </div>
