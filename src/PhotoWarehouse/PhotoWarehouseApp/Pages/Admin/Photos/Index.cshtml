@@ -11,54 +11,56 @@
     <a class="clickable" asp-page="Create">Добавить новое фото</a>
     <a class="clickable" asp-page="CreateMultiple">Добавить несколько фотографий</a>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Photo[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Photo[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Photo[0].InitialUploadDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Photo[0].DateTaken)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Photo[0].Category)
-            </th>
-            <th>
-                Действия
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Photo)
-        {
+<div class="table-wrapper">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InitialUploadDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateTaken)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    <a class="clickable" asp-page="./Edit" asp-route-photoId="@item.Id">Изменить</a> |
-                    <a class="clickable" asp-page="./Details" asp-route-photoId="@item.Id">Подробнее</a> |
-                    <a class="clickable" asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Photo[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Photo[0].Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Photo[0].InitialUploadDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Photo[0].DateTaken)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Photo[0].Category)
+                </th>
+                <th>
+                    Действия
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Photo)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InitialUploadDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTaken)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        <a class="clickable" asp-page="./Edit" asp-route-photoId="@item.Id">Изменить</a> |
+                        <a class="clickable" asp-page="./Details" asp-route-photoId="@item.Id">Подробнее</a> |
+                        <a class="clickable" asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
