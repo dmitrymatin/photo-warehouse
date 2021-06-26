@@ -50,6 +50,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Orders
 
             Orders = await context.Orders
                 .Include(o => o.OrderItems)
+                .Where(o => o.Customer.Id == user.Id)
                 .ToListAsync();
 
             return Page();

@@ -44,14 +44,14 @@ namespace PhotoWarehouseApp.Pages.Photos.Orders
             {
                 order = user.Orders.FirstOrDefault(o => o.Id == orderId);
             }
-            else if (await userManager.IsInRoleAsync(user, Roles.Client.ToString()))
+            else if (await userManager.IsInRoleAsync(user, Roles.Administrator.ToString()))
             {
                 order = context.Orders.Find(orderId);
             }
 
             if (order is null)
             {
-                return RedirectToPage("/Orders/List");
+                return RedirectToPage("/Photos/Orders/List");
             }
 
             Order = await context.Orders.AsNoTracking()
