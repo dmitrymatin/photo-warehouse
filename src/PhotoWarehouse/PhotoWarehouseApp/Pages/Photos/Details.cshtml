@@ -58,7 +58,7 @@
                 @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
                 {
                     <div class="card-info">
-                        Дата загрузки: @Model.Photo.InitialUploadDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+                        Дата загрузки на сайт: @Model.Photo.InitialUploadDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
                     </div>
                     <div class="card-info">
                         @Model.Photo.ViewCount просмотров

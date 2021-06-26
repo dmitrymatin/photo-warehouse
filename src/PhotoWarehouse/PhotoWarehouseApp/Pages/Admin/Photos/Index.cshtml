@@ -6,11 +6,10 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
+<h2>Фотографии</h2>
 <div class="row">
-    <a class="clickable" asp-page="Create">Add new photo</a>
-    <a class="clickable" asp-page="CreateMultiple">Add multiple photos</a>
+    <a class="clickable" asp-page="Create">Добавить новое фото</a>
+    <a class="clickable" asp-page="CreateMultiple">Добавить несколько фотографий</a>
 </div>
 <table class="table">
     <thead>
@@ -30,7 +29,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Photo[0].Category)
             </th>
-            <th></th>
+            <th>
+                Действия
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -50,12 +51,12 @@
                     @Html.DisplayFor(modelItem => item.DateTaken)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Category.Id)
+                    @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-photoId="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-photoId="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="clickable" asp-page="./Edit" asp-route-photoId="@item.Id">Изменить</a> |
+                    <a class="clickable" asp-page="./Details" asp-route-photoId="@item.Id">Подробнее</a> |
+                    <a class="clickable" asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
                 </td>
             </tr>
         }
