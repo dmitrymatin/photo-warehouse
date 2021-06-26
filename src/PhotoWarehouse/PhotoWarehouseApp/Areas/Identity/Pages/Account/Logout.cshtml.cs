@@ -23,10 +23,6 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account
             _logger = logger;
         }
 
-        public void OnGet()
-        {
-        }
-
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
@@ -37,7 +33,7 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToPage();
+                return RedirectToPage("/Index");
             }
         }
     }
