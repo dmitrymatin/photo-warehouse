@@ -77,7 +77,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
                 if (!formPhoto.IsImage(extension))
                 {
-                    TempData["ImageError"] = "The file you submitted is not an image. Only image files can be uploaded.";
+                    TempData["ImageError"] = "Загруженный файл не является изображением.";
                     return RedirectToPage();
                 }
 
