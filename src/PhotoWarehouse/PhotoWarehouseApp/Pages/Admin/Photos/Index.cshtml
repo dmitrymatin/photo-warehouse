@@ -11,26 +11,26 @@
     <a class="clickable" asp-page="Create">Добавить новое фото</a>
     <a class="clickable" asp-page="CreateMultiple">Добавить несколько фотографий</a>
 </div>
-<div class="table-wrapper">
+<div class="table-wrapper column">
     <table class="table">
         <thead>
             <tr>
-                <th>
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Photo[0].Name)
                 </th>
-                <th>
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Photo[0].Description)
                 </th>
-                <th>
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Photo[0].InitialUploadDate)
                 </th>
-                <th>
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Photo[0].DateTaken)
                 </th>
-                <th>
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Photo[0].Category)
                 </th>
-                <th>
+                <th scope="col">
                     Действия
                 </th>
             </tr>
@@ -45,19 +45,21 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InitialUploadDate)
+                    <td class="local-date-time">
+                        @item.InitialUploadDate.ToString(System.Globalization.CultureInfo.InvariantCulture)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateTaken)
+                    <td class="local-date-time">
+                        @item.DateTaken?.ToString(System.Globalization.CultureInfo.InvariantCulture)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Category.Name)
                     </td>
                     <td>
-                        <a class="clickable" asp-page="./Edit" asp-route-photoId="@item.Id">Изменить</a> |
-                        <a class="clickable" asp-page="./Details" asp-route-photoId="@item.Id">Подробнее</a> |
-                        <a class="clickable" asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
+                        <div class="column">
+                            <a class="clickable" asp-page="./Edit" asp-route-photoId="@item.Id">Изменить</a>
+                            <a class="clickable" asp-page="./Details" asp-route-photoId="@item.Id">Подробнее</a>
+                            <a class="clickable" asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
+                        </div>
                     </td>
                 </tr>
             }

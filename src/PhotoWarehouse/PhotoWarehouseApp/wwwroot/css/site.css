@@ -141,10 +141,12 @@ footer.row {
     border: .15em solid #faefff;
     outline: 1px solid black;
     border-radius: 0px;
+    box-shadow: 0 0.6px 0.8px rgba(0, 0, 0, 0.017), 0 1.4px 1.7px rgba(0, 0, 0, 0.025), 0 2.3px 2.9px rgba(0, 0, 0, 0.031), 0 3.5px 4.3px rgba(0, 0, 0, 0.035), 0 5px 6.3px rgba(0, 0, 0, 0.04), 0 7.1px 8.9px rgba(0, 0, 0, 0.045), 0 10.1px 12.6px rgba(0, 0, 0, 0.049), 0 14.6px 18.3px rgba(0, 0, 0, 0.055), 0 22.5px 28.1px rgba(0, 0, 0, 0.063), 0 40px 50px rgba(0, 0, 0, 0.08);
 }
 
     .searchBar input:hover {
         border: .15em solid #7400B8;
+        background-color: #fdf9ff;
     }
 
 .searchBar {
@@ -299,14 +301,67 @@ select {
 /*TABLE*/
 .table-wrapper {
     overflow: scroll;
+    margin: 1.3em 0 .3em;
 }
 
-@media only screen and (max-width: 425px) {
+    .table-wrapper::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background-color: #F5F5F5;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #a7a7a7;
+    }
+
+.table {
+    border-collapse: collapse;
+}
+
+    .table td, th {
+        border: 1px solid rgb(120, 120, 120);
+        padding: .5em .3em .5em;
+        text-align: center;
+    }
+
+    .table tbody tr:nth-child(2n) {
+        background-color: rgb(213 213 213);
+    }
+
+    .table tbody tr:nth-child(2n + 1) {
+        background-color: rgb(234 234 234);
+    }
+
+    .table td {
+        color: rgb(80, 80, 80);
+        font-weight: 100;
+    }
+
+    .table th[scope="col"] {
+        font-weight: 700;
+        font-size: 1.3em;
+        background-color: rgb(170, 170, 170);
+        color: #fdf9ff;
+    }
+
+
+@media only screen and (max-width: 567px) {
     main.column {
         padding: 0 .8em 1.7em;
     }
 
     .form-medium {
         width: 75vw;
+    }
+
+    .table-wrapper{
+        font-size: .6em;
     }
 }

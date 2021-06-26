@@ -27,7 +27,9 @@ function localiseDateString() {
     const dateFields = document.querySelectorAll(".local-date-time");
     dateFields.forEach(df => {
         const value = df.innerText;
-        const localDate = new Date(value);
-        df.innerText = localDate.toLocaleString();
+        if (value) {
+            const localDate = new Date(value);
+            df.innerText = localDate.toLocaleString();
+        }
     });
 }
