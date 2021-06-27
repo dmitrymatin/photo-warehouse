@@ -2,35 +2,31 @@
 @model PhotoWarehouseApp.Pages.Admin.Categories.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактировать категорию";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<div class="column column-centered">
+    <h2>Редактирование категории</h2>
 
-<h4>PhotoCategory</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form method="post" class="form-medium">
+        <div class="column">
+            <div asp-validation-summary="ModelOnly" class="validation-alert"></div>
             <input type="hidden" asp-for="PhotoCategory.Id" />
-            <div class="form-group">
-                <label asp-for="PhotoCategory.Name" class="control-label"></label>
+            <div class="row">
+                <label asp-for="PhotoCategory.Name"></label>
                 <input asp-for="PhotoCategory.Name" class="form-control" />
-                <span asp-validation-for="PhotoCategory.Name" class="text-danger"></span>
+                <span asp-validation-for="PhotoCategory.Name" class="validation-alert"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            <button type="submit" class="clickable">Сохранить</button>
+        </div>
+    </form>
+
+    <div class="row">
+        <a class="clickable" asp-page="./Index">Назад к списку категорий</a>
     </div>
-</div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
