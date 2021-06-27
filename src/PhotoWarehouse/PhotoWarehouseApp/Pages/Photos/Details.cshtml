@@ -33,7 +33,7 @@
                     }
                     @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
                     {
-                        <button class="clickable" type="submit" asp-page="/Admin/Photos/Download">Скачать</button>
+                        <button class="clickable" type="submit" asp-page="/Photos/Details" asp-page-handler="Download">Скачать</button>
                     }
                 </div>
 

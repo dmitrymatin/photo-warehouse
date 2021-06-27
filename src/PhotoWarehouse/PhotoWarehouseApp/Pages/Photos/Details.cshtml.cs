@@ -1,13 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using PhotoWarehouse.Data;
 using PhotoWarehouse.Data.Repositories;
 using PhotoWarehouse.Domain.Photos;
+using PhotoWarehouse.Domain.Users;
+using PhotoWarehouseApp.Areas.Identity;
 using PhotoWarehouseApp.Services;
 
 namespace PhotoWarehouseApp.Pages.Photos
@@ -16,11 +23,21 @@ namespace PhotoWarehouseApp.Pages.Photos
     {
         private readonly IPhotoRepository _photoRepository;
         private readonly IConfiguration _configuration;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public DetailsModel(IPhotoRepository photoRepository, IConfiguration configuration)
+        public DetailsModel(IPhotoRepository photoRepository,
+            IConfiguration configuration,
+            UserManager<ApplicationUser> userManager,
+            ApplicationDbContext context,
+            IWebHostEnvironment webHostEnvironment)
         {
             _photoRepository = photoRepository;
             _configuration = configuration;
+            _userManager = userManager;
+            _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public class PhotoItemsInputModel
@@ -31,6 +48,8 @@ namespace PhotoWarehouseApp.Pages.Photos
 
         public Photo Photo { get; set; }
         public PhotoItem PhotoItemFirst { get; set; }
+
+        [BindProperty]
         public PhotoItem PhotoItemChosen { get; set; }
         public IEnumerable<PhotoItemsInputModel> PhotoItemsInputModels { get; set; }
         public SelectList PhotoItemsList { get; set; }
@@ -40,9 +59,9 @@ namespace PhotoWarehouseApp.Pages.Photos
             Photo = await _photoRepository.GetPhotoAsync(photoId, true, true, true);
             PhotoItemFirst = Photo?.PhotoItems?.FirstOrDefault();
 
-            if (Photo is null || PhotoItemFirst is null)
+            if (User.IsInRole(Roles.Client.ToString()) && (Photo is null || PhotoItemFirst is null))
             {
-                ViewData["PhotoNotFoundMessage"] = "Sorry, we couldn't find the photo or it is not fully set up";
+                ViewData["PhotoNotFoundMessage"] = "«апрошенна€ фотографи€ не существует или не полностью опубликована.";
                 return Page();
             }
 
@@ -59,6 +78,19 @@ namespace PhotoWarehouseApp.Pages.Photos
             PhotoItemFirst.RelativePath = FileService.GetUserImageContentPath(_configuration, PhotoItemFirst.FileName);
 
             return Page();
+        }
+
+        public IActionResult OnPostDownload()
+        {
+            if (!ModelState.IsValid || !User.IsInRole(Roles.Administrator.ToString()))
+            {
+                return RedirectToPage("/Error");
+            }
+
+            var chosenPhotoItemId = PhotoItemChosen.Id;
+            var chosenPhotoItem = _context.PhotoItems.Find(chosenPhotoItemId);
+            string path = FileService.GetUserImageContentPath(_configuration, chosenPhotoItem.FileName);
+            return File(path, MediaTypeNames.Application.Octet, chosenPhotoItem.FileName);
         }
     }
 }
