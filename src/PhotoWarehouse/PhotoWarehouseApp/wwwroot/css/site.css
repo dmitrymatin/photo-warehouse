@@ -26,7 +26,6 @@ main {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    min-height: 3.1rem;
 }
 
 footer.row {
@@ -68,7 +67,7 @@ main.column {
     padding: 0 5.3em 2.3em;
 }
 
-.landing-text{
+.landing-text {
     letter-spacing: .06em;
     line-height: 1.7em;
 }
@@ -97,6 +96,10 @@ footer.row {
     .navbar .clickable {
         box-shadow: 0px 2px 9px 6px rgba(0,0,0,0.06);
     }
+
+.row.navbar {
+    min-height: 3.1em;
+}
 
 .clickable {
     text-decoration: none;
@@ -236,7 +239,6 @@ select {
         padding: .8em;
         height: auto;
         width: auto;
-        max-height: auto;
         max-width: 65vw;
     }
 
@@ -281,6 +283,7 @@ select {
 
 .card-control {
     justify-content: flex-end;
+    padding-top: .4em;
 }
 
     .card-control > .clickable {

@@ -1,12 +1,18 @@
 ﻿@using PhotoWarehouse.Domain.Photos
 @model PhotoItem
 
-<div class="card column">
+<div class="card cardAutoHeight column">
     <div class="card-picture row">
         <a asp-page="/Photos/Details" asp-route-photoId="@Model.Photo.Id">
             <img src="@Model.RelativePath"
                  alt="@Model.Photo.Name of size @Model.Size" in @Model.FileFormat format />
         </a>
+    </div>
+    <div class="row card-control">
+        <button class="clickable" type="submit" 
+                asp-page="/Photos/Orders/Details" 
+                asp-page-handler="Download" 
+                asp-route-itemId="@Model.Id">Скачать</button>
     </div>
     <div class="card-title">
         <a class="clickable" asp-page="/Photos/Details" asp-route-photoId="@Model.Photo.Id">

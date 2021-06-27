@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,6 +8,9 @@ using PhotoWarehouse.Domain.Orders;
 using PhotoWarehouse.Domain.Users;
 using PhotoWarehouseApp.Areas.Identity;
 using PhotoWarehouseApp.Services;
+using System.Linq;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace PhotoWarehouseApp.Pages.Photos.Orders
 {
@@ -21,7 +20,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Orders
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfiguration configuration;
 
-        public DetailsModel(ApplicationDbContext context, 
+        public DetailsModel(ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             IConfiguration configuration)
         {
@@ -30,6 +29,7 @@ namespace PhotoWarehouseApp.Pages.Photos.Orders
             this.configuration = configuration;
         }
 
+        [BindProperty]
         public Order Order { get; set; }
 
         public async Task<IActionResult> OnGet(int orderId)
@@ -69,6 +69,42 @@ namespace PhotoWarehouseApp.Pages.Photos.Orders
             }
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostDownloadAsync(int? itemId)
+        {
+            string userName = User.Identity?.Name;
+
+            if (itemId is null
+                || userName is null
+                || !ModelState.IsValid
+                || !User.IsInRole(Roles.Client.ToString()))
+            {
+                return RedirectToPage("/Error");
+            }
+
+            var user = await userManager.FindByNameAsync(userName);
+
+            var userEntry = context.Users
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.OrderItems)
+                        .ThenInclude(pi => pi.FileFormat)
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.OrderItems)
+                        .ThenInclude(pi => pi.Photo)
+                .FirstOrDefault(u => u.Id == user.Id);
+
+            var userOrder = userEntry.Orders.FirstOrDefault(o => o.Id == Order.Id);
+
+            var userOrderItem = userOrder?.OrderItems.FirstOrDefault(pi => pi.Id == itemId);
+
+            if (userOrderItem is not null)
+            {
+                string path = FileService.GetUserImageContentPath(configuration, userOrderItem.FileName);
+                return File(path, MediaTypeNames.Application.Octet, $"{userOrderItem.Photo.Name}{userOrderItem.FileFormat}");
+            }
+
+            return RedirectToPage("/Error");
         }
     }
 }
