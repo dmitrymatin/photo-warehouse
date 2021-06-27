@@ -390,6 +390,10 @@ select {
         padding: 0 .8em 1.7em;
     }
 
+    .landing-image {
+        width: 90vw;
+    }
+
     .form-medium {
         width: 75vw;
     }
