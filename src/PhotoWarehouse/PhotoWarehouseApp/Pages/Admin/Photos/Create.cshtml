@@ -23,22 +23,22 @@
         <div class="column">
             <div asp-validation-summary="ModelOnly" class="validation-alert"></div>
             <div class="row">
-                <label asp-for="Photo.Name" class="control-label"></label>
+                <label asp-for="Photo.Name"></label>
                 <input asp-for="Photo.Name" class="form-control" />
                 <span asp-validation-for="Photo.Name" class="validation-alert"></span>
             </div>
             <div class="row">
-                <label asp-for="Photo.Description" class="control-label"></label>
+                <label asp-for="Photo.Description"></label>
                 <input asp-for="Photo.Description" class="form-control" />
                 <span asp-validation-for="Photo.Description" class="validation-alert"></span>
             </div>
             <div class="row">
-                <label asp-for="Photo.DateTaken" class="control-label"></label>
+                <label asp-for="Photo.DateTaken"></label>
                 <input type="datetime-local" asp-for="Photo.DateTaken" class="form-control" />
                 <span asp-validation-for="Photo.DateTaken" class="validation-alert"></span>
             </div>
             <div class="row">
-                <label asp-for="Photo.CategoryId" class="control-label"></label>
+                <label asp-for="Photo.CategoryId"></label>
                 <select asp-for="Photo.CategoryId" class="form-control" asp-items="ViewBag.Category"></select>
             </div>
             <div class="row">

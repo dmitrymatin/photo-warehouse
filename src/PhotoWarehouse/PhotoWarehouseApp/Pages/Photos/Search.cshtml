@@ -2,12 +2,12 @@
 @using System.Globalization
 @model PhotoWarehouseApp.Pages.Photos.SearchModel
 @{
-    ViewData["Title"] = "Search";
+    ViewData["Title"] = "Поиск";
 }
 
 
 <div class="column column-centered">
-    <h1>Search results</h1>
+    <h1>Результаты поиска</h1>
     @if (ViewBag.NoSearchResultsMessage is not null)
     {
         <div class="alert">@ViewBag.NoSearchResultsMessage</div>

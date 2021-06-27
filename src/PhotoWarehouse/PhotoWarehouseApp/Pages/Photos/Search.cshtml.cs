@@ -45,7 +45,7 @@ namespace PhotoWarehouseApp.Pages.Photos
 
             if (!FoundPhotos.Any())
             {
-                ViewData["NoSearchResultsMessage"] = "Sorry, we couldn't find anything that fit your search";
+                ViewData["NoSearchResultsMessage"] = "ѕо данному поисковому запросу ничего не найдено";
             }
 
 
@@ -64,7 +64,7 @@ namespace PhotoWarehouseApp.Pages.Photos
 
             if (!FoundPhotos.Any())
             {
-                ViewData["NoSearchResultsMessage"] = "Sorry, we couldn't find anything that fit your search";
+                ViewData["NoSearchResultsMessage"] = "ѕо данному поисковому запросу ничего не найдено";
             }
 
 

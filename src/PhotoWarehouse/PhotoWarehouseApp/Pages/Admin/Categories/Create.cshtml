@@ -2,34 +2,32 @@
 @model PhotoWarehouseApp.Pages.Admin.Categories.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Добавить категорию";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<div class="column column-centered">
 
-<h4>PhotoCategory</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PhotoCategory.Name" class="control-label"></label>
-                <input asp-for="PhotoCategory.Name" class="form-control" />
-                <span asp-validation-for="PhotoCategory.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <h2>Добавление фотографии</h2>
+
+    <div class="row">
+        <a class="clickable" asp-page="Index">Назад к списку категорий</a>
     </div>
-</div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+    <form method="post" class="form-medium">
+        <div class="column">
+            <div asp-validation-summary="ModelOnly" class="validation-alert"></div>
+            <div class="row">
+                <label asp-for="PhotoCategory.Name"></label>
+                <input asp-for="PhotoCategory.Name" class="form-control" />
+                <span asp-validation-for="PhotoCategory.Name" class="validation-alert"></span>
+            </div>
+            <button type="submit" class="clickable">Создать</button>
+        </div>
+    </form>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</div>
