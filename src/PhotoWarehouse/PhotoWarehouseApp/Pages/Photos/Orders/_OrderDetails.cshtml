@@ -9,10 +9,15 @@
         </a>
     </div>
     <div class="row card-control">
-        <button class="clickable" type="submit" 
-                asp-page="/Photos/Orders/Details" 
-                asp-page-handler="Download" 
-                asp-route-itemId="@Model.Id">Скачать</button>
+        @if (User.IsInRole(Areas.Identity.Roles.Client.ToString()))
+        {
+            <button class="clickable" type="submit"
+                    asp-page="/Photos/Orders/Details"
+                    asp-page-handler="Download"
+                    asp-route-itemId="@Model.Id">
+                Скачать
+            </button>
+        }
     </div>
     <div class="card-title">
         <a class="clickable" asp-page="/Photos/Details" asp-route-photoId="@Model.Photo.Id">

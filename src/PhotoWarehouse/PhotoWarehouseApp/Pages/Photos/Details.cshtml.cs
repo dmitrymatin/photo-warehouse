@@ -59,9 +59,9 @@ namespace PhotoWarehouseApp.Pages.Photos
             Photo = await _photoRepository.GetPhotoAsync(photoId, true, true, true);
             PhotoItemFirst = Photo?.PhotoItems?.FirstOrDefault();
 
-            bool userIsClient = User.IsInRole(Roles.Client.ToString();
+            bool userIsClient = User.IsInRole(Roles.Client.ToString());
 
-            if (Photo is null || (userIsClient) && PhotoItemFirst is null))
+            if (Photo is null || (userIsClient) && PhotoItemFirst is null)
             {
                 ViewData["PhotoNotFoundMessage"] = "«апрошенна€ фотографи€ не существует или не полностью опубликована.";
                 return Page();

@@ -100,6 +100,10 @@ namespace PhotoWarehouseApp.Pages.Photos.Orders
 
             if (userOrderItem is not null)
             {
+                context.Attach(userOrderItem.Photo);
+                userOrderItem.Photo.DownloadCount++;
+                await context.SaveChangesAsync();
+
                 string path = FileService.GetUserImageContentPath(configuration, userOrderItem.FileName);
                 return File(path, MediaTypeNames.Application.Octet, $"{userOrderItem.Photo.Name}{userOrderItem.FileFormat}");
             }
