@@ -1,14 +1,14 @@
-﻿initialiseCategoriesMenu();
+﻿initialiseCategoriesMenu('#categoriesMenuToggle', '#expMenu');
 localiseDateString();
 
 
-function initialiseCategoriesMenu() {
-    const menuToggle = document.querySelector('#categoriesMenuToggle');
-    const menu = document.querySelector('#expMenu');
+function initialiseCategoriesMenu(menuToggleSelector, expandableMenuSelector) {
+    const menuToggle = document.querySelector(menuToggleSelector);
+    const menu = document.querySelector(expandableMenuSelector);
 
     menuToggle?.addEventListener('click', () => {
         const menuToggleCoords = menuToggle.getBoundingClientRect();
-        console.dir(menuToggleCoords);
+        //console.dir(menuToggleCoords);
         const x = menuToggleCoords.left;
         const y = menuToggleCoords.bottom;
 

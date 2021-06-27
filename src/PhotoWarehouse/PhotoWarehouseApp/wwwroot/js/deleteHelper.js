@@ -1,12 +1,16 @@
-﻿const existingPhotoItems = document.querySelectorAll('.photoItemDeleteButton');
-existingPhotoItems.forEach((pi) => {
-    pi.addEventListener('click', (event) => {
-        const clickedButton = event.target;
+﻿markElementAsDeleted('.photoItemDeleteButton', '.itemStatus');
 
-        const parent = clickedButton.parentElement;
-        const photoItemStatusInput = parent.querySelector('.itemStatus');
-        photoItemStatusInput.value = "Deleted";
+function markElementAsDeleted(deleteButtonSelector, statusElementSelector) {
+    const existingPhotoItems = document.querySelectorAll(deleteButtonSelector);
+    existingPhotoItems.forEach((pi) => {
+        pi.addEventListener('click', (event) => {
+            const clickedButton = event.target;
 
-        parent.style.display = "none";
+            const parent = clickedButton.parentElement;
+            const photoItemStatusInput = parent.querySelector(statusElementSelector);
+            photoItemStatusInput.value = "Deleted";
+
+            parent.style.display = "none";
+        });
     });
-});
+}
