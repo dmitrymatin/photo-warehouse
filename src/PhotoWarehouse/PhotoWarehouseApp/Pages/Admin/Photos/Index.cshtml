@@ -40,7 +40,9 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                        <a asp-page="/Photos/Details" asp-route-photoId="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </a>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
