@@ -61,7 +61,7 @@ namespace PhotoWarehouseApp.Pages.Photos
 
             bool userIsClient = User.IsInRole(Roles.Client.ToString());
 
-            if (Photo is null || (userIsClient) && PhotoItemFirst is null)
+            if (Photo is null || (userIsClient && PhotoItemFirst is null))
             {
                 ViewData["PhotoNotFoundMessage"] = "«апрошенна€ фотографи€ не существует или не полностью опубликована.";
                 return Page();

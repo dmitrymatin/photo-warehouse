@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,6 +19,7 @@ using SixLabors.ImageSharp;
 
 namespace PhotoWarehouseApp.Pages.Admin.Photos
 {
+    [Authorize(Roles = "Administrator")]
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _context;

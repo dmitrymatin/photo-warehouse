@@ -20,11 +20,10 @@
             </section>
             <section class="row">
                 <div class="row navbar">
+                    <span id="categoriesMenuToggle" class="navItem clickable">Категории</span>
+                    @await Component.InvokeAsync("CategoriesMenu")
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <span id="categoriesMenuToggle" class="navItem clickable">Категории</span>
-                        @await Component.InvokeAsync("CategoriesMenu");
-
                         @if (User.IsInRole(Areas.Identity.Roles.Administrator.ToString()))
                         {
                             <a class="navItem clickable" asp-page="/Admin/Photos/Index">Загрузка фото</a>

@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PhotoWarehouse.Data;
 using PhotoWarehouse.Domain.Photos;
+using PhotoWarehouseApp.Areas.Identity;
 using System.Threading.Tasks;
 
 namespace PhotoWarehouseApp.Pages.Admin.Categories
 {
+    [Authorize(Roles = "Administrator")]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;
