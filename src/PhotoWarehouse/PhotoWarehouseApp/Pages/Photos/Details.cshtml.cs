@@ -59,7 +59,9 @@ namespace PhotoWarehouseApp.Pages.Photos
             Photo = await _photoRepository.GetPhotoAsync(photoId, true, true, true);
             PhotoItemFirst = Photo?.PhotoItems?.FirstOrDefault();
 
-            if (User.IsInRole(Roles.Client.ToString()) && (Photo is null || PhotoItemFirst is null))
+            bool userIsClient = User.IsInRole(Roles.Client.ToString();
+
+            if (Photo is null || (userIsClient) && PhotoItemFirst is null))
             {
                 ViewData["PhotoNotFoundMessage"] = "«апрошенна€ фотографи€ не существует или не полностью опубликована.";
                 return Page();
@@ -76,6 +78,13 @@ namespace PhotoWarehouseApp.Pages.Photos
             PhotoItemsList = new SelectList(PhotoItemsInputModels, "Id", "SizeAndFormat");
 
             PhotoItemFirst.RelativePath = FileService.GetUserImageContentPath(_configuration, PhotoItemFirst.FileName);
+
+            if (userIsClient)
+            {
+                var photoEntry = _context.Attach(Photo);
+                Photo.ViewCount++;
+                await _context.SaveChangesAsync();
+            }
 
             return Page();
         }
