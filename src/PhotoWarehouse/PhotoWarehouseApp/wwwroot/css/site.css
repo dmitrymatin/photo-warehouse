@@ -29,6 +29,11 @@ main {
     min-height: 3.1rem;
 }
 
+footer.row {
+    justify-content: center;
+    padding: .3em .6em 1.9em;
+}
+
 .column {
     display: flex;
     flex-direction: column;
@@ -61,6 +66,18 @@ header.row {
 main.column {
     background-color: #faefff;
     padding: 0 5.3em 2.3em;
+}
+
+.landing-text{
+    letter-spacing: .06em;
+    line-height: 1.7em;
+}
+
+.landing-image {
+    width: 60vw;
+    height: auto;
+    border-radius: 8px;
+    margin: .9em 0 .9em;
 }
 
 footer.row {
