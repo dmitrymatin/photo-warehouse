@@ -115,7 +115,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 
             _photoRepository.Commit();
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("./Index");
         }
     }
 }

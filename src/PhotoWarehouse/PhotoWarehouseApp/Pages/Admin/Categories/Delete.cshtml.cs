@@ -47,7 +47,15 @@ namespace PhotoWarehouseApp.Pages.Admin.Categories
             if (PhotoCategory != null)
             {
                 _context.PhotoCategories.Remove(PhotoCategory);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (DbUpdateException)
+                {
+                    return RedirectToPage("/Error");
+                }
             }
 
             return RedirectToPage("./Index");

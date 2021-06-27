@@ -48,6 +48,12 @@ namespace PhotoWarehouse.Data
             builder.Entity<IdentityUserToken<string>>(entity =>
                 entity.Property(p => p.Name).HasMaxLength(85));
 
+            builder.Entity<Photo>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Photos)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
     }
