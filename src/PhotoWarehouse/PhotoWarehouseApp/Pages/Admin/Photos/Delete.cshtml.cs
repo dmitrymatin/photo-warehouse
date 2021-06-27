@@ -12,9 +12,9 @@ namespace PhotoWarehouseApp.Pages.Admin.Photos
 {
     public class DeleteModel : PageModel
     {
-        private readonly PhotoWarehouse.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DeleteModel(PhotoWarehouse.Data.ApplicationDbContext context)
+        public DeleteModel(ApplicationDbContext context)
         {
             _context = context;
         }
