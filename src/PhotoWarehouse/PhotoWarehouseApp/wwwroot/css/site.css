@@ -1,6 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
+﻿/*Глобальные стили для документа*/
 * {
     font-family: 'Noto Sans JP', sans-serif;
 }
@@ -13,14 +11,12 @@ html, body {
     color: #2a2a2a;
 }
 
+/*Главный контейнер для всего содержимого*/
 .container {
     min-height: 100vh;
 }
 
-main {
-    flex: 1;
-}
-
+/*Строки с использованием технологии flexbox*/
 .row {
     display: flex;
     flex-direction: row;
@@ -28,11 +24,7 @@ main {
     align-items: center;
 }
 
-footer.row {
-    justify-content: center;
-    padding: .3em .6em 1.9em;
-}
-
+/*Колонки с использованием технологии flexbox*/
 .column {
     display: flex;
     flex-direction: column;
@@ -52,9 +44,8 @@ footer.row {
     width: auto;
 }
 
-header.row h1 {
-    font-size: 28px;
-    padding-right: .8rem;
+.siteTitle {
+    font-size: 24px;
 }
 
 header.row {
@@ -62,27 +53,7 @@ header.row {
     color: #2a2a2a;
 }
 
-main.column {
-    background-color: #faefff;
-    padding: 0 5.3em 2.3em;
-}
-
-.landing-text {
-    letter-spacing: .06em;
-    line-height: 1.7em;
-}
-
-.landing-image {
-    width: 60vw;
-    height: auto;
-    border-radius: 8px;
-    margin: .9em 0 .9em;
-}
-
-footer.row {
-    background-color: #80FFDB;
-}
-
+/*Панель навигации*/
 .navbar {
     align-content: center;
     flex-wrap: wrap;
@@ -100,6 +71,43 @@ footer.row {
 .row.navbar {
     min-height: 3.1em;
 }
+
+.row.stickRight {
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+
+/*Основное содержимое*/
+main {
+    flex: 1;
+}
+
+    main.column {
+        background-color: #faefff;
+        padding: 0 5.3em 2.3em;
+    }
+
+.landing-text {
+    letter-spacing: .06em;
+    line-height: 1.7em;
+}
+
+.landing-image {
+    width: 60vw;
+    height: auto;
+    border-radius: 8px;
+    margin: .9em 0 .9em;
+}
+
+/*Строка подвала страницы*/
+footer.row {
+    background-color: #80FFDB;
+    justify-content: center;
+    padding: .3em .6em 1.9em;
+}
+
+/*Общие стили*/
 
 .clickable {
     text-decoration: none;
@@ -120,22 +128,13 @@ footer.row {
         color: #fdf9ff;
     }
 
-.row.stickRight {
-    flex-grow: 1;
-    justify-content: flex-end;
-}
-
-.siteTitle {
-    font-size: 24px;
-}
-
 .icon {
     margin: .6em;
     height: 36px;
     width: auto;
 }
 
-/*menu*/
+/*Выпадающее меню*/
 .expandableMenu {
     position: absolute;
     border-radius: 5px;
@@ -149,8 +148,7 @@ footer.row {
         display: none;
     }
 
-/*end menu*/
-
+/*Поисковая строка*/
 .searchBar input {
     font-size: 1.5em;
     padding: .8em;
