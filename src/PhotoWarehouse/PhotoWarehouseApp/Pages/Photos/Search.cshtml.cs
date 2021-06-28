@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using PhotoWarehouse.Data.Repositories;
 using PhotoWarehouse.Domain.Photos;
 using PhotoWarehouseApp.Services;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PhotoWarehouseApp.Pages.Photos
 {

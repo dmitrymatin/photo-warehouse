@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +6,9 @@ using PhotoWarehouse.Data;
 using PhotoWarehouse.Domain.Orders;
 using PhotoWarehouse.Domain.Users;
 using PhotoWarehouseApp.Areas.Identity;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PhotoWarehouseApp.Pages.Photos.Orders
 {

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PhotoWarehouse.Data;
 using PhotoWarehouse.Domain.Photos;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PhotoWarehouseApp.Pages.Admin.Categories
 {
@@ -21,7 +18,7 @@ namespace PhotoWarehouseApp.Pages.Admin.Categories
             _context = context;
         }
 
-        public IList<PhotoCategory> PhotoCategory { get;set; }
+        public IList<PhotoCategory> PhotoCategory { get; set; }
 
         public async Task OnGetAsync()
         {

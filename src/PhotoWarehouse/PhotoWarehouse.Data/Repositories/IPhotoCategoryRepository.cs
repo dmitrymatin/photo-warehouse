@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PhotoWarehouse.Domain.Photos;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PhotoWarehouse.Data.Repositories

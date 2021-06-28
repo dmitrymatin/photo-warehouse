@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +11,10 @@ using PhotoWarehouse.Domain.Photos;
 using PhotoWarehouse.Domain.Users;
 using PhotoWarehouseApp.Areas.Identity;
 using PhotoWarehouseApp.Services;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace PhotoWarehouseApp.Pages.Photos
 {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PhotoWarehouse.Domain.Users;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace PhotoWarehouseApp.Areas.Identity.Pages.Account.Manage
 {
@@ -33,7 +30,7 @@ namespace PhotoWarehouseApp.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required(ErrorMessage = "Введите имя пользователя")]
-            [Display(Name ="Имя пользователя")]
+            [Display(Name = "Имя пользователя")]
             public string Username { get; set; }
 
             [Required(ErrorMessage = "Введите адрес электронной почтыпользователя")]

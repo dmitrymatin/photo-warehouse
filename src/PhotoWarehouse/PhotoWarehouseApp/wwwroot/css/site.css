@@ -178,7 +178,7 @@ footer.row {
         background-color: #faefff;
     }
 
-/*COMMON CONTROLS*/
+/*Общие элементы управления*/
 button {
     margin: .15em;
     background: inherit;
@@ -209,7 +209,7 @@ select {
     border-radius: 6px;
 }
 
-/*CARDS*/
+/*Стили для карточек*/
 
 .row.card-collection {
     justify-content: center;
@@ -288,7 +288,7 @@ select {
         font-size: .7em;
     }
 
-/*FORM STYLES*/
+/*Стили для элементов формы*/
 .form-medium {
     width: 35vw;
 }
@@ -327,7 +327,7 @@ select {
     width: 70vw;
 }
 
-/*TABLE*/
+/*обертка для таблиц*/
 .table-wrapper {
     overflow: scroll;
     margin: 1.3em 0 .3em;
@@ -354,6 +354,8 @@ select {
         background-color: #a7a7a7;
     }
 
+
+/*Стили для таблиц*/
 .table {
     border-collapse: collapse;
 }
@@ -384,7 +386,7 @@ select {
         color: #fdf9ff;
     }
 
-
+/*Медиазапрос для экранов размеров не более 567 пикселей*/
 @media only screen and (max-width: 567px) {
     main.column {
         padding: 0 .8em 1.7em;
