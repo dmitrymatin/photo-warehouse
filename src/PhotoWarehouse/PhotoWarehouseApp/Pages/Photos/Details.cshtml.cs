@@ -81,8 +81,8 @@ namespace PhotoWarehouseApp.Pages.Photos
 
             if (userIsClient)
             {
-                var photoEntry = _context.Attach(Photo);
-                Photo.ViewCount++;
+                var photo = await _photoRepository.GetPhotoAsync(photoId, false, false, false);
+                photo.ViewCount++;
                 await _context.SaveChangesAsync();
             }
 
