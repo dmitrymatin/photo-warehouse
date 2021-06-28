@@ -83,6 +83,7 @@ namespace PhotoWarehouseApp.Pages.Photos
             {
                 var photo = await _photoRepository.GetPhotoAsync(photoId, false, false, false);
                 photo.ViewCount++;
+                var photoEntry = _context.Entry(photo).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
 
