@@ -1,67 +1,42 @@
 # photo-warehouse
 
-# Базовые требования для запуска проекта
+# Basic requirements to start a project
 * [.NET 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
-* Для открытия и запуска проекта - Visual Studio 2019 (или любой текстовый редактор, но тогда вся работа с проектом ведется через [dotnet CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/))
+* To open and run a project - Visual Studio 2019 and higher (or any text editor, but then all work with the project is done through [dotnet CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) )
 * MySQL8.0
 
-# Структура проекта
-* PhotoWarehouse.Domain - содержит классы, описывающие предметную область. Используются ORM *(Entity Framework Core 5)* для создания соответствующих таблиц в БД
-* PhotoWarehouse.Data - содержит классы, обеспечивающие работу ORM по связыванию сущностей предметной области с БД, а также классы-репозитории для выполнения запросов к БД
-* PhotoWarehouseApp - проект веб-приложения
+# Project structure
+* PhotoWarehouse.Domain - contains classes that describe the domain. ORM *(Entity Framework Core 5)* is used to create the corresponding tables in the database and represent them as entities in the app
+* PhotoWarehouse.Data - contains classes that enable the ORM to connect domain entities with the database, as well as repository classes for executing queries to the database
+* PhotoWarehouseApp - web application project
 
-# Конфигурация
-1. В PhotoWarehouseApp в файле appsettings.json проверить строку подключения к локальной БД (вероятно, необходимо поменять имя пользователя)
-2. Добавить секретные данные в конфигурацию приложения:
-  * При работе в VS2019 нажать правой кнопкой по проекту PhotoWarehouseApp и выбрать *"Manage User Secrets"*
- При этом откроется json-файл. В него необходимо добавить следующее содержимое:
- ```json
+# Configuration
+1. In PhotoWarehouseApp, in the appsettings.json file, check the connection string to the local database (you probably need to change the user name)
+2. Add secret data to the application configuration:
+   * When working in VS2019, right-click on the PhotoWarehouseApp project and select *"Manage User Secrets"*
+  This will open a json file. You need to add the following content to it:
+  ```json
 {
-  "DbPassword": "<пароль_к_серверу_баз_данных>",
-  "AdministratorEmail": "admin@pw.com",
-  "AdministratorPassword": "<пароль_для_администратора_сайта>"
+   "DbPassword": "<password_to_database_server>",
+   "AdministratorEmail": "admin@pw.com",
+   "AdministratorPassword": "<password_for_site_administrator>"
 }
 ```
-Почту администратора (AdministratorEmail) менять не обязательно, она выдуманная
-  * Если нет VS2019, то каждую из 3-х настроек можно задать командой `dotnet user-secrets set "<ключ>" "<значение>"`
- Например,  `dotnet user-secrets set "DbPassword" "pass123"`
+It is not necessary to change the administrator email (AdministratorEmail), it is fictitious
+   * If you are not using VS2019, then each of the 3 settings can be set with the command `dotnet user-secrets set "<key>" "<value>"`
+  For example, `dotnet user-secrets set "DbPassword" "pass123"`
 
-3. Создать базу данных путем применения миграций из проекта PhotoWarehouse.Data
-Предварительно, необходимо убедиться, что установлен инструмент для работы с Entity Framework: dotnet-ef.
-Для его установки, необходимо выполнить команду `dotnet tool install --global dotnet-ef` <br/>
-После установки dotnet-ef, перейти в консоли в папку с проектом PhotoWarehouse.Data (В VS2019 в контекстном меню для проекта PhotoWarehouse.Data можно выбрать опцию открытия в терминале - *Open in Terminal*).  
-Выполнить команду `dotnet ef database update -s ..\PhotoWarehouseApp\PhotoWarehouseApp.csproj`  
-База данных должна создаться, и её можно увидеть в списке БД, например, в MySQL Workbench. Если БД не удается создать, возможно проблема в правах доступа, и БД необходимо создать вручную.
+3. Create a database by applying migrations from the PhotoWarehouse.Data project
+First, you need to make sure that the tool for working with Entity Framework is installed: dotnet-ef.
+To install it, you need to run the command `dotnet tool install --global dotnet-ef` <br/>
+After installing dotnet-ef, go to the console in the folder with the PhotoWarehouse.Data project (In VS2019, in the context menu for the PhotoWarehouse.Data project, you can select the option to open in the terminal - *Open in Terminal*).
+Run the command `dotnet ef database update -s ..\PhotoWarehouseApp\PhotoWarehouseApp.csproj`
+The database should be created and can be seen in the databases list, for example, in MySQL Workbench. If the database cannot be created, there may be an issue with access rights and the database must be created manually.
 
-4. Запуск
-* В VS2019 можно выбрать запуск либо на IIS Express, либо Kestrel (PhotoWarehouseApp в выпадающем списке рядом с зеленой кнопкой запуска)
-* Из консоли можно выполнить команду `dotnet run`
-* После запуска можно войти как администратор, используя имя administrator и пароль, заданный в конфигурации AdministratorPassword, а также создать новую учетную запись пользователя-клиента
-
-# Что сделано
-* Регистрация и вход пользователей (автоматически создается учетная запись администратора (владельца) ресурса
-* Создание категорий (.../admin/categories)
-* Вывод списка фото (.../admin/photos)
-* Добавление одного фото (...admin/photos/create)
-* Добавление серии фото (...admin/photos/createMultiple)
-* Просмотр описания фотографии и всех связанных вариантов фото (.../admin/photos/details/{id}), где {id} - идентификатор фото (типа int)
-### **UPD: 22/06/21**
-* Добавлена возможность редактирования фото, а также редактирования списка связанных вариантов фото
-* Добавлена возможность поиска фотографий по названию
-### **UPD: 23/06/21**
-* Добавлена возможность вывода списка фотографий в категории
-* Переход к подробному описанию фото с выводом статистики для администратора и выпадающими списками с возможными размерами и форматами фотографии
-* Добавление пользователем-клиентом отдельной фотографии в корзину (без отображения самой корзины)
-### **UPD: 24/06/21**
-* Показ содержимого корзины
-* Редактирование предметов корзины (изменение выбор размера и формата из доступных для данной фотографии, а также удаление предмета)
-* Оформление заказа
-* Отображение содержимого заказа
-
-# Над чем ведется работа
-* Корзина и заказы пользователя
-* Скачивание фотографий
-* Интерфейс пока самый базовый, по завершению работы с серверной частью внешний вид и формат вывода некоторых типов данных (например, дат) будет улучшен
+4. Launching the app
+* In VS2019 you can choose to run on either IIS Express or Kestrel (PhotoWarehouseApp in the dropdown next to the green launch button)
+* From the console you can run the command `dotnet run`
+* Once launched, you can log in as an administrator using the administrator name and password set in the AdministratorPassword configuration, and also create a new client user account
 
 
-Stock photo project implemented as part of coursework at VLSU
+This stock photo project has been implemented as part of coursework at university (VLSU)
